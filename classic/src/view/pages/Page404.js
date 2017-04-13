@@ -40,23 +40,23 @@ Ext.define('conjoon.cn_treenavviewport.view.pages.Page404', {
     },
 
     items: [{
+        cls    : 'inner-container',
         xtype  : 'container',
-        width  : 400,
+        width  : 600,
         layout : {
             type  : 'vbox',
-            align : 'center',
+            align : 'stretch',
             pack  : 'center'
         },
         items: [{
+            cls   : 'top-text',
             xtype : 'label',
             text  : '404'
         }, {
+            cls   : 'descr',
+            flex : 1,
             xtype : 'label',
-            html  : '<div>Seems you\'ve hit a wall!</div><div>Try going back to our <a href="#"> Home page </a></div>'
-        },
-        {
-            xtype : 'tbspacer',
-            flex  : 1
+            html  : '<div>Seems like the page you\'ve requested could not be found!</div><div>Try going back to our <a href="#"> Home page </a></div>'
         }]
     }]
 
