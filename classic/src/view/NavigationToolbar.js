@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,14 @@
  */
 
 /**
- * An {@link Ext.Toolbar} to provide a button for showing/hiding the navigation of
- * the {@link conjoon.cn_treenavviewport}, and provide space for module-related
+ * An {@link Ext.Toolbar} to provide a component to serve as a placeholder for
+ * app informations (e.g. a logo), and a button for showing/hiding the navigation
+ * of the {@link conjoon.cn_treenavviewport}, and provide space for module-related
  * (meta) navigation/information items.
+ *
+ * +--------------------------------+-----------------------------------+-------------+
+ * | cn_treenavviewport_ref_applogo | cn_treenavviewport_ref_hidenavbtn |   [items]   |
+ * +--------------------------------+-----------------------------------+-------------+
  */
 Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
 
@@ -36,10 +41,12 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
     referenceHolder : true,
 
     items : [{
+        xtype     : 'component',
+        reference : 'cn_treenavviewport_ref_applogo'
+    }, {
         xtype     : 'button',
         reference : 'cn_treenavviewport_ref_hidenavbtn',
         text      : 'Hide Navigation'
     }]
-
 
 });

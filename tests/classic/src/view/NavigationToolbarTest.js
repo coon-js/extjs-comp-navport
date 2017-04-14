@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,8 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn')).toBeTruthy();
 
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
+
+        t.expect(toolbar.lookup('cn_treenavviewport_ref_applogo') instanceof Ext.Component).toBe(true);
 
     });
 
