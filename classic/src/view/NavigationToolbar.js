@@ -47,6 +47,6 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
         xtype     : 'button',
         reference : 'cn_treenavviewport_ref_hidenavbtn',
         text      : 'Hide Navigation'
-    }]
+    }, '->']
 
 });

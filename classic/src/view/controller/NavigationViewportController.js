@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     extend : 'Ext.app.ViewController',
 
     requires : [
-        'conjoon.cn_treenavviewport.view.pages.Page404'
+        'conjoon.cn_treenavviewport.view.pages.Page404',
+        'conjoon.cn_treenavviewport.view.NavigationToolbar'
     ],
 
     alias : 'controller.cn_treenavviewport-ctrl',
@@ -83,6 +84,50 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
             click : 'onHideNavigationClick'
         }
 
+    },
+
+    /**
+     * Adds a new item to this view's toolbar which is always visible, regardless
+     * of the currently active package.
+     *
+     * @param {Object}
+     *
+     * @protected
+     *
+     * @throws error if the  toolbar with the specified reference was not found or
+     * is not available or is not an instance of
+     * {@link conjoon.cn_treenavviewport.view.NavigationToolbar}, if items is
+     * not an array or if any item in the array is invalid
+     */
+    addPermaNavItem : function(item) {
+
+        var me   = this,
+            tbar = me.lookup('cn_treenavviewport_ref_tbar');
+
+        if (!tbar || !(tbar instanceof conjoon.cn_treenavviewport.view.NavigationToolbar)) {
+            Ext.raise({
+                sourceClass : Ext.getClassName(this),
+                item        : item,
+                msg         : !tbar
+                    ? Ext.getClassName(this) + "#buildPermaNavItems " +
+                    "needs toolbar with reference " +
+                    "cn_treenavviewport_ref_tbar to be available"
+                    : Ext.getClassName(this) + "#buildPermaNavItems " +
+                    "needs toolbar to be instance of " +
+                    "conjoon.cn_treenavviewport.view.NavigationToolbar"
+            });
+        }
+
+        if (!Ext.isObject(item) ||
+            (!Ext.isString(item.xtype) && !Ext.isString(item.xclass))) {
+            Ext.raise({
+                sourceClass : Ext.getClassName(this),
+                item        : item,
+                msg         : Ext.getClassName(this) + "#buildPermaNavItems found an invalid configuration for a navigation item"
+            });
+        }
+
+        tbar.add(item);
     },
 
     /**

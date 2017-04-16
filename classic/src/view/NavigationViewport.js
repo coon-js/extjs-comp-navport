@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,11 +42,17 @@
  * Building the main navigation:
  * =============================
  * The tree's navigation items are specified by the {@link conjoon.cn_core.app.PackageController#postLaunchHook}
- * which return values may contain objects with a "navigation" property.
- * This should be an array or a single object of {@link conjoon.cn_treenavviewport.model.NavigationModel}
- * configurations or instances.
- * If the navigation model contains a "view" property, its value will be interpreted
- * as a component to render into the ViewPorts {@link conjoon.app_treenavviewport.view.ContentContainer}.
+ * which return values may contain objects with a "navigation" property, and a
+ * permaNav property.
+ *  - "navigation" property:
+ *     This should be an array or a single object of {@link conjoon.cn_treenavviewport.model.NavigationModel}
+ *     configurations or instances.
+ *     If the navigation model contains a "view" property, its value will be
+ *     interpreted as a component to render into the ViewPorts {@link conjoon.app_treenavviewport.view.ContentContainer}.
+ *  - "permaNav" property:
+ *     This should be an array of items which will be added to the right side
+ *     of the toolbar and stay visible all the time, regardless of the currently
+ *     active main view.
  *
  *
  * Showing/Hiding the navigation:
@@ -66,6 +72,10 @@
  *                      route : 'example',
  *                      text  : 'ExampleNavigation',
  *                      view  : 'MyApp.view.ExampleView'
+ *                  }],
+ *                  permaNav : [{
+ *                      xtype : 'button',
+ *                      text  : 'permaNav Button'
  *                  }]
  *              };
  *          }
@@ -125,66 +135,24 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
 
     /**
      * Consumes a javascript native object and passes the entries found within
-     * the "navigation" property to the embedded {@link conjoon.cn_treenavviewport.view.NavigationTree}'s store
-     * to build the main navigation.
-     * This method checks the passed argument for validity. Any invalid configuration
-     * will not be considered as a navigation item.
-     * If the items in "navigation" are not configured with a "leaf" property,
-     * this property will automatically be set to "true".
-     *
+     * to the #buildNavigationItems and #buildPermaNavItems
      * @inheritdoc
      *
      * @param {Object} info
-     * @param {Object[]} info.navigation
-     * An array with objects to be passed to the constructor of {@link conjoon.cn_treenavviewport.model.NavigationModel}
      *
-     * @throws error if info.navigation is set, but is not an array, or if any entry
-     * in the array is found which does not represent a valid configuration for
-     * {@link conjoon.cn_treenavviewport.model.NavigationModel}
+     * @throws bubbles the ecxeptions od #buildNavigationItems and
+     * #buildPermaNavItems
      */
     addPostLaunchInfo : function(info) {
 
-        if (!info.hasOwnProperty('navigation')) {
-            return;
+        var me = this;
+
+        if (info.hasOwnProperty('navigation')) {
+            me.buildNavigationItems(info.navigation);
         }
 
-        var me              = this,
-            nav             = info.navigation,
-            navItem         = null,
-            mandatoryFields = ['text', 'route'],
-            manField;
-
-        if (!Ext.isArray(info.navigation)) {
-            Ext.raise({
-                sourceClass       : Ext.getClassName(this),
-                'info.navigation' : nav,
-                msg               : Ext.getClassName(this) + "#addPostLaunchInfo needs info.navigation to be an array"
-            });
-        }
-
-        for (var i = 0, len = nav.length; i < len; i++) {
-            navItem = nav[i];
-
-            for (var a = 0, lena = mandatoryFields.length; a < lena; a++) {
-                manField = mandatoryFields[a];
-
-                if (!navItem.hasOwnProperty(manField) ||
-                    !navItem[manField]) {
-                    Ext.raise({
-                        sourceClass      : Ext.getClassName(this),
-                        'navigationItem' : navItem,
-                        msg              : Ext.getClassName(this) + "#addPostLaunchInfo found an invalid configuration for a navigation item"
-                    });
-                }
-            }
-
-            if (!navItem.hasOwnProperty('leaf')) {
-                navItem.leaf = true;
-            }
-
-            me.getController().addNavigationItem(
-                Ext.create('conjoon.cn_treenavviewport.model.NavigationModel', navItem)
-            );
+        if (info.hasOwnProperty('permaNav')) {
+            me.buildPermaNavItems(info.permaNav);
         }
 
     },
@@ -224,6 +192,101 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
         var me = this;
 
         return me.getController().addViewForHash(hash);
+    },
+
+
+    /**
+     * Iterates the passed items array and passes the entries found within to
+     * the  embedded {@link conjoon.cn_treenavviewport.view.NavigationTree}'s store
+     * to build the main navigation.
+     * This method checks the passed argument for validity. Any invalid configuration
+     * will not be considered as a navigation item.
+     * If the items are not configured with a "leaf" property, this property
+     * will automatically be set to "true".
+     *
+     * @inheritdoc
+     *
+     * @param {Object[]} items
+     * An array with objects to be passed to the constructor of {@link conjoon.cn_treenavviewport.model.NavigationModel}
+     *
+     * @throws error if items is not an array, or if any entry in the array is
+     * found which does not represent a valid configuration for
+     * {@link conjoon.cn_treenavviewport.model.NavigationModel}
+     * @private
+     */
+    buildNavigationItems : function(items) {
+
+        var me              = this,
+            nav             = items,
+            navItem         = null,
+            mandatoryFields = ['text', 'route'],
+            manField;
+
+        if (!Ext.isArray(nav)) {
+            Ext.raise({
+                sourceClass : Ext.getClassName(this),
+                items       : nav,
+                msg         : Ext.getClassName(this) + "#buildNavigationItems needs items to be an array"
+            });
+        }
+
+        for (var i = 0, len = nav.length; i < len; i++) {
+            navItem = nav[i];
+
+            for (var a = 0, lena = mandatoryFields.length; a < lena; a++) {
+                manField = mandatoryFields[a];
+
+                if (!navItem.hasOwnProperty(manField) ||
+                    !navItem[manField]) {
+                    Ext.raise({
+                        sourceClass : Ext.getClassName(this),
+                        item        : navItem,
+                        msg         : Ext.getClassName(this) + "#buildNavigationItems found an invalid configuration for a navigation item"
+                    });
+                }
+            }
+
+            if (!navItem.hasOwnProperty('leaf')) {
+                navItem.leaf = true;
+            }
+
+            me.getController().addNavigationItem(
+                Ext.create('conjoon.cn_treenavviewport.model.NavigationModel', navItem)
+            );
+        }
+    },
+
+
+    /**
+     * Iterates the passed items array and passes the enties to this view's
+     * controller for further processing to add them to this view's toolbar.
+     *
+     * @param {Object[]} items An array of items with a valid configuration to
+     * serve as a toolbar item.
+     *
+     * @throws error if the passed argument was not an array. Bubbles the
+     * exceptions of
+     * {@link conjoon.cn_treenavviewport.view.controller.NavigationViewportController#addPermaNavItem}
+     *
+     * @private
+     *
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#addPermaNavItem
+     */
+    buildPermaNavItems : function(items) {
+
+        var me = this;
+
+        if (!Ext.isArray(items)) {
+            Ext.raise({
+                sourceClass : Ext.getClassName(this),
+                items       : items,
+                msg         : Ext.getClassName(this) + "#buildPermaNavItems needs items to be an array"
+            });
+        }
+
+        for (var i = 0, len = items.length; i < len; i++) {
+            me.getController().addPermaNavItem(items[i]);
+        }
     }
 
 });
