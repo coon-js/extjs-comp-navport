@@ -45,21 +45,6 @@ describe('conjoon.cn_treenavviewport.view.controller.NavigationViewportControlle
 
         viewportCtrl = Ext.create('conjoon.cn_treenavviewport.view.controller.NavigationViewportController');
 
-        // no toolbar available
-        var exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem({});} catch (e) {exc = e;}
-        t.expect(exc).toBeDefined();
-        t.expect(exc.msg).toContain("needs toolbar with reference");
-
-        // MOCK LOOKUP() - EMPTY OBJECT
-        viewportCtrl.lookup = function() {return {}};
-
-        // toolbar not the proper type
-        exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem({});} catch (e) {exc = e;}
-        t.expect(exc).toBeDefined();
-        t.expect(exc.msg).toContain("needs toolbar to be instance of");
-
         // MOCK LOOKUP() - EMPTY OBJECT
         // TOOLBAR
         var toolbar = Ext.create('conjoon.cn_treenavviewport.view.NavigationToolbar');
@@ -67,45 +52,55 @@ describe('conjoon.cn_treenavviewport.view.controller.NavigationViewportControlle
             return toolbar;
         };
 
-        // item falsy
-        exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem();} catch (e) {exc = e;}
-        t.expect(exc.item).not.toBeDefined();
-        t.expect(exc.msg).toContain("found an invalid configuration");
-
-        // item no xtype, no xclass
-        exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem({});} catch (e) {exc = e;}
-        t.expect(exc.item).toBeDefined();
-        t.expect(exc.item.xtype).not.toBeDefined();
-        t.expect(exc.item.xclass).not.toBeDefined();
-        t.expect(exc.msg).toContain("found an invalid configuration");
-
-        // item xtype a number
-        exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem({xtype : 2});} catch (e) {exc = e;}
-        t.expect(exc.item.xtype).toBeDefined();
-        t.expect(exc.item.xclass).not.toBeDefined();
-        t.expect(exc.msg).toContain("found an invalid configuration");
-
-        // item xclass a number
-        exc = e = undefined;
-        try{viewportCtrl.addPermaNavItem({xclass : {}});} catch (e) {exc = e;}
-        t.expect(exc.item.xtype).not.toBeDefined();
-        t.expect(exc.item.xclass).toBeDefined();
-        t.expect(exc.msg).toContain("found an invalid configuration");
-
-        // valid
-        t.expect(toolbar.down('#buttonA')).toBeFalsy();
-        t.expect(toolbar.down('#buttonB')).toBeFalsy();
-        viewportCtrl.addPermaNavItem({xclass : 'Ext.Button', itemId : 'buttonA'});
-        t.expect(toolbar.down('#buttonA')).toBeTruthy();
-        viewportCtrl.addPermaNavItem({xtype : 'button', itemId : 'buttonB'});
-        t.expect(toolbar.down('#buttonB')).toBeTruthy();
-
+        var res = viewportCtrl.addPermaNavItems([{xtype : 'button', itemId : 'foo'}]);
+        t.expect(res[0]).toBe('foo');
         toolbar.destroy();
         toolbar = null;
+    });
 
-    })
+
+    t.describe('createNavigationModelFrom()', function(t) {
+
+        var exc, e, rec;
+
+        viewportCtrl = Ext.create(
+            'conjoon.cn_treenavviewport.view.controller.NavigationViewportController'
+        );
+
+        exc, e = undefined;
+        try{viewportCtrl.createNavigationModelFrom(
+            {}
+        );}catch(e){exc = e};
+        t.expect(exc.msg).toContain('invalid configuration');
+
+        exc, e = undefined;
+        try{viewportCtrl.createNavigationModelFrom(
+            {text : 'text'}
+        );}catch(e){exc = e};
+        t.expect(exc.msg).toContain('invalid configuration');
+
+        exc, e = undefined;
+        try{viewportCtrl.createNavigationModelFrom(
+            {route : 'route'}
+        );}catch(e){exc = e};
+        t.expect(exc.msg).toContain('invalid configuration');
+
+        rec = viewportCtrl.createNavigationModelFrom(
+            {id : 'a', text : 'text', route : 'route', nodeNav : {},
+                view : 'myView', iconCls : 'myIconCls'}
+        );
+
+        t.isInstanceOf(rec, 'conjoon.cn_treenavviewport.model.NavigationModel');
+
+        t.isStrict(rec.getId(),        'a');
+        t.isStrict(rec.get('leaf'),    true);
+        t.isStrict(rec.get('text'),    'text');
+        t.isStrict(rec.get('route'),   'route');
+        t.isStrict(rec.get('view'),    'myView');
+        t.isStrict(rec.get('iconCls'), 'myIconCls');
+        t.expect(rec.get('nodeNav')).toBeUndefined();
+
+    });
+
 
 });

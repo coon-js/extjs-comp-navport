@@ -30,7 +30,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
     requires : [
         'conjoon.cn_treenavviewport.view.pages.Page404',
-        'conjoon.cn_treenavviewport.view.NavigationToolbar'
+        'conjoon.cn_treenavviewport.model.NavigationModel'
     ],
 
     alias : 'controller.cn_treenavviewport-ctrl',
@@ -87,67 +87,65 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     },
 
     /**
-     * Adds a new item to this view's toolbar which is always visible, regardless
-     * of the currently active package.
+     * Adds permanent navigation items to this view's NavigationToolbar.
      *
-     * @param {Object}
+     * @param   {Array} items
+     * @returns {Array} an array with the itemIds of the items that were added
+     * to the toolbar
      *
-     * @protected
+     * @throws bubbles all the exceptions thrown by
+     * conjoon.cn_treenavviewport.view.NavigationToolbar#addPermanentNavigation
      *
-     * @throws error if the  toolbar with the specified reference was not found or
-     * is not available or is not an instance of
-     * {@link conjoon.cn_treenavviewport.view.NavigationToolbar}, if items is
-     * not an array or if any item in the array is invalid
+     * @see conjoon.cn_treenavviewport.view.NavigationToolbar#addPermanentNavigation
      */
-    addPermaNavItem : function(item) {
-
+    addPermaNavItems : function(items) {
         var me   = this,
             tbar = me.lookup('cn_treenavviewport_ref_tbar');
 
-        if (!tbar || !(tbar instanceof conjoon.cn_treenavviewport.view.NavigationToolbar)) {
-            Ext.raise({
-                sourceClass : Ext.getClassName(this),
-                item        : item,
-                msg         : !tbar
-                    ? Ext.getClassName(this) + "#buildPermaNavItems " +
-                    "needs toolbar with reference " +
-                    "cn_treenavviewport_ref_tbar to be available"
-                    : Ext.getClassName(this) + "#buildPermaNavItems " +
-                    "needs toolbar to be instance of " +
-                    "conjoon.cn_treenavviewport.view.NavigationToolbar"
-            });
-        }
-
-        if (!Ext.isObject(item) ||
-            (!Ext.isString(item.xtype) && !Ext.isString(item.xclass))) {
-            Ext.raise({
-                sourceClass : Ext.getClassName(this),
-                item        : item,
-                msg         : Ext.getClassName(this) + "#buildPermaNavItems found an invalid configuration for a navigation item"
-            });
-        }
-
-        tbar.add(item);
+        return tbar.addPermanentNavigation(items);
     },
+
 
     /**
-     * Adds a new record to the store of {@link conjoon.cn_treenavviewport.view.NavigationTree}.
+     * Creates the main navigation from the passes array and will consider the
+     * "nodeNav" entries to properly build up the node id associated navigation
+     * for the nodes.
      *
-     * @param {conjoon.cn_treenavviewport.model.NavigationModel} record
+     * @param {Array} items
      *
-     * @throws error if record is not an instance of {@link conjoon.cn_treenavviewport.model.NavigationModel}
+     * @throws bubbles the exeptions from the referenced methods
      *
-     * @protected
+     * @see #createNavigationModelFrom
      */
-    addNavigationItem : function(record) {
+    addMainNavigationItems : function(items) {
 
         var me      = this,
+            navItem = null,
+            tbar    = me.lookup('cn_treenavviewport_ref_tbar'),
             view    = me.getView(),
             navTree = view.lookup('cn_treenavviewport_ref_conwrap').lookup('cn_treenavviewport_ref_navtree'),
-            store   = navTree.getStore();
+            store   = navTree.getStore(),
+            navigationModel;
 
-        store.getRootNode().appendChild(record);
+        if (!Ext.isArray(items)) {
+            Ext.raise({
+                sourceClass : Ext.getClassName(this),
+                items       : nav,
+                msg         : Ext.getClassName(this) + "#addNavigationItems needs items to be an array"
+            });
+        }
+
+        for (var i = 0, len = items.length; i < len; i++) {
+            navItem = items[i];
+            navigationModel = me.createNavigationModelFrom(navItem);
+            if (navItem.nodeNav) {
+                tbar.addNodeNavigation(navItem.nodeNav, navigationModel.getId());
+            }
+
+            store.getRootNode().appendChild(navigationModel);
+        }
     },
+
 
     /**
      * Hides the NavigationTree
@@ -166,6 +164,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
         contentWrap.updateLayout({isRoot: true});
     },
 
+
     /**
      * Process the specified hash and tries to route it to a view.
      *
@@ -174,20 +173,24 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      * @see #createViewForHash
      */
     processRouteFor : function(hash) {
-
         var me = this;
 
         me.addViewForHash(hash);
     },
 
+
     /**
      * Adds the specified view associated with the hash to the content panel of
      * the Viewport. The hash's associated view is looked up in the NavigationTree's
      * store and its collection of {@link conjoon.cn_treenavviewport.model.NavigationModel}s.
+     * Additionally, the NavigationToolbar is requested to show the id associated
+     * navigation for the view#s associated node, if any.
      *
-     * @param {String] hash
+     * @param {String} hash
      *
      * @return {Ext.Component} The view associated with the hash, or null
+     *
+     * @see conjoon.cn_treenavviewport.view.NavigationToolbar#showNavigationForNode
      */
     addViewForHash : function(hash) {
         var me           = this,
@@ -196,6 +199,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
             store        = navTree.getStore(),
             view         = me.getView(),
             contentPanel = conwrap.lookup('cn_treenavviewport_ref_conctr'),
+            tbar         = me.lookup('cn_treenavviewport_ref_tbar'),
             newView,
             node;
 
@@ -225,6 +229,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
          */
         navTree.suspendEvents();
         navTree.setSelection(node);
+        tbar.showNavigationForNode(node.getId());
         navTree.resumeEvents();
 
         if (node.get('view')) {
@@ -356,6 +361,47 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
             me.currentView.close();
             me.currentView = null;
+        },
+
+
+        /**
+         * Creates a conjoon.cn_treenavviewport.model.NavigationModel from the
+         * passed config by making sure the created model is set up properly.
+         *
+         * @param {Object} config
+         *
+         * @returns {conjoon.cn_treenavviewport.model.NavigationModel}
+         *
+         * @throws if the configuration was not valid
+         */
+        createNavigationModelFrom : function(config) {
+
+            var me = this,
+                mandatoryFields = ['text', 'route'],
+                manField, navCon;
+
+            for (var a = 0, lena = mandatoryFields.length; a < lena; a++) {
+                manField = mandatoryFields[a];
+
+                if (!config.hasOwnProperty(manField) ||
+                    !config[manField]) {
+                    Ext.raise({
+                        sourceClass : Ext.getClassName(this),
+                        config      : config,
+                        msg         : Ext.getClassName(this) + "#createNavigationModelFrom found an invalid configuration for a navigation item"
+                    });
+                }
+            }
+
+            if (!config.hasOwnProperty('leaf')) {
+                config.leaf = true;
+            }
+
+            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls');
+
+            return Ext.create(
+                'conjoon.cn_treenavviewport.model.NavigationModel', navCon
+            );
         }
     }
 

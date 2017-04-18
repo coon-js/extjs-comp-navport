@@ -44,19 +44,49 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
             'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
 
         t.expect(toolbar instanceof Ext.Toolbar).toBeTruthy();
-
         t.expect(toolbar.alias).toContain('widget.cn_treenavviewport-tbar');
-
         t.expect(toolbar.cls).toBe('cn_treenavviewport-tbar');
-
-        t.expect(toolbar.referenceHolder).toBe(true);
-
+        t.isInstanceOf(toolbar.getController(), 'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController');
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn')).toBeTruthy();
-
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
-
         t.expect(toolbar.lookup('cn_treenavviewport_ref_applogo') instanceof Ext.Component).toBe(true);
 
     });
 
+
+    t.it("Test addNodeNavigation()", function(t) {
+        toolbar = Ext.create(
+            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+
+        var res = toolbar.addNodeNavigation(
+            [{xtype : 'button', itemId : 'foo'}], 'id');
+
+        t.isArray(res);
+        t.isStrict(res[0], 'foo');
+    });
+
+
+    t.it("Test addPermanentNavigation()", function(t) {
+        toolbar = Ext.create(
+            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+
+        var res = toolbar.addPermanentNavigation(
+            [{xtype : 'button', itemId : 'foo'}]);
+
+        t.isArray(res);
+        t.isStrict(res[0], 'foo');
+    });
+
+
+    t.it("Test showNavigationForNode()", function(t) {
+        toolbar = Ext.create(
+            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+
+        var res = toolbar.addNodeNavigation(
+            [{xtype : 'button', itemId : 'foo'}], 'id');
+
+        t.ok(toolbar.down('#foo').isHidden());
+        toolbar.showNavigationForNode('id');
+        t.notOk(toolbar.down('#foo').isHidden());
+    });
 });

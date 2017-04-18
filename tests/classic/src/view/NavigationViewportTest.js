@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,35 +150,6 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
 
     });
 
-
-    /**
-     * conjoon/app-cn_treenavviewport/#2
-     */
-    t.it("Should test buildPermaNavItems properly", function(t) {
-
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-
-        var exc = e = undefined;
-        try{viewport.buildPermaNavItems();}catch(e){exc = e;}
-        t.expect(exc).toBeDefined();
-        t.expect(exc.msg).toContain('needs items to be an array');
-
-
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeFalsy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeFalsy();
-
-        viewport.buildPermaNavItems([{
-            xtype  : 'button',
-            itemId : 'buttonA'
-        }, {
-            xtype  : 'button',
-            itemId : 'buttonB'
-        }]);
-
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeTruthy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeTruthy();
-    });
-
     /**
      * conjoon/app-cn_treenavviewport/#2
      */
@@ -195,6 +166,34 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
             }, {
                 xtype  : 'button',
                 itemId : 'buttonB'
+            }]
+        });
+        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeTruthy();
+        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeTruthy();
+
+    });
+
+
+    /**
+     * conjoon/app-cn_treenavviewport/#2
+     */
+    t.it("Should test addPostLaunchInfo() with nodeNav properly", function(t) {
+
+        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+
+        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeFalsy();
+        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeFalsy();
+        viewport.addPostLaunchInfo({
+            navigation : [{
+                route : 'route',
+                text  : 'text',
+                nodeNav : [{
+                    xtype  : 'button',
+                    itemId : 'buttonA'
+                }, {
+                    xtype  : 'button',
+                    itemId : 'buttonB'
+                }]
             }]
         });
         t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeTruthy();

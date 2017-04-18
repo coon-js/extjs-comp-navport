@@ -11,6 +11,9 @@ harness.configure({
          * Universal
          */
         'conjoon.cn_treenavviewport' : '../src',
+        'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
+
+
 
         /**
          * Classic
@@ -81,5 +84,13 @@ harness.start({
         items : [
             'src/store/NavigationTreeStoreTest.js'
         ]
+    }, {
+        group : 'view',
+        items : [{
+            group : 'controller',
+            items : [
+                'src/view/controller/NavigationToolbarViewControllerTest.js'
+            ]
+        }]
     }]
 });

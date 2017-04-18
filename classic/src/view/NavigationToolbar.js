@@ -24,21 +24,25 @@
  * An {@link Ext.Toolbar} to provide a component to serve as a placeholder for
  * app informations (e.g. a logo), and a button for showing/hiding the navigation
  * of the {@link conjoon.cn_treenavviewport}, and provide space for module-related
- * (meta) navigation/information items.
+ * (meta) navigation/information items, such as node navigation and permanent navigation.
  *
- * +--------------------------------+-----------------------------------+-------------+
- * | cn_treenavviewport_ref_applogo | cn_treenavviewport_ref_hidenavbtn |   [items]   |
- * +--------------------------------+-----------------------------------+-------------+
+ * +--------------------------------------------------------------------------------+
+ * | logo | hidenavbtn |  [node navigation items]   | [permanent navigation items]
+ * +--------------------------------------------------------------------------------+
  */
 Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
 
     extend : 'Ext.Toolbar',
 
+    requires : [
+        'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController'
+    ],
+
     alias : 'widget.cn_treenavviewport-tbar',
 
     cls : 'cn_treenavviewport-tbar',
 
-    referenceHolder : true,
+    controller : 'cn_treenavviewport-navigationtoolbarviewcontroller',
 
     items : [{
         xtype     : 'component',
@@ -46,7 +50,68 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
     }, {
         xtype     : 'button',
         reference : 'cn_treenavviewport_ref_hidenavbtn',
-        text      : 'Hide Navigation'
-    }, '->']
+        text      : 'Hide Navigation',
+        tooltip  : {
+            title : 'Show / hide navigation',
+            text  : 'Adjusts visibility of the main navigation.'
+        }
+    }, '->'],
+
+
+    /**
+     * Adds the items as permanent navigation items to this toolbar.
+     *
+     * @param {Array} items
+     *
+     * @return {Array} An array with the itemIds of the added items.
+     *
+     * @throws bubbles the exceptions of {@link conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildPermaNavItems}
+     *
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildPermaNavItems
+     */
+    addPermanentNavigation : function(items) {
+        var me = this;
+
+        return me.getController().buildPermaNavItems(items);
+    },
+
+
+    /**
+     * Adds the items as id-associated navigation items to this toolbar.
+     * Associated items can be shown by calling #showNavigationForNode
+     *
+     * @param {Array}  items
+     * @param {String} id the id associated with this items.
+     *
+     * @return {Array} An array with the itemIds of the added items.
+     *
+     * @throws bubbles the exceptions of {@link conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildNodeNavItems}
+     *
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildNodeNavItems
+     * @see #showNavigationForNode
+     */
+    addNodeNavigation : function(items, id) {
+        var me = this;
+        return me.getController().buildNodeNavItems(items, id);
+    },
+
+
+    /**
+     * Shows the items associated with the specified id. Any previously shown
+     * items will be hidden.
+     *
+     * @param {Array}  items
+     * @param {String} id the id associated with this items.
+     *
+     * @return {Array} An array with the itemIds of the added items.
+     *
+     *
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#activateNodeNavFor
+     * @see #showNavigationForNode
+     */
+    showNavigationForNode : function(id) {
+        var me = this;
+        me.getController().activateNavigationForNode(id);
+    }
 
 });
