@@ -44,7 +44,7 @@
  * The tree's navigation items are specified by the {@link conjoon.cn_core.app.PackageController#postLaunchHook}
  * which return values may contain objects with a "navigation"-, and a
  * "permaNav"-property.
- * 
+ *
  *  - "navigation" property:
  *     This should be an array with objects mapping configurations for {@link conjoon.cn_treenavviewport.model.NavigationModel}
  *     If the navigation model contains a "view" property, its value will be
