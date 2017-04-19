@@ -48,6 +48,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
         xtype     : 'component',
         reference : 'cn_treenavviewport_ref_applogo'
     }, {
+        margin    : '0 0 0 8',
         xtype     : 'button',
         reference : 'cn_treenavviewport_ref_hidenavbtn',
         text      : 'Hide Navigation',
