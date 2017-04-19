@@ -75,6 +75,11 @@ harness.start({
             ]
         }]
     }, {
+        group : 'mixin',
+        items : [
+            'src/mixin/ViewportManageableTest.js'
+        ]
+    }, {
         group : 'model',
         items : [
             'src/model/NavigationModelTest.js'
