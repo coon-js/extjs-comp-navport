@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,52 +38,50 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_2', fun
     });
 
 
-    t.it("Should be possible to click a Tree's Menu Item and trigger routing", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+    t.chain({
+        requireOk : 'conjoon.cn_treenavviewport.view.NavigationViewport'
+    }, {
+        action : function(next) {
 
-        var myRouteCalled  = false,
-            myRoute1Called = false,
-            navTree        = viewport.down('cn_treenavviewport-navtree'),
-            store          = navTree.getStore();
+            t.it("Should be possible to click a Tree's Menu Item and trigger routing", function(t) {
+                console.warn("Adding custom hash so test processes properly");
+                // browser not firing hashchange if this is not set by hand
+                // might be n issue with the iframe the test runs in
+                Ext.util.History.add('');
 
-        console.warn("Adding custom hash so test processes properly");
-        // browser not firing hashchange if this is not set by hand
-        // might be n issue with the iframe the test runs in
-        Ext.util.History.add('');
+                var app = Ext.create('conjoon.cn_comp.app.Application', {
+                    name        : 'check',
+                    mainView    : 'conjoon.cn_treenavviewport.view.NavigationViewport',
+                    controllers : [
+                        'conjoon.cn_treenavviewport.app.PackageController'
+                    ]
+                });
 
-        viewport.getController().setRoutes({
-            myRoute  : function() {
-                myRouteCalled = true;
-            },
-            myRoute1 : function() {
-                myRoute1Called = true;
-            }
-        });
+                var viewport = app.getMainView(),
+                    navTree  = viewport.down('cn_treenavviewport-navtree'),
+                    store    = navTree.getStore();
 
-        viewport.addPostLaunchInfo(postLaunchInfo);
 
-        t.expect(myRouteCalled).toBe(false);
-        t.expect(myRoute1Called).toBe(false);
 
-        t.click(navTree.getItem(store.getAt(0)));
+                viewport.addPostLaunchInfo(postLaunchInfo);
 
-        t.waitForMs(500, function() {
-            t.expect(myRouteCalled).toBe(true);
-            t.expect(myRoute1Called).toBe(false);
 
-            Ext.util.History.add('myRoute1');
 
-            t.waitForMs(500, function() {
+                t.click(navTree.getItem(store.getAt(0)));
 
-                t.expect(navTree.getSelection()).toBe(store.getAt(1));
+                t.waitForMs(500, function() {
+                    Ext.util.History.add('myRoute1');
+                    t.waitForMs(500, function() {
+                        t.expect(navTree.getSelection()).toBe(store.getAt(1));
 
-                t.expect(myRouteCalled).toBe(true);
-                t.expect(myRoute1Called).toBe(true);
+                    });
+
+                });
+
+
             });
 
-        });
-    });
-
+        }});
 
 
 

@@ -120,7 +120,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
         w = null;
     });
 
-    t.it("Should addViewForHash properly", function(t) {
+    t.it("activateViewForHash()", function(t) {
 
         viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
 
@@ -132,15 +132,15 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
             }]
         });
 
-        var w = viewport.addViewForHash('somehash');
+        var w = viewport.activateViewForHash('somehash');
 
         t.expect(w).toBeFalsy();
 
-        w = viewport.addViewForHash('testroute');
+        w = viewport.activateViewForHash('testroute');
 
         t.expect(w instanceof Ext.Panel).toBe(true);
 
-        var v = viewport.addViewForHash('testroute');
+        var v = viewport.activateViewForHash('testroute');
 
         t.expect(w).toBe(v);
 

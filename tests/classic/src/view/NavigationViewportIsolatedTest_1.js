@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,53 +38,68 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_1', fun
     });
 
 
-    t.it("Should show a 404 info if the router could not process a route", function(t) {
+    t.chain({
+        requireOk : 'conjoon.cn_treenavviewport.view.NavigationViewport'
+    }, {
+        action : function(next) {
 
-        var app = Ext.create('Ext.app.Application', {
-            name : 'check'
-        });
+            t.it("Should show a 404 info if the router could not process a route", function(t) {
 
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-        viewport.addPostLaunchInfo(postLaunchInfo);
+                console.warn("Adding custom hash so test processes properly");
+                // browser not firing hashchange if this is not set by hand
+                // might be n issue with the iframe the test runs in
+                Ext.util.History.add('');
 
-        var navTree = viewport.down('cn_treenavviewport-navtree'),
-            store   = navTree.getStore(),
-            pg      = null;
+                var app = Ext.create('conjoon.cn_comp.app.Application', {
+                    name : 'check',
+                    mainView : 'conjoon.cn_treenavviewport.view.NavigationViewport',
+                    controllers : [
+                        'conjoon.cn_treenavviewport.app.PackageController'
+                    ]
+                });
 
-        console.warn("Adding custom hash so test processes properly");
-        // browser not firing hashchange if this is not set by hand
-        // might be n issue with the iframe the test runs in
-        Ext.util.History.add('');
+                viewport = app.getMainView();
+                viewport.addPostLaunchInfo(postLaunchInfo);
 
-        pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                var navTree = viewport.down('cn_treenavviewport-navtree'),
+                    store   = navTree.getStore(),
+                    pg      = null;
 
-        t.expect(pg).toBeTruthy();
-        t.expect(pg.length).toBe(0);
 
-        if (pg.length === 0) {
-            Ext.util.History.add('foo');
-
-            t.waitForMs(500, function() {
                 pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
 
                 t.expect(pg).toBeTruthy();
-                t.expect(pg.length).toBe(1);
+                t.expect(pg.length).toBe(0);
 
-                if (pg.length) {
-                    t.expect(pg[0] instanceof conjoon.cn_treenavviewport.view.pages.Page404).toBe(true);
-                    pg[0].destroy();
+                if (pg.length === 0) {
+                    Ext.util.History.add('foo');
+
+                    t.waitForMs(500, function() {
+                        pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+
+                        t.expect(pg).toBeTruthy();
+                        t.expect(pg.length).toBe(1);
+
+                        if (pg.length) {
+                            t.expect(pg[0] instanceof conjoon.cn_treenavviewport.view.pages.Page404).toBe(true);
+                            pg[0].destroy();
+                        }
+
+                        app.destroy();
+                        app = null;
+                    });
+                } else {
+                    app.destroy();
+                    app = null;
                 }
 
-                app.destroy();
-                app = null;
             });
-        } else {
-            app.destroy();
-            app = null;
+
+
+
         }
 
     });
-
 
 
 });

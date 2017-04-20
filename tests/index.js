@@ -57,8 +57,7 @@ harness.start({
                     './classic/src/view/NavigationViewportIsolatedTest_1.js',
                     './classic/src/view/NavigationViewportIsolatedTest_2.js',
                     './classic/src/view/NavigationViewportIsolatedTest_3.js',
-                    './classic/src/view/NavigationViewportIsolatedTest_4.js',
-                    './classic/src/view/NavigationViewportIsolatedTest_5.js'
+                    './classic/src/view/NavigationViewportIsolatedTest_4.js'
                 ]
             }]
     }]
@@ -67,6 +66,11 @@ harness.start({
 }, {
     group : 'universal',
     items : [{
+        group : 'app',
+        items : [
+            'src/app/PackageControllerTest.js'
+        ]
+    },{
         group : 'data',
         items : [{
             group : 'schema',

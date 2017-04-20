@@ -188,12 +188,19 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
      * an action.
      *
      * @param {String} missingHash The hash that was requested but not resolved
+     * @param {String} defaultToken A defaultToken (as defined by the application)
+     * wich should be used to present the user an url-option to return to.
+     * This defaultToken should be guaranteed to match an existing route
+     * in the application.
      *
      * @return {conjoon.cn_treenavviewport.view.pages.Page404}
      */
-    showUnmatchedRouteNotification : function(missingHash) {
+    showUnmatchedRouteNotification : function(missingHash, defaultToken) {
+        var me = this;
+
         return Ext.create('conjoon.cn_treenavviewport.view.pages.Page404', {
-            title : Ext.String.format("\"{0}\" not found", missingHash)
+            title     : Ext.String.format("\"{0}\" not found", missingHash),
+            homeToken : defaultToken
         });
     },
 
@@ -203,10 +210,25 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
      *
      * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#addViewForHash
      */
-    addViewForHash : function(hash) {
+    activateViewForHash : function(hash, defaultToken) {
         var me = this;
+        me.cleanup();
+        return me.getController().addViewForHash(hash, defaultToken);
+    },
 
-        return me.getController().addViewForHash(hash);
+    /**
+     * @inheritdoc
+     *
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#isCurrentViewClosable
+     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#ctrl.closeCurrentView();
+     */
+    cleanup : function() {
+        var me   = this,
+            ctrl = me.getController();
+
+        if (ctrl.isCurrentViewClosable()) {
+            ctrl.closeCurrentView();
+        }
     }
 
 });

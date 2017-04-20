@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,60 +37,58 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
         };
     });
 
+    t.chain({
+        requireOk : 'conjoon.cn_treenavviewport.view.NavigationViewport'
+    }, {
+        action : function(next) {
 
-    t.it("Should properly process requests to empty hash", function(t) {
 
-        var app = Ext.create('Ext.app.Application', {
-            name : 'check'
-        });
+            t.it("Should properly process requests to empty hash", function(t) {
 
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-
-        var navTree = viewport.down('cn_treenavviewport-navtree'),
-            store   = navTree.getStore(),
-            pg, pg2 = null;
-
-        console.warn("Adding custom hash so test processes properly");
-        // browser not firing hashchange if this is not set by hand
-        // might be n issue with the iframe the test runs in
-        Ext.util.History.add('');
-
-        viewport.addPostLaunchInfo(postLaunchInfo);
-
-        pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
-        t.expect(pg).toBeTruthy();
-        t.expect(pg.length).toBe(0);
-
-        if (pg.length === 0) {
-            Ext.util.History.add('foobar');
-
-            t.waitForMs(500, function() {
-                pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
-
-                t.expect(pg).toBeTruthy();
-                t.expect(pg.length).toBe(1);
-
-                if (pg.length) {
-                    t.expect(pg[0] instanceof conjoon.cn_treenavviewport.view.pages.Page404).toBe(true);
-                }
-
+                console.warn("Adding custom hash so test processes properly");
+                // browser not firing hashchange if this is not set by hand
+                // might be n issue with the iframe the test runs in
                 Ext.util.History.add('');
 
-                t.waitForMs(500, function() {
-                    pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                var app = Ext.create('conjoon.cn_comp.app.Application', {
+                    name        : 'check',
+                    mainView    : 'conjoon.cn_treenavviewport.view.NavigationViewport',
+                    controllers : [
+                        'conjoon.cn_treenavviewport.app.PackageController'
+                    ]
+                });
 
-                    t.expect(pg2).toBeTruthy();
-                    t.expect(pg2.length).toBe(0);
+                viewport = app.getMainView();
 
-                    Ext.util.History.add('snafu');
+                var navTree = viewport.down('cn_treenavviewport-navtree'),
+                    store   = navTree.getStore(),
+                    pg, pg2 = null;
+
+                console.warn("Adding custom hash so test processes properly");
+                // browser not firing hashchange if this is not set by hand
+                // might be n issue with the iframe the test runs in
+                Ext.util.History.add('');
+
+                viewport.addPostLaunchInfo(postLaunchInfo);
+
+                pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                t.expect(pg).toBeTruthy();
+                t.expect(pg.length).toBe(0);
+
+                if (pg.length === 0) {
+                    Ext.util.History.add('foobar');
 
                     t.waitForMs(500, function() {
-                        pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                        pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
 
-                        t.expect(pg2).toBeTruthy();
-                        t.expect(pg2.length).toBe(1);
+                        t.expect(pg).toBeTruthy();
+                        t.expect(pg.length).toBe(1);
 
-                        Ext.util.History.add('#');
+                        if (pg.length) {
+                            t.expect(pg[0] instanceof conjoon.cn_treenavviewport.view.pages.Page404).toBe(true);
+                        }
+
+                        Ext.util.History.add('');
 
                         t.waitForMs(500, function() {
                             pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
@@ -98,21 +96,37 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
                             t.expect(pg2).toBeTruthy();
                             t.expect(pg2.length).toBe(0);
 
-                            app.destroy();
-                            app = null;
+                            Ext.util.History.add('snafu');
+
+                            t.waitForMs(500, function() {
+                                pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+
+                                t.expect(pg2).toBeTruthy();
+                                t.expect(pg2.length).toBe(1);
+
+                                Ext.util.History.add('#');
+
+                                t.waitForMs(500, function() {
+                                    pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+
+                                    t.expect(pg2).toBeTruthy();
+                                    t.expect(pg2.length).toBe(0);
+
+                                    app.destroy();
+                                    app = null;
+                                });
+
+                            });
+
                         });
-
                     });
-
-                });
+                } else {
+                    app.destroy();
+                    app = null;
+                }
             });
-        } else {
-            app.destroy();
-            app = null;
-        }
-    });
 
-
+        }});
 
 
 });

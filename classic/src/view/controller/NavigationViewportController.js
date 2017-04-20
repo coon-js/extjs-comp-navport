@@ -41,18 +41,6 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      */
     currentView : null,
 
-    listen : {
-        controller : {
-            '#' : {
-                unmatchedroute :  'onUnmatchedRoute'
-            }
-        }
-    },
-
-    routes: {
-        ':node': 'onRouteChange'
-    },
-
     control : {
 
         'cn_treenavviewport' : {
@@ -85,6 +73,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
         }
 
     },
+
 
     /**
      * Adds permanent navigation items to this view's NavigationToolbar.
@@ -166,20 +155,6 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
 
     /**
-     * Process the specified hash and tries to route it to a view.
-     *
-     * @param {String} hash
-     *
-     * @see #createViewForHash
-     */
-    processRouteFor : function(hash) {
-        var me = this;
-
-        me.addViewForHash(hash);
-    },
-
-
-    /**
      * Adds the specified view associated with the hash to the content panel of
      * the Viewport. The hash's associated view is looked up in the NavigationTree's
      * store and its collection of {@link conjoon.cn_treenavviewport.model.NavigationModel}s.
@@ -187,12 +162,14 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      * navigation for the view#s associated node, if any.
      *
      * @param {String} hash
+     * @param {String} defaultToken
      *
      * @return {Ext.Component} The view associated with the hash, or null
      *
      * @see conjoon.cn_treenavviewport.view.NavigationToolbar#showNavigationForNode
      */
-    addViewForHash : function(hash) {
+    addViewForHash : function(hash, defaultToken) {
+
         var me           = this,
             conwrap      = me.lookup('cn_treenavviewport_ref_conwrap'),
             navTree      = conwrap.lookup('cn_treenavviewport_ref_navtree'),
@@ -205,22 +182,23 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
         hash = (hash || '').toLowerCase();
 
-        if (hash === '' || hash === '#') {
-            /**
-             * Remove previously shown closable views
-             */
-            if (me.isCurrentViewClosable()) {
-                me.closeCurrentView();
+        if (hash == '') {
+            return null;
+        }
+
+        node = store.findBy(function(record) {
+            var route = (record.get('route') || '').toLowerCase();
+            if (route === hash) {
+                return true;
             }
+        });
+
+        if (node === -1) {
+            me.nodeNotFound(hash, defaultToken);
             return;
         }
 
-        node = store.findNode('route', hash, false, false, true);
-
-        if (!node) {
-            me.routeNotMatched(hash);
-            return;
-        }
+        node = store.getAt(node);
 
         /**
          * Suspend events of the nav tree here so selection of the node
@@ -229,8 +207,8 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
          */
         navTree.suspendEvents();
         navTree.setSelection(node);
-        tbar.showNavigationForNode(node.getId());
         navTree.resumeEvents();
+        tbar.showNavigationForNode(node.getId());
 
         if (node.get('view')) {
             newView = contentPanel.down('component[cn_routeId=' + hash + ']');
@@ -264,51 +242,21 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
 
     /**
-     * Shows a notification that the requested route was not found.
+     * Shows a notification that the node for the requested route was not found.
+     *
+     * @param {String} hash The has that could not be matched
+     * @param{String} defaultToken a token that can be used to privde a working url
+     * to return to
      *
      * see {@link conjoon.cn_treenavviewport.view.NavigationViewport#showUnmatchedRouteNotification}
      */
-    routeNotMatched : function(hash) {
-
+    nodeNotFound : function(hash, defaultToken) {
         var me   = this,
             view = me.getView();
 
-        /**
-         * Remove previously shown closable views
-         */
-        if (me.isCurrentViewClosable()) {
-            me.closeCurrentView();
-        }
-
-        me.currentView = view.showUnmatchedRouteNotification(hash);
+        me.currentView = view.showUnmatchedRouteNotification(hash, defaultToken);
     },
 
-
-    /**
-     * Callback for this controller's routing.
-     *
-     * @param {String} hash
-     *
-     * see {@link #processrouteFor}
-     */
-    onRouteChange : function(hash) {
-        var me = this;
-        me.processRouteFor(hash)
-    },
-
-
-    /**
-     * Callback for the controller's unmatched route handling. Tries to identify
-     * the failed route for providing a fallback, resulting in a possible 404-NotFound
-     * notification.
-     *
-     *
-     * see {@link #processRouteFor}
-     */
-    onUnmatchedRoute : function(hash) {
-        var me = this;
-        me.processRouteFor(hash)
-    },
 
     /**
      * Callback for the {@link conjoon.cn_treenavviewport.view.NavigationTree#selectionchange}
@@ -351,7 +299,11 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
             var me = this;
 
-            return me.currentView && (me.currentView instanceof conjoon.cn_treenavviewport.view.pages.Page404);
+            if (me.currentView && (Ext.isFunction(me.currentView.canNavigationViewportCloseView))) {
+                return me.currentView.canNavigationViewportCloseView();
+            }
+
+            return false
         },
 
 
