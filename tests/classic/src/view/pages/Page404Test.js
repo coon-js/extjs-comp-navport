@@ -42,7 +42,25 @@ describe('conjoon.cn_treenavviewport.view.pages.404Test', function(t) {
         t.expect(page instanceof conjoon.cn_comp.window.LockingWindow).toBe(true);
         t.expect(page.cls).toBe('cn_treenavviewport-pg404');
         t.expect(page.alias).toContain('widget.cn_treenavviewport-pg404');
+    });
 
+    t.it("Should test mixin", function(t) {
+        page = Ext.create('conjoon.cn_treenavviewport.view.pages.Page404');
+        t.expect(page.canNavigationViewportCloseView()).toBe(true);
+    });
+
+    t.it("Should test homeToken", function(t) {
+        var page = Ext.create('conjoon.cn_treenavviewport.view.pages.Page404', {
+            homeToken : 'testhome'
+        });
+
+
+        var pg = Ext.dom.Query.select('label.descr a');
+
+        t.ok(pg);
+        t.is(pg.length, 1);
+
+        t.expect(pg[0].href.split('#')[1]).toBe('testhome');
     });
 
 });

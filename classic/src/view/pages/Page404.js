@@ -1,10 +1,10 @@
 /**
  * conjoon
- * (c) 2007-2016 conjoon.org
+ * (c) 2007-2017 conjoon.org
  * licensing@conjoon.org
  *
  * app-cn_treenavviewport
- * Copyright (C) 2016 Thorsten Suckow-Homberg/conjoon.org
+ * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,10 @@ Ext.define('conjoon.cn_treenavviewport.view.pages.Page404', {
 
     extend : 'conjoon.cn_comp.window.LockingWindow',
 
+    mixins : [
+        'conjoon.cn_treenavviewport.mixin.ViewportManageable'
+    ],
+
     alias : 'widget.cn_treenavviewport-pg404',
 
     cls : 'cn_treenavviewport-pg404',
@@ -38,6 +42,12 @@ Ext.define('conjoon.cn_treenavviewport.view.pages.Page404', {
         align : 'center',
         pack  : 'center'
     },
+
+    /**
+     * The token to use as the route for redirecting to a "home" route.
+     * @cfg {String} homeToken
+     */
+    homeToken : null,
 
     items: [{
         cls    : 'inner-container',
@@ -54,10 +64,25 @@ Ext.define('conjoon.cn_treenavviewport.view.pages.Page404', {
             text  : '404'
         }, {
             cls   : 'descr',
-            flex : 1,
+            flex  : 1,
             xtype : 'label',
-            html  : '<div>Seems like the page you\'ve requested could not be found!</div><div>Try going back to our <a href="#"> Home page </a></div>'
+            data  : {
+                route : undefined
+            },
+            tpl  : '<div>Seems like the page you\'ve requested could not be found!</div><div>Return to the <a href="#{route}"> Home page </a></div>'
         }]
-    }]
+    }],
+
+    /**
+     * @inheritdoc
+     * Overriden to make sure we are using #homeToken for routing.
+     */
+    initComponent : function() {
+       var me = this;
+
+        me.items[0].items[1].data.route = me.homeToken;
+
+        me.callParent(arguments);
+    }
 
 });
