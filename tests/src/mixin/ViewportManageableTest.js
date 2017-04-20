@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-describe(c, function(t) {
+describe('conjoon.cn_treenavviewport.mixin.ViewportManageableTest', function(t) {
 
 
 // +----------------------------------------------------------------------------
