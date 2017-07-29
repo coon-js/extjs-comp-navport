@@ -216,6 +216,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
         return me.getController().addViewForHash(hash, defaultToken);
     },
 
+
     /**
      * @inheritdoc
      *

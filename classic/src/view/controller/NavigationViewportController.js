@@ -42,31 +42,9 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     currentView : null,
 
     control : {
-
-        'cn_treenavviewport' : {
-            afterrender : {
-                fn : function(viewport) {
-                    var me      = this,
-                        navTree = viewport.lookup('cn_treenavviewport_ref_conwrap')
-                                          .lookup('cn_treenavviewport_ref_navtree');
-
-                    navTree.on(
-                        'selectionchange',
-                        me.onNavigationTreeSelectionChange,
-                        me
-                    );
-                },
-                single : true
-            }
+        'cn_treenavviewport-navtree' : {
+            selectionchange : 'onNavigationTreeSelectionChange'
         },
-
-        /**
-         * @ext-bug https://www.sencha.com/forum/showthread.php?313236-Parent-View-s-controller-fails-to-observe-Ext.list.Tree-child-component&p=1140819
-         * See this class' "afterrender" listener that gets added to the viewport.
-         */
-        //'cn_treenavviewport-navtree' : {
-        //       selectionchange : 'onNavigationTreeSelectionChange'
-        // },
 
         'cn_treenavviewport-tbar > button[reference=cn_treenavviewport_ref_hidenavbtn]' : {
             click : 'onHideNavigationClick'
