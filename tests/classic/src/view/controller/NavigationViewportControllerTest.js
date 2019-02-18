@@ -62,7 +62,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
     });
 
 
-    t.describe('createNavigationModelFrom()', function(t) {
+    t.it('createNavigationModelFrom()', function(t) {
 
         var exc, e, rec;
 

@@ -92,8 +92,10 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
         t.expect(btn).toBeTruthy();
         t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(false);
-        t.click(btn);
-        t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(true);
+        t.click(btn, function() {
+            t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(true);
+        });
+
     });
 
 

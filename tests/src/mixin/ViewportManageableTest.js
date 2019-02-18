@@ -30,7 +30,7 @@ describe('coon.navport.mixin.ViewportManageableTest', function(t) {
 // |                    =~. Unit Tests .~=
 // +----------------------------------------------------------------------------
 
-    t.describe('canNavigationViewportCloseView()', function(t) {
+    t.it('canNavigationViewportCloseView()', function(t) {
         var mixin = Ext.create('coon.navport.mixin.ViewportManageable');
 
         t.expect(mixin.canNavigationViewportCloseView()).toBe(true);

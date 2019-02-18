@@ -70,16 +70,14 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
 
 
 
-                t.click(navTree.getItem(store.getAt(0)));
-
-                t.waitForMs(500, function() {
+                t.click(navTree.getItem(store.getAt(0)), function() {
                     Ext.util.History.add('myRoute1');
                     t.waitForMs(500, function() {
                         t.expect(navTree.getSelection()).toBe(store.getAt(1));
 
                     });
-
                 });
+
 
 
             });

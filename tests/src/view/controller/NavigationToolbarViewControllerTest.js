@@ -29,7 +29,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
 
     t.chain({
         action : function(next) {
-            t.describe('sanitize', function(t) {
+            t.it('sanitize', function(t) {
                 sharedController = Ext.create('coon.navport.view.controller.NavigationToolbarViewController');
                 toolbar = Ext.create('Ext.Toolbar', {renderTo : document.body, controller : sharedController});
 
@@ -45,7 +45,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
     }, {
         action : function(next, controller, toolbar) {
             // buildToolbarItems
-            t.describe('buildToolbarItems()', function(t) {
+            t.it('buildToolbarItems()', function(t) {
                 var exc = e = undefined, itemIds;
                 try {controller.buildToolbarItems();}catch(e){exc = e};
                 t.expect(exc.msg).toContain('to be an array');
@@ -81,7 +81,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
     }, {
         action : function(next, controller, toolbar) {
             // buildPermaNavItems
-            t.describe('buildPermaNavItems()', function(t) {
+            t.it('buildPermaNavItems()', function(t) {
                 var itemIds = controller.buildPermaNavItems(
                     [{xtype : 'button', itemId : 'foo', hidden : true},
                      {xtype : 'button', itemId : 'bar', hidden : true}]
@@ -98,7 +98,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
     }, {
         action : function(next, controller, toolbar) {
             // buildNodeNavItems
-            t.describe('buildNodeNavItems()', function(t) {
+            t.it('buildNodeNavItems()', function(t) {
                 var itemIds = controller.buildNodeNavItems(
                     [{xtype : 'button', itemId : 'foobar', hidden : true},
                      {xtype : 'button', itemId : 'barfoo'}],
@@ -118,7 +118,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
     }, {
         action : function(next, controller, toolbar) {
             // switchItemVisibility
-            t.describe('switchItemVisibility()', function(t) {
+            t.it('switchItemVisibility()', function(t) {
 
                 var foobar = toolbar.down('#foobar'),
                     barfoo = toolbar.down('#barfoo');
@@ -150,7 +150,7 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
             /**
              * activateNavigationForNode
              */
-            t.describe('activateNavigationForNode()', function(t) {
+            t.it('activateNavigationForNode()', function(t) {
 
                 var itemIds = controller.buildNodeNavItems(
                     [{xtype : 'button', itemId : 'foofoo'},
