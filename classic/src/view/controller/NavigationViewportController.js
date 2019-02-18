@@ -1,39 +1,42 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
  * The View Controller for the NavigationViewport.
  *
  */
-Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportController', {
+Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
     extend : 'Ext.app.ViewController',
 
     requires : [
-        'conjoon.cn_treenavviewport.view.pages.Page404',
-        'conjoon.cn_treenavviewport.model.NavigationModel'
+        'coon.navport.view.pages.Page404',
+        'coon.navport.model.NavigationModel'
     ],
 
-    alias : 'controller.cn_treenavviewport-ctrl',
+    alias : 'controller.cn_navport-ctrl',
 
     /**
      * Stores the current view of the viewport.
@@ -42,11 +45,11 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     currentView : null,
 
     control : {
-        'cn_treenavviewport-navtree' : {
+        'cn_navport-navtree' : {
             selectionchange : 'onNavigationTreeSelectionChange'
         },
 
-        'cn_treenavviewport-tbar > button[reference=cn_treenavviewport_ref_hidenavbtn]' : {
+        'cn_navport-tbar > button[reference=cn_treenavviewport_ref_hidenavbtn]' : {
             click : 'onHideNavigationClick'
         }
 
@@ -61,9 +64,9 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      * to the toolbar
      *
      * @throws bubbles all the exceptions thrown by
-     * conjoon.cn_treenavviewport.view.NavigationToolbar#addPermanentNavigation
+     * coon.navport.view.NavigationToolbar#addPermanentNavigation
      *
-     * @see conjoon.cn_treenavviewport.view.NavigationToolbar#addPermanentNavigation
+     * @see coon.navport.view.NavigationToolbar#addPermanentNavigation
      */
     addPermaNavItems : function(items) {
         var me   = this,
@@ -135,7 +138,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     /**
      * Adds the specified view associated with the hash to the content panel of
      * the Viewport. The hash's associated view is looked up in the NavigationTree's
-     * store and its collection of {@link conjoon.cn_treenavviewport.model.NavigationModel}s.
+     * store and its collection of {@link coon.navport.model.NavigationModel}s.
      * Additionally, the NavigationToolbar is requested to show the id associated
      * navigation for the view#s associated node, if any.
      *
@@ -144,7 +147,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      *
      * @return {Ext.Component} The view associated with the hash, or null
      *
-     * @see conjoon.cn_treenavviewport.view.NavigationToolbar#showNavigationForNode
+     * @see coon.navport.view.NavigationToolbar#showNavigationForNode
      */
     addViewForHash : function(hash, defaultToken) {
 
@@ -226,7 +229,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
      * @param{String} defaultToken a token that can be used to privde a working url
      * to return to
      *
-     * see {@link conjoon.cn_treenavviewport.view.NavigationViewport#showUnmatchedRouteNotification}
+     * see {@link coon.navport.view.NavigationViewport#showUnmatchedRouteNotification}
      */
     nodeNotFound : function(hash, defaultToken) {
         var me   = this,
@@ -237,15 +240,15 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
 
     /**
-     * Callback for the {@link conjoon.cn_treenavviewport.view.NavigationTree#selectionchange}
+     * Callback for the {@link coon.navport.view.NavigationTree#selectionchange}
      * event. Will pass the model to {@link #redirectTo} which uses the model's
      * {@link Ext.data.Model#toUrl} method to compute the route.
      *
-     * @param {conjoon.cn_treenavviewport.view.NavigationTree} tree
-     * @param {conjoon.cn_treenavviewport.model.NavigationModel} node
+     * @param {coon.navport.view.NavigationTree} tree
+     * @param {coon.navport.model.NavigationModel} node
      *
      * see {@link #redirectTo}
-     * see {@link conjoon.cn_treenavviewport.model.NavigationModel#toUrl}.
+     * see {@link coon.navport.model.NavigationModel#toUrl}.
      */
     onNavigationTreeSelectionChange : function(tree, node) {
         var me = this;
@@ -254,7 +257,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
     },
 
     /**
-     * Callback for the {@link conjoon.cn_treenavviewport.view.NavigationToolbar}'s
+     * Callback for the {@link coon.navport.view.NavigationToolbar}'s
      * hideNavigation Button.
      *
      * @param {Ext.Button} btn
@@ -295,12 +298,12 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
 
 
         /**
-         * Creates a conjoon.cn_treenavviewport.model.NavigationModel from the
+         * Creates a coon.navport.model.NavigationModel from the
          * passed config by making sure the created model is set up properly.
          *
          * @param {Object} config
          *
-         * @returns {conjoon.cn_treenavviewport.model.NavigationModel}
+         * @returns {coon.navport.model.NavigationModel}
          *
          * @throws if the configuration was not valid
          */
@@ -330,7 +333,7 @@ Ext.define('conjoon.cn_treenavviewport.view.controller.NavigationViewportControl
             navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls');
 
             return Ext.create(
-                'conjoon.cn_treenavviewport.model.NavigationModel', navCon
+                'coon.navport.model.NavigationModel', navCon
             );
         }
     }

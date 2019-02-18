@@ -1,26 +1,29 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', function(t) {
+describe('coon.navport.view.NavigationViewportIsolatedTest_4', function(t) {
 
     var viewport,
         postLaunchInfo;
@@ -38,7 +41,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
     });
 
     t.chain({
-        requireOk : 'conjoon.cn_treenavviewport.view.NavigationViewport'
+        requireOk : 'coon.navport.view.NavigationViewport'
     }, {
         action : function(next) {
 
@@ -50,17 +53,17 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
                 // might be n issue with the iframe the test runs in
                 Ext.util.History.add('');
 
-                var app = Ext.create('conjoon.cn_comp.app.Application', {
+                var app = Ext.create('coon.comp.app.Application', {
                     name        : 'check',
-                    mainView    : 'conjoon.cn_treenavviewport.view.NavigationViewport',
+                    mainView    : 'coon.navport.view.NavigationViewport',
                     controllers : [
-                        'conjoon.cn_treenavviewport.app.PackageController'
+                        'coon.navport.app.PackageController'
                     ]
                 });
 
                 viewport = app.getMainView();
 
-                var navTree = viewport.down('cn_treenavviewport-navtree'),
+                var navTree = viewport.down('cn_navport-navtree'),
                     store   = navTree.getStore(),
                     pg, pg2 = null;
 
@@ -71,7 +74,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
 
                 viewport.addPostLaunchInfo(postLaunchInfo);
 
-                pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                pg = Ext.ComponentQuery.query('cn_navport-pg404');
                 t.expect(pg).toBeTruthy();
                 t.expect(pg.length).toBe(0);
 
@@ -79,19 +82,19 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
                     Ext.util.History.add('foobar');
 
                     t.waitForMs(500, function() {
-                        pg = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                        pg = Ext.ComponentQuery.query('cn_navport-pg404');
 
                         t.expect(pg).toBeTruthy();
                         t.expect(pg.length).toBe(1);
 
                         if (pg.length) {
-                            t.expect(pg[0] instanceof conjoon.cn_treenavviewport.view.pages.Page404).toBe(true);
+                            t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
                         }
 
                         Ext.util.History.add('');
 
                         t.waitForMs(500, function() {
-                            pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                            pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
 
                             t.expect(pg2).toBeTruthy();
                             t.expect(pg2.length).toBe(0);
@@ -99,7 +102,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
                             Ext.util.History.add('snafu');
 
                             t.waitForMs(500, function() {
-                                pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                                pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
 
                                 t.expect(pg2).toBeTruthy();
                                 t.expect(pg2.length).toBe(1);
@@ -107,7 +110,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportIsolatedTest_4', fun
                                 Ext.util.History.add('#');
 
                                 t.waitForMs(500, function() {
-                                    pg2 = Ext.ComponentQuery.query('cn_treenavviewport-pg404');
+                                    pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
 
                                     t.expect(pg2).toBeTruthy();
                                     t.expect(pg2.length).toBe(0);

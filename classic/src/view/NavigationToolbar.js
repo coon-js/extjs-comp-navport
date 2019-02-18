@@ -1,48 +1,51 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
  * An {@link Ext.Toolbar} to provide a component to serve as a placeholder for
  * app informations (e.g. a logo), and a button for showing/hiding the navigation
- * of the {@link conjoon.cn_treenavviewport}, and provide space for module-related
+ * of the {@link coon.navport}, and provide space for module-related
  * (meta) navigation/information items, such as node navigation and permanent navigation.
  *
  * +--------------------------------------------------------------------------------+
  * | logo | hidenavbtn |  [node navigation items]   | [permanent navigation items]
  * +--------------------------------------------------------------------------------+
  */
-Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
+Ext.define('coon.navport.view.NavigationToolbar', {
 
     extend : 'Ext.Toolbar',
 
     requires : [
-        'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController'
+        'coon.navport.view.controller.NavigationToolbarViewController'
     ],
 
-    alias : 'widget.cn_treenavviewport-tbar',
+    alias : 'widget.cn_navport-tbar',
 
-    cls : 'cn_treenavviewport-tbar',
+    cls : 'cn_navport-tbar',
 
-    controller : 'cn_treenavviewport-navigationtoolbarviewcontroller',
+    controller : 'cn_navport-navigationtoolbarviewcontroller',
 
     items : [{
         xtype     : 'component',
@@ -66,9 +69,9 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
      *
      * @return {Array} An array with the itemIds of the added items.
      *
-     * @throws bubbles the exceptions of {@link conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildPermaNavItems}
+     * @throws bubbles the exceptions of {@link coon.navport.view.controller.NavigationToolbarViewController#buildPermaNavItems}
      *
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildPermaNavItems
+     * @see coon.navport.view.controller.NavigationToolbarViewController#buildPermaNavItems
      */
     addPermanentNavigation : function(items) {
         var me = this;
@@ -86,9 +89,9 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
      *
      * @return {Array} An array with the itemIds of the added items.
      *
-     * @throws bubbles the exceptions of {@link conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildNodeNavItems}
+     * @throws bubbles the exceptions of {@link coon.navport.view.controller.NavigationToolbarViewController#buildNodeNavItems}
      *
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#buildNodeNavItems
+     * @see coon.navport.view.controller.NavigationToolbarViewController#buildNodeNavItems
      * @see #showNavigationForNode
      */
     addNodeNavigation : function(items, id) {
@@ -107,7 +110,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationToolbar', {
      * @return {Array} An array with the itemIds of the added items.
      *
      *
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController#activateNodeNavFor
+     * @see coon.navport.view.controller.NavigationToolbarViewController#activateNodeNavFor
      * @see #showNavigationForNode
      */
     showNavigationForNode : function(id) {

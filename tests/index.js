@@ -1,38 +1,38 @@
 var harness = new Siesta.Harness.Browser.ExtJS();
 
 harness.configure({
-    title          : 'My Tests',
+    title          : 'app-cn_navport',
     disableCaching : true,
     loaderPath     : {
 
-        'conjoon.test.view.mock' : './classic/src/view/mock',
+        'coon.test.view.mock' : './classic/src/view/mock',
 
         /**
          * Universal
          */
-        'conjoon.cn_treenavviewport' : '../src',
-        'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
+        'coon.navport' : '../src',
+        'coon.navport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
 
 
 
         /**
          * Classic
          */
-        'conjoon.cn_treenavviewport.view' : '../classic/src/view',
+        'coon.navport.view' : '../classic/src/view',
 
         /**
          * Requirements
          */
-        'conjoon.cn_core.app'       : '../../lib-cn_core/src/app',
-        'conjoon.cn_core.data'      : '../../lib-cn_core/src/data',
-        'conjoon.cn_comp.container' : '../../lib-cn_comp/classic/src/container',
-        'conjoon.cn_comp.app'       : '../../lib-cn_comp/src/app',
-        'conjoon.cn_comp.list'      : '../../lib-cn_comp/classic/src/list',
-        'conjoon.cn_comp.window'    : '../../lib-cn_comp/classic/src/window'
+        'coon.core.app'       : '../../lib-cn_core/src/app',
+        'coon.core.data'      : '../../lib-cn_core/src/data',
+        'coon.comp.container' : '../../lib-cn_comp/classic/src/container',
+        'coon.comp.app'       : '../../lib-cn_comp/src/app',
+        'coon.comp.list'      : '../../lib-cn_comp/classic/src/list',
+        'coon.comp.window'    : '../../lib-cn_comp/classic/src/window'
     },
     preload        : [
-        conjoon.tests.config.paths.extjs.css.url,
-        conjoon.tests.config.paths.extjs.js.url
+        coon.tests.config.paths.extjs.css.url,
+        coon.tests.config.paths.extjs.js.url
     ]
 });
 

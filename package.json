@@ -2,7 +2,7 @@
     /**
      * The name of the package.
      */
-    "name": "app-cn_treenavviewport",
+    "name": "app-cn_navport",
 
     /**
      * Alternate names for this package.
@@ -16,7 +16,7 @@
      * As a general rule, all classes that belong to this package should be under this namespace
      * if multiple namespaces are part of this package, set this to "".
      */
-    "namespace": "conjoon.cn_treenavviewport",
+    "namespace": "coon.navport",
 
     /**
      * The package type.
@@ -46,17 +46,17 @@
      * Required only if you are distributing this package through a Sencha Cmd repository,
      * in which case it should match the name you assign to your local package repository.
      */
-    "creator": "conjoon Open Source Project",
+    "creator": "coon.js",
 
     /**
      * A summarized description of this package.
      */
-    "summary": "Enhanced viewport for Sencha/ conjoon applications.",
+    "summary": "Enhanced viewport template for rapid, modular, package agnostic Sencha ExtJS application building.",
 
     /**
      * A detailed description of this package.
      */
-    "detailedDescription": "This package contains a viewport implementation with convenient functionality to hook modules into the application by simply specifying PackageControllers, representing packages. Requires lib-cn_comp.",
+    "detailedDescription": "This package contains a default Viewport implementation which serves as a template for Sencha ExtJS applications. The Viewport along with its configurations allows for support for routing, navigation and managing views. It lets you hook modules into an application by simply specifying PackageControllers. Requires lib-cn_comp.",
 
     /**
      * The package version.

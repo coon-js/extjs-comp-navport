@@ -1,30 +1,33 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * This is a specialized implementation of {@link conjoon.cn_comp.container.Viewport}
- * to be used with application based upon {@link conjoon.cn_comp.app.Application}
- * and utilizing {@link conjoon.cn_core.app.PackageController}s.
- * By default, it renders a {@link conjoon.cn_treenavviewport.view.NavigationTree}
+ * This is a specialized implementation of {@link coon.comp.container.Viewport}
+ * to be used with application based upon {@link coon.comp.app.Application}
+ * and utilizing {@link coon.core.app.PackageController}s.
+ * By default, it renders a {@link coon.navport.view.NavigationTree}
  * on the left hand side and an {@link Ext.Toolbar} on the top of the viewport,
  * leaving a content panel with an {@link Ext.layout.container.Card}-layout.
  *
@@ -41,14 +44,14 @@
  *
  * Building the main navigation:
  * =============================
- * The tree's navigation items are specified by the {@link conjoon.cn_core.app.PackageController#postLaunchHook}
+ * The tree's navigation items are specified by the {@link coon.core.app.PackageController#postLaunchHook}
  * which return values may contain objects with a "navigation"-, and a
  * "permaNav"-property.
  *
  *  - "navigation" property:
- *     This should be an array with objects mapping configurations for {@link conjoon.cn_treenavviewport.model.NavigationModel}
+ *     This should be an array with objects mapping configurations for {@link coon.navport.model.NavigationModel}
  *     If the navigation model contains a "view" property, its value will be
- *     interpreted as a component to render into the ViewPorts {@link conjoon.app_treenavviewport.view.ContentContainer}.
+ *     interpreted as a component to render into the ViewPorts {@link coon.app_treenavviewport.view.ContentContainer}.
  *     - "nodeNav" property
  *       Each entry in "navigation" might have a "nodeNav" property, holding an
  *       array of configurations for toolbar items. These items will be displayed
@@ -64,13 +67,13 @@
  * Showing/Hiding the navigation:
  * ==============================
  * The viewport can show/hide it's navigation. The default toolbar for this
- * container {@link conjoon.cn_treenavviewport.view.NavigationToolbar} provides
+ * container {@link coon.navport.view.NavigationToolbar} provides
  * a button for expanding/collapsing the navigation.
  *
  *      @example
  *      Ext.define('MyApp.controller.PackageController', {
  *
- *          extend : 'conjoon.cn_core.app.PackageController',
+ *          extend : 'coon.core.app.PackageController',
  *
  *          postLaunchHook : function() {
  *              return {
@@ -95,9 +98,9 @@
  *
  *      Ext.define('MyApp.Application', {
  *
- *          extend : 'conjoon.cn_comp.app.Application',
+ *          extend : 'coon.comp.app.Application',
  *
- *          applicationViewClassName : 'conjoon.cn_treenavviewport.view.NavigationViewport',
+ *          applicationViewClassName : 'coon.navport.view.NavigationViewport',
  *
  *          controllers : [
  *              'MyApp.controller.PackageController'
@@ -109,25 +112,25 @@
  *
  *
  */
-Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
+Ext.define('coon.navport.view.NavigationViewport', {
 
-    extend : 'conjoon.cn_comp.container.Viewport',
+    extend : 'coon.comp.container.Viewport',
 
-    alias : 'widget.cn_treenavviewport',
+    alias : 'widget.cn_navport',
 
     requires: [
-        'conjoon.cn_treenavviewport.view.NavigationToolbar',
-        'conjoon.cn_treenavviewport.view.controller.NavigationViewportController',
-        'conjoon.cn_treenavviewport.view.ContentWrap',
-        'conjoon.cn_treenavviewport.model.NavigationModel',
-        'conjoon.cn_treenavviewport.view.pages.Page404'
+        'coon.navport.view.NavigationToolbar',
+        'coon.navport.view.controller.NavigationViewportController',
+        'coon.navport.view.ContentWrap',
+        'coon.navport.model.NavigationModel',
+        'coon.navport.view.pages.Page404'
     ],
 
     referenceHolder : true,
 
-    controller : 'cn_treenavviewport-ctrl',
+    controller : 'cn_navport-ctrl',
 
-    cls : 'cn_treenavviewport',
+    cls : 'cn_navport',
 
     layout: {
         type  : 'vbox',
@@ -136,10 +139,10 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
 
     items: [{
         reference : 'cn_treenavviewport_ref_tbar',
-        xtype     : 'cn_treenavviewport-tbar'
+        xtype     : 'cn_navport-tbar'
     }, {
         reference : 'cn_treenavviewport_ref_conwrap',
-        xtype     : 'cn_treenavviewport-conwrap',
+        xtype     : 'cn_navport-conwrap',
         flex      : 1
     }],
 
@@ -175,7 +178,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
      *
      * @param {Boolean} hide True to hide the NavigationTree, otherwise false.
      *
-     * see {@link conjoon.cn_treenavviewport.view.controller.NavigationViewportController#hideNavigation}
+     * see {@link coon.navport.view.controller.NavigationViewportController#hideNavigation}
      */
     hideNavigation : function(hide) {
         this.getController().hideNavigation(hide);
@@ -183,7 +186,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
 
 
     /**
-     * Displays an {@link conjoon.cn_treenavviewport.view.pages.404}
+     * Displays an {@link coon.navport.view.pages.404}
      * to inform the user that a requested route could not be matched against
      * an action.
      *
@@ -193,12 +196,12 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
      * This defaultToken should be guaranteed to match an existing route
      * in the application.
      *
-     * @return {conjoon.cn_treenavviewport.view.pages.Page404}
+     * @return {coon.navport.view.pages.Page404}
      */
     showUnmatchedRouteNotification : function(missingHash, defaultToken) {
         var me = this;
 
-        return Ext.create('conjoon.cn_treenavviewport.view.pages.Page404', {
+        return Ext.create('coon.navport.view.pages.Page404', {
             title     : Ext.String.format("\"{0}\" not found", missingHash),
             homeToken : defaultToken
         });
@@ -208,7 +211,7 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
     /**
      * @inheritdoc
      *
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#addViewForHash
+     * @see coon.navport.view.controller.NavigationViewportController#addViewForHash
      */
     activateViewForHash : function(hash, defaultToken) {
         var me = this;
@@ -220,8 +223,8 @@ Ext.define('conjoon.cn_treenavviewport.view.NavigationViewport', {
     /**
      * @inheritdoc
      *
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#isCurrentViewClosable
-     * @see conjoon.cn_treenavviewport.view.controller.NavigationViewportController#ctrl.closeCurrentView();
+     * @see coon.navport.view.controller.NavigationViewportController#isCurrentViewClosable
+     * @see coon.navport.view.controller.NavigationViewportController#ctrl.closeCurrentView();
      */
     cleanup : function() {
         var me   = this,

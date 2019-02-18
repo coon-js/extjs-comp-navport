@@ -1,26 +1,29 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
+describe('coon.navport.view.NavigationToolbarTest', function(t) {
 
     var toolbar,
         toolbarConfig;
@@ -41,12 +44,12 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
 
     t.it("Should create and show the toolbar", function(t) {
         toolbar = Ext.create(
-            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+            'coon.navport.view.NavigationToolbar', toolbarConfig);
 
         t.expect(toolbar instanceof Ext.Toolbar).toBeTruthy();
-        t.expect(toolbar.alias).toContain('widget.cn_treenavviewport-tbar');
-        t.expect(toolbar.cls).toBe('cn_treenavviewport-tbar');
-        t.isInstanceOf(toolbar.getController(), 'conjoon.cn_treenavviewport.view.controller.NavigationToolbarViewController');
+        t.expect(toolbar.alias).toContain('widget.cn_navport-tbar');
+        t.expect(toolbar.cls).toBe('cn_navport-tbar');
+        t.isInstanceOf(toolbar.getController(), 'coon.navport.view.controller.NavigationToolbarViewController');
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn')).toBeTruthy();
         t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
         t.expect(toolbar.lookup('cn_treenavviewport_ref_applogo') instanceof Ext.Component).toBe(true);
@@ -56,7 +59,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
 
     t.it("Test addNodeNavigation()", function(t) {
         toolbar = Ext.create(
-            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+            'coon.navport.view.NavigationToolbar', toolbarConfig);
 
         var res = toolbar.addNodeNavigation(
             [{xtype : 'button', itemId : 'foo'}], 'id');
@@ -68,7 +71,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
 
     t.it("Test addPermanentNavigation()", function(t) {
         toolbar = Ext.create(
-            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+            'coon.navport.view.NavigationToolbar', toolbarConfig);
 
         var res = toolbar.addPermanentNavigation(
             [{xtype : 'button', itemId : 'foo'}]);
@@ -80,7 +83,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationToolbarTest', function(t) {
 
     t.it("Test showNavigationForNode()", function(t) {
         toolbar = Ext.create(
-            'conjoon.cn_treenavviewport.view.NavigationToolbar', toolbarConfig);
+            'coon.navport.view.NavigationToolbar', toolbarConfig);
 
         var res = toolbar.addNodeNavigation(
             [{xtype : 'button', itemId : 'foo'}], 'id');

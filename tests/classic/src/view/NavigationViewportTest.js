@@ -1,26 +1,29 @@
 /**
- * conjoon
- * (c) 2007-2017 conjoon.org
- * licensing@conjoon.org
+ * coon.js
+ * app-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
  *
- * app-cn_treenavviewport
- * Copyright (C) 2017 Thorsten Suckow-Homberg/conjoon.org
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
+describe('coon.navport.view.NavigationViewportTest', function(t) {
 
     var viewport,
         postLaunchInfo;
@@ -47,11 +50,11 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
 
 
     t.it("Should create and show Viewport", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-        t.expect(viewport instanceof conjoon.cn_comp.container.Viewport).toBeTruthy();
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        t.expect(viewport instanceof coon.comp.container.Viewport).toBeTruthy();
 
-        t.expect(viewport.alias).toContain('widget.cn_treenavviewport');
-        t.expect(viewport.cls).toBe('cn_treenavviewport');
+        t.expect(viewport.alias).toContain('widget.cn_navport');
+        t.expect(viewport.cls).toBe('cn_navport');
         t.expect(viewport.referenceHolder).toBe(true);
         t.expect(viewport.getLayout() instanceof Ext.layout.container.VBox).toBe(true);
         t.expect(viewport.getLayout().align).toBe('stretch');
@@ -60,44 +63,44 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
 
 
     t.it("Should have the ContentWrap", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-        t.expect(viewport.lookup('cn_treenavviewport_ref_conwrap') instanceof conjoon.cn_treenavviewport.view.ContentWrap).toBe(true);
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        t.expect(viewport.lookup('cn_treenavviewport_ref_conwrap') instanceof coon.navport.view.ContentWrap).toBe(true);
         t.expect(viewport.lookup('cn_treenavviewport_ref_conwrap').flex).toBe(1);
     });
 
 
     t.it("Should have the Toolbar", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
-        t.expect(viewport.lookup('cn_treenavviewport_ref_tbar') instanceof conjoon.cn_treenavviewport.view.NavigationToolbar).toBe(true);
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        t.expect(viewport.lookup('cn_treenavviewport_ref_tbar') instanceof coon.navport.view.NavigationToolbar).toBe(true);
     });
 
 
     t.it("Should be possible to hide the navigation", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
-        t.expect(viewport.down('cn_treenavviewport-navtree').isVisible()).toBe(true);
+        t.expect(viewport.down('cn_navport-navtree').isVisible()).toBe(true);
         viewport.hideNavigation(true);
-        t.expect(viewport.down('cn_treenavviewport-navtree').isVisible()).toBe(false);
+        t.expect(viewport.down('cn_navport-navtree').isVisible()).toBe(false);
         viewport.hideNavigation(false);
-        t.expect(viewport.down('cn_treenavviewport-navtree').isHidden()).toBe(false);
+        t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(false);
     });
 
 
     t.it("Should be possible to click the hideNavigation Button and hide the navigation", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
         var btn = viewport.down('button[reference=cn_treenavviewport_ref_hidenavbtn]');
 
         t.expect(btn).toBeTruthy();
-        t.expect(viewport.down('cn_treenavviewport-navtree').isHidden()).toBe(false);
+        t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(false);
         t.click(btn);
-        t.expect(viewport.down('cn_treenavviewport-navtree').isHidden()).toBe(true);
+        t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(true);
     });
 
 
     t.it("Should be possible to call addPostLaunchInfo and populate the NavigationTree", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
-        var store = viewport.down('cn_treenavviewport-navtree').getStore();
+        var store = viewport.down('cn_navport-navtree').getStore();
 
         t.expect(store.getRange().length).toBe(0);
         t.expect(store.getRootNode().childNodes.length).toBe(0);
@@ -110,11 +113,11 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
 
 
     t.it("Should process showUnmatchedRouteNotification properly", function(t) {
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
         var w = viewport.showUnmatchedRouteNotification('somehash');
 
-        t.expect(w instanceof conjoon.cn_comp.window.LockingWindow).toBe(true);
+        t.expect(w instanceof coon.comp.window.LockingWindow).toBe(true);
 
         w.destroy();
         w = null;
@@ -122,7 +125,7 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
 
     t.it("activateViewForHash()", function(t) {
 
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
         viewport.addPostLaunchInfo({
             navigation : [{
@@ -151,14 +154,14 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
     });
 
     /**
-     * conjoon/app-cn_treenavviewport/#2
+     * coon/app-cn_navport/#2
      */
     t.it("Should test addPostLaunchInfo() with permaNav properly", function(t) {
 
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeFalsy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeFalsy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonA')).toBeFalsy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonB')).toBeFalsy();
         viewport.addPostLaunchInfo({
             permaNav : [{
                 xtype  : 'button',
@@ -168,21 +171,21 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
                 itemId : 'buttonB'
             }]
         });
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeTruthy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeTruthy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonA')).toBeTruthy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonB')).toBeTruthy();
 
     });
 
 
     /**
-     * conjoon/app-cn_treenavviewport/#2
+     * coon/app-cn_navport/#2
      */
     t.it("Should test addPostLaunchInfo() with nodeNav properly", function(t) {
 
-        viewport = Ext.create('conjoon.cn_treenavviewport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport');
 
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeFalsy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeFalsy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonA')).toBeFalsy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonB')).toBeFalsy();
         viewport.addPostLaunchInfo({
             navigation : [{
                 route : 'route',
@@ -196,8 +199,8 @@ describe('conjoon.cn_treenavviewport.view.NavigationViewportTest', function(t) {
                 }]
             }]
         });
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonA')).toBeTruthy();
-        t.expect(viewport.down('cn_treenavviewport-tbar').down('#buttonB')).toBeTruthy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonA')).toBeTruthy();
+        t.expect(viewport.down('cn_navport-tbar').down('#buttonB')).toBeTruthy();
 
     });
 });
