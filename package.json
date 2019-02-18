@@ -56,7 +56,7 @@
     /**
      * A detailed description of this package.
      */
-    "detailedDescription": "This package contains a default Viewport implementation which serves as a template for Sencha ExtJS applications. The Viewport along with its configurations allows for support for routing, navigation and managing views. It lets you hook modules into an application by simply specifying PackageControllers. Requires lib-cn_comp.",
+    "detailedDescription": "This package contains a default Viewport implementation which serves as a template for Sencha ExtJS applications. The Viewport along with its configurations allows for support for routing, navigation and managing views. Requires lib-cn_comp.",
 
     /**
      * The package version.

@@ -4,9 +4,9 @@ modular, package agnostic Sencha ExtJS application building.
 
 The default Viewport implementation can be found in `coon.navport.view.NavigationViewport` 
 and serves as a viewport-template for Sencha ExtJS applications. Along with its configurations and
-associated classes, it allows for support for routing, navigation and managing views, and lets 
-you hook into modules represented by other packages by simply extending and specifying 
-`coon.navport.app.PackageController`s. 
+associated classes, it allows for support for routing, navigation and managing views.
+
+An [lib-cn_comp](https://github.com/coon-js/lib-cn_comp) application (`coon.comp.app.Application`) is mandatory.
 
 A reference implementation can be found in the [conjoon](https://github.com/conjoon) project.
 
