@@ -1,11 +1,13 @@
 # app-cn_navport  [![Build Status](https://travis-ci.org/coon/app-cn_navport.svg?branch=master)](https://travis-ci.org/coon/app-cn_navport)
 This **Sencha ExtJS** package provides an enhanced viewport template for rapid, 
 modular, package agnostic Sencha ExtJS application building.
-The default Viewport implementation which can be found in `coon.navport.view.NavigationViewport` 
-serves as a viewport-template for Sencha ExtJS applications. Along with its configurations and
+
+The default Viewport implementation can be found in `coon.navport.view.NavigationViewport` 
+and serves as a viewport-template for Sencha ExtJS applications. Along with its configurations and
 associated classes, it allows for support for routing, navigation and managing views, and lets 
 you hook into modules represented by other packages by simply extending and specifying 
-`coon.navport.app.PackageController`'s 
+`coon.navport.app.PackageController`s. 
+
 A reference implementation can be found in the [conjoon](https://github.com/conjoon) project.
 
 ## Naming
