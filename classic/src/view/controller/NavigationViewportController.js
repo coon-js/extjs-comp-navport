@@ -49,7 +49,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             selectionchange : 'onNavigationTreeSelectionChange'
         },
 
-        'cn_navport-tbar > button[reference=cn_treenavviewport_ref_hidenavbtn]' : {
+        'cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]' : {
             click : 'onHideNavigationClick'
         }
 
@@ -70,7 +70,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      */
     addPermaNavItems : function(items) {
         var me   = this,
-            tbar = me.lookup('cn_treenavviewport_ref_tbar');
+            tbar = me.lookup('cn_navport_ref_tbar');
 
         return tbar.addPermanentNavigation(items);
     },
@@ -91,9 +91,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
         var me      = this,
             navItem = null,
-            tbar    = me.lookup('cn_treenavviewport_ref_tbar'),
+            tbar    = me.lookup('cn_navport_ref_tbar'),
             view    = me.getView(),
-            navTree = view.lookup('cn_treenavviewport_ref_conwrap').lookup('cn_treenavviewport_ref_navtree'),
+            navTree = view.lookup('cn_navport_ref_conwrap').lookup('cn_navport_ref_navtree'),
             store   = navTree.getStore(),
             navigationModel;
 
@@ -126,8 +126,8 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
         var me          = this,
             view        = me.getView(),
-            contentWrap = view.lookup('cn_treenavviewport_ref_conwrap'),
-            navTree     = contentWrap.lookup('cn_treenavviewport_ref_navtree');
+            contentWrap = view.lookup('cn_navport_ref_conwrap'),
+            navTree     = contentWrap.lookup('cn_navport_ref_navtree');
 
         navTree.setHidden(hide === true);
 
@@ -152,12 +152,12 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
     addViewForHash : function(hash, defaultToken) {
 
         var me           = this,
-            conwrap      = me.lookup('cn_treenavviewport_ref_conwrap'),
-            navTree      = conwrap.lookup('cn_treenavviewport_ref_navtree'),
+            conwrap      = me.lookup('cn_navport_ref_conwrap'),
+            navTree      = conwrap.lookup('cn_navport_ref_navtree'),
             store        = navTree.getStore(),
             view         = me.getView(),
-            contentPanel = conwrap.lookup('cn_treenavviewport_ref_conctr'),
-            tbar         = me.lookup('cn_treenavviewport_ref_tbar'),
+            contentPanel = conwrap.lookup('cn_navport_ref_conctr'),
+            tbar         = me.lookup('cn_navport_ref_tbar'),
             newView,
             node;
 
@@ -268,7 +268,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
         var me      = this,
             view    = me.getView(),
-            navTree = view.lookup('cn_treenavviewport_ref_conwrap').lookup('cn_treenavviewport_ref_navtree');
+            navTree = view.lookup('cn_navport_ref_conwrap').lookup('cn_navport_ref_navtree');
 
         me.hideNavigation(navTree.isVisible() === true);
     },

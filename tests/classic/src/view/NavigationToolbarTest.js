@@ -50,9 +50,9 @@ describe('coon.navport.view.NavigationToolbarTest', function(t) {
         t.expect(toolbar.alias).toContain('widget.cn_navport-tbar');
         t.expect(toolbar.cls).toBe('cn_navport-tbar');
         t.isInstanceOf(toolbar.getController(), 'coon.navport.view.controller.NavigationToolbarViewController');
-        t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn')).toBeTruthy();
-        t.expect(toolbar.lookup('cn_treenavviewport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
-        t.expect(toolbar.lookup('cn_treenavviewport_ref_applogo') instanceof Ext.Component).toBe(true);
+        t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn')).toBeTruthy();
+        t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
+        t.expect(toolbar.lookup('cn_navport_ref_applogo') instanceof Ext.Component).toBe(true);
 
     });
 

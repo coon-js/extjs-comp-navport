@@ -49,11 +49,11 @@ Ext.define('coon.navport.view.NavigationToolbar', {
 
     items : [{
         xtype     : 'component',
-        reference : 'cn_treenavviewport_ref_applogo'
+        reference : 'cn_navport_ref_applogo'
     }, {
         margin    : '0 0 0 8',
         xtype     : 'button',
-        reference : 'cn_treenavviewport_ref_hidenavbtn',
+        reference : 'cn_navport_ref_hidenavbtn',
         text      : 'Hide Navigation',
         tooltip  : {
             title : 'Show / hide navigation',
