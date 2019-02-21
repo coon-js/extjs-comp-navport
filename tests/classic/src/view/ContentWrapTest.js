@@ -49,13 +49,13 @@ describe('coon.navport.view.ContentWrapTest', function(t) {
         t.expect(cwrap.cls).toBe('cn_navport-conwrap');
         t.expect(cwrap.referenceHolder).toBe(true);
 
-        t.expect(cwrap.lookup('cn_treenavviewport_ref_navtree')).toBeTruthy();
-        t.expect(cwrap.lookup('cn_treenavviewport_ref_navtree') instanceof coon.navport.view.NavigationTree).toBeTruthy();
+        t.expect(cwrap.lookup('cn_navport_ref_navtree')).toBeTruthy();
+        t.expect(cwrap.lookup('cn_navport_ref_navtree') instanceof coon.navport.view.NavigationTree).toBeTruthy();
 
-        t.expect(cwrap.lookup('cn_treenavviewport_ref_navtree').getWidth()).toBe(250);
+        t.expect(cwrap.lookup('cn_navport_ref_navtree').getWidth()).toBe(250);
 
-        t.expect(cwrap.lookup('cn_treenavviewport_ref_conctr')).toBeTruthy();
-        t.expect(cwrap.lookup('cn_treenavviewport_ref_conctr') instanceof coon.navport.view.ContentContainer).toBeTruthy();
+        t.expect(cwrap.lookup('cn_navport_ref_conctr')).toBeTruthy();
+        t.expect(cwrap.lookup('cn_navport_ref_conctr') instanceof coon.navport.view.ContentContainer).toBeTruthy();
     });
 
     t.it("Should use the proper layout", function(t) {

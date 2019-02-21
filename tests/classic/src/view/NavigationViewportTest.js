@@ -64,14 +64,14 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
     t.it("Should have the ContentWrap", function(t) {
         viewport = Ext.create('coon.navport.view.NavigationViewport');
-        t.expect(viewport.lookup('cn_treenavviewport_ref_conwrap') instanceof coon.navport.view.ContentWrap).toBe(true);
-        t.expect(viewport.lookup('cn_treenavviewport_ref_conwrap').flex).toBe(1);
+        t.expect(viewport.lookup('cn_navport_ref_conwrap') instanceof coon.navport.view.ContentWrap).toBe(true);
+        t.expect(viewport.lookup('cn_navport_ref_conwrap').flex).toBe(1);
     });
 
 
     t.it("Should have the Toolbar", function(t) {
         viewport = Ext.create('coon.navport.view.NavigationViewport');
-        t.expect(viewport.lookup('cn_treenavviewport_ref_tbar') instanceof coon.navport.view.NavigationToolbar).toBe(true);
+        t.expect(viewport.lookup('cn_navport_ref_tbar') instanceof coon.navport.view.NavigationToolbar).toBe(true);
     });
 
 
@@ -88,7 +88,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
     t.it("Should be possible to click the hideNavigation Button and hide the navigation", function(t) {
         viewport = Ext.create('coon.navport.view.NavigationViewport');
-        var btn = viewport.down('button[reference=cn_treenavviewport_ref_hidenavbtn]');
+        var btn = viewport.down('button[reference=cn_navport_ref_hidenavbtn]');
 
         t.expect(btn).toBeTruthy();
         t.expect(viewport.down('cn_navport-navtree').isHidden()).toBe(false);

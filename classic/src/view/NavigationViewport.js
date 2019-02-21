@@ -51,7 +51,7 @@
  *  - "navigation" property:
  *     This should be an array with objects mapping configurations for {@link coon.navport.model.NavigationModel}
  *     If the navigation model contains a "view" property, its value will be
- *     interpreted as a component to render into the ViewPorts {@link coon.app_treenavviewport.view.ContentContainer}.
+ *     interpreted as a component to render into the ViewPorts {@link coon.navport.view.ContentContainer}.
  *     - "nodeNav" property
  *       Each entry in "navigation" might have a "nodeNav" property, holding an
  *       array of configurations for toolbar items. These items will be displayed
@@ -138,10 +138,10 @@ Ext.define('coon.navport.view.NavigationViewport', {
     },
 
     items: [{
-        reference : 'cn_treenavviewport_ref_tbar',
+        reference : 'cn_navport_ref_tbar',
         xtype     : 'cn_navport-tbar'
     }, {
-        reference : 'cn_treenavviewport_ref_conwrap',
+        reference : 'cn_navport_ref_conwrap',
         xtype     : 'cn_navport-conwrap',
         flex      : 1
     }],

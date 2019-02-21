@@ -56,11 +56,11 @@ Ext.define('coon.navport.view.ContentWrap', {
     },
 
     items: [{
-        reference : 'cn_treenavviewport_ref_navtree',
+        reference : 'cn_navport_ref_navtree',
         xtype     : 'cn_navport-navtree',
         width     : 250
     }, {
-        reference : 'cn_treenavviewport_ref_conctr',
+        reference : 'cn_navport_ref_conctr',
         flex      : 1,
         xtype     : 'cn_navport-conctr'
     }]
