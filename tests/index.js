@@ -12,6 +12,7 @@ harness.configure({
          */
         'coon.navport' : '../src',
         'coon.navport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
+        'coon.navport.view.controller.NavigationViewportController' : '../src/view/controller/NavigationViewportController.js',
 
 
 
