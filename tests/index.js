@@ -21,6 +21,9 @@ harness.configure({
          */
         'coon.navport.view' : '../classic/src/view',
 
+        'Ext.Package' : '../../../remote/package-loader/src/Package.js',
+        'Ext.package' : '../../../remote/package-loader/src/package',
+
         /**
          * Requirements
          */
