@@ -1,7 +1,7 @@
 /**
  * coon.js
- * app-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
+ * lib-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,7 +42,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
     });
 
     /**
-     * coon/app-cn_navport/#2
+     * coon/lib-cn_navport/#2
      */
     t.it("Should test addPermaNavItem() properly", function(t) {
 

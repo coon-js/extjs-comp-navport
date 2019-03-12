@@ -1,7 +1,7 @@
 var harness = new Siesta.Harness.Browser.ExtJS();
 
 harness.configure({
-    title          : 'app-cn_navport',
+    title          : 'lib-cn_navport',
     disableCaching : true,
     loaderPath     : {
 

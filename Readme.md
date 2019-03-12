@@ -1,4 +1,4 @@
-# app-cn_navport  [![Build Status](https://travis-ci.org/coon/app-cn_navport.svg?branch=master)](https://travis-ci.org/coon/app-cn_navport)
+# lib-cn_navport  [![Build Status](https://travis-ci.org/coon/lib-cn_navport.svg?branch=master)](https://travis-ci.org/coon/lib-cn_navport)
 This **Sencha ExtJS** package provides an enhanced viewport template for rapid, 
 modular, package agnostic Sencha ExtJS application building.
 The default Viewport implementation which can be found in `coon.navport.view.NavigationViewport` 
@@ -14,7 +14,7 @@ The following naming conventions apply:
 #### Namespace
 `coon.navport.*`
 #### Package name
-`app-cn_navport`
+`lib-cn_navport`
 #### Shorthand to be used with providing aliases
 `cn_navport`
 

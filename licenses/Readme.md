@@ -1,4 +1,4 @@
-# app-cn_navport/licenses
+# lib-cn_navport/licenses
 
 This folder contains the supported licenses for third-party use.
 
@@ -6,7 +6,7 @@ coon
 (c) 2007-2017 coon.org
 licensing@coon.org
 
-app-cn_navport
+lib-cn_navport
 Copyright (C) 2017 Thorsten Suckow-Homberg/coon.org
 
 This program is free software: you can redistribute it and/or modify

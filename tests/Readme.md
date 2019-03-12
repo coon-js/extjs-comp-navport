@@ -1,6 +1,6 @@
-# app-cn_navport - Tests - Read Me
+# lib-cn_navport - Tests - Read Me
 
-app-cn_navport uses [Siesta](http://bryntum.com) for Unit/UI testing.
+lib-cn_navport uses [Siesta](http://bryntum.com) for Unit/UI testing.
 
 Make sure you set the paths to the resources properly in the files index.html.template and
 tests.config.js.template, then rename them:
