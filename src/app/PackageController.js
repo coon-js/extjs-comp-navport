@@ -1,7 +1,7 @@
 /**
  * coon.js
- * app-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
+ * lib-cn_navport
+ * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,7 +24,7 @@
  */
 
 /**
- * This is the package controller of the app-cn_navport package to be
+ * This is the package controller of the lib-cn_navport package to be
  * used with {@link coon.comp.app.Application}.
  * This package controller is mainly responsible for proper routing of unmatched
  * routes against the application's addViewForHash() method.

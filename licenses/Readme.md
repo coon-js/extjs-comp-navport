@@ -1,10 +1,10 @@
-# app-cn_navport/licenses
+# lib-cn_navport/licenses
 
 This folder contains the supported licenses for third-party use.
 
 coon.js
-app-cn_navport
-Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/app-cn_navport
+lib-cn_navport
+Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

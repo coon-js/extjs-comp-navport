@@ -1,6 +1,6 @@
 {
 
-    "name": "app-cn_navport",
+    "name": "lib-cn_navport",
 
     "sencha": {
         "namespace": "coon.navport",
