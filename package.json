@@ -13,9 +13,9 @@
         "format": "1",
         "slicer": null,
         "output": {
-            "base" : "${package.dir}/build",
-            "js" : {
-                "version" : "ES6"
+            "base": "${package.dir}/build/${build.id}",
+            "js": {
+                "version": "ES6"
             }
         },
         "compressor": {
@@ -32,6 +32,14 @@
         "framework": "ext",
         "requires": [
             "lib-cn_comp"
-        ]
+        ],
+        "builds": {
+            "classic": {
+                "toolkit": "classic"
+            },
+            "modern": {
+                "toolkit": "modern"
+            }
+        }
     }
 }

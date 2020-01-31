@@ -42,7 +42,7 @@ harness.configure({
         'coon.navport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
         'coon.navport.view.controller.NavigationViewportController' : '../src/view/controller/NavigationViewportController.js',
         'coon.comp.window.LockingWindow'    : '../../lib-cn_comp/src/window/LockingWindow.js',
-        'coon.comp.container.Viewport' : '../../lib-cn_comp/src/container/Viewport.js',
+        'coon.comp.container.Viewport' : '../../lib-cn_comp/' + (isModern ? 'modern' : 'classic') + '/src/container/Viewport.js',
         'coon.comp.list.Tree'      : '../../lib-cn_comp/src/list/Tree.js',
         'coon.navport.view' : '../src/view',
 
