@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,47 +23,34 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * This container wraps bot hthe {@link coon.navport.view.NavigationTree}
- * and {@link coon.navport.view.ContentContainer}. Its purpose is
- * to mainly arrange and order the main navigation and the content panel and provide
- * a layout for the main elements of the viewport.
- */
-Ext.define('coon.navport.view.ContentWrap', {
+describe('coon.navport.view.ContentContainerTest', function(t) {
 
-    extend : 'Ext.container.Container',
+    var container,
+        containerConfig;
 
-    alias : 'widget.cn_navport-conwrap',
-
-    requires: [
-        'coon.navport.view.NavigationTree',
-        'coon.navport.view.ContentContainer'
-    ],
-
-    cls : 'cn_navport-conwrap',
-
-    referenceHolder : true,
-
-    layout : {
-        type  : 'hbox',
-        align : 'stretch',
-
-        animate       : true,
-        animatePolicy : {
-            x     : true,
-            width : true
+    t.afterEach(function() {
+        if (container) {
+            container.destroy();
+            container = null;
         }
-    },
+    });
 
-    items: [{
-        reference : 'cn_navport_ref_navtree',
-        xtype     : 'cn_navport-navtree',
-        width     : 250
-    }, {
-        reference : 'cn_navport_ref_conctr',
-        flex      : 1,
-        xtype     : 'cn_navport-conctr'
-    }]
+    t.beforeEach(function() {
+        containerConfig = {
+            renderTo : document.body
+        };
+    })
 
+
+    t.it("Should create and show Container", function(t) {
+        container = Ext.create(
+            'coon.navport.view.ContentContainer', containerConfig);
+
+        t.expect(container instanceof Ext.Container).toBe(true);
+        t.isInstanceOf(container.getLayout(), (Ext.isModern ? Ext.layout.Card : Ext.layout.container.Card));
+        t.expect(Ext.isModern ? container.getCls() : container.cls).toContain('cn_navport-conctr');
+        t.expect(container.alias).toContain('widget.cn_navport-conctr');
+
+    });
 
 });

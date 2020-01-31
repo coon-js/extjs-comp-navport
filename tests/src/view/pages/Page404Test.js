@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -38,12 +38,16 @@ describe('coon.navport.view.pages.404Test', function(t) {
 
     })
 
+// +-------------------------------
+// | Tests
+// +-------------------------------
+
 
     t.it("Should create and show Page", function(t) {
         page = Ext.create('coon.navport.view.pages.Page404');
 
         t.expect(page instanceof coon.comp.window.LockingWindow).toBe(true);
-        t.expect(page.cls).toBe('cn_navport-pg404');
+        t.expect(Ext.isModern ? page.getCls() : page.cls)[Ext.isModern ? "toContain" : "toBe"]('cn_navport-pg404');
         t.expect(page.alias).toContain('widget.cn_navport-pg404');
     });
 
@@ -58,7 +62,7 @@ describe('coon.navport.view.pages.404Test', function(t) {
         });
 
 
-        var pg = Ext.dom.Query.select('label.descr a');
+        var pg = Ext.dom.Query.select(Ext.isModern ? 'div.descr a' : 'label.descr a');
 
         t.ok(pg);
         t.is(pg.length, 1);

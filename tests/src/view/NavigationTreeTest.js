@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,34 +23,37 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.ContentContainerTest', function(t) {
+describe('coon.navport.view.NavigationTreeTest', function(t) {
 
-    var container,
-        containerConfig;
+    var tree,
+        treeConfig;
 
-    t.afterEach(function() {
-        if (container) {
-            container.destroy();
-            container = null;
+    t.afterEach(function() {return;
+        if (tree) {
+            tree.destroy();
+            tree = null;
         }
     });
 
-    t.beforeEach(function() {
-        containerConfig = {
+    t.beforeEach(function(){
+        treeConfig = {
             renderTo : document.body
         };
-    })
-
-
-    t.it("Should create and show Container", function(t) {
-        container = Ext.create(
-            'coon.navport.view.ContentContainer', containerConfig);
-
-        t.expect(container instanceof Ext.Container).toBe(true);
-        t.expect(container.getLayout() instanceof Ext.layout.container.Card).toBe(true);
-        t.expect(container.cls).toBe('cn_navport-conctr');
-        t.expect(container.alias).toContain('widget.cn_navport-conctr');
-
     });
+
+    t.it("Should create and show the tree", function(t) {
+        tree = Ext.create('coon.navport.view.NavigationTree', treeConfig);
+
+        t.expect(tree instanceof coon.comp.list.Tree).toBe(true);
+        t.expect(tree.alias).toContain('widget.cn_navport-navtree');
+        t.expect(tree.getCls()).toContain('cn_navport-navtree');
+        t.expect(tree.getStore()).toBeTruthy();
+        t.expect(tree.getStore() instanceof coon.navport.store.NavigationTreeStore).toBe(true);
+
+        t.expect(tree.defaultConfig.expanderOnly).toBe(false);
+        t.expect(tree.defaultConfig.expanderFirst).toBe(false);
+    });
+
+
 
 });

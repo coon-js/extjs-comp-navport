@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,27 +24,21 @@
  */
 
 /**
- * An {@link coon.comp.list.Tree} to provide a view for the main navigation of the
- * {@link coon.navport.view.NavigationViewport}.
+ * An {@link Ext.Container} to serve as the main container in the {@link coon.navport.view.NavigationViewport}
+ * to which all the module/package related content should go.
+ *
  */
-Ext.define('coon.navport.view.NavigationTree', {
+Ext.define('coon.navport.view.ContentContainer', {
 
-    extend :  'coon.comp.list.Tree',
+    extend : 'Ext.Container',
 
-    requires : [
-        'coon.navport.store.NavigationTreeStore'
-    ],
+    alias : 'widget.cn_navport-conctr',
 
-    alias : 'widget.cn_navport-navtree',
+    cls : 'cn_navport-conctr',
 
-    cls : 'cn_navport-navtree',
-
-    store  : {
-        type :'cn_navport-navtreestore'
-    },
-
-    expanderOnly : false,
-
-    expanderFirst: false
-
+    layout: {
+        type: 'card',
+        anchor: '100%'
+    }
 });
+

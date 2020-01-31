@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -49,9 +49,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             selectionchange : 'onNavigationTreeSelectionChange'
         },
 
-        'cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]' : {
-            click : 'onHideNavigationClick'
-        }
+        'cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]' : Ext.isModern ? {
+            tap : 'onHideNavigationClick'
+        } : {click : 'onHideNavigationClick'}
 
     },
 
@@ -195,7 +195,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             newView = contentPanel.down('component[cn_routeId=' + hash + ']');
 
             if (newView) {
-                contentPanel.getLayout().setActiveItem(newView);
+                contentPanel.setActiveItem(newView);
             } else {
                 newView = Ext.create(node.get('view'), {
                     cn_routeId : hash
@@ -203,7 +203,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
                 if (!(newView instanceof Ext.Window)) {
                     Ext.suspendLayouts();
-                    contentPanel.getLayout().setActiveItem(contentPanel.add(newView));
+                    contentPanel.setActiveItem(contentPanel.add(newView));
                     Ext.resumeLayouts(true);
                 }
             }
@@ -251,10 +251,18 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      * see {@link coon.navport.model.NavigationModel#toUrl}.
      */
     onNavigationTreeSelectionChange : function(tree, node) {
-        var me = this;
+        const me = this;
 
+        // Modern Toolkit will remove all items in the tree when
+        // involved in a destroy()-process, sending "null"-nodes
+        // to this observer. check here if that is the case
+        // and exit silently
+        if (node === null && me.getView().isDestroying) {
+            return;
+        }
         me.redirectTo(node);
     },
+
 
     /**
      * Callback for the {@link coon.navport.view.NavigationToolbar}'s

@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -48,7 +48,7 @@ describe('coon.navport.view.NavigationToolbarTest', function(t) {
 
         t.expect(toolbar instanceof Ext.Toolbar).toBeTruthy();
         t.expect(toolbar.alias).toContain('widget.cn_navport-tbar');
-        t.expect(toolbar.cls).toBe('cn_navport-tbar');
+        t.expect(Ext.isModern ? toolbar.getCls() : toolbar.cls)[Ext.isModern ? "toContain" : "toBe"]('cn_navport-tbar');
         t.isInstanceOf(toolbar.getController(), 'coon.navport.view.controller.NavigationToolbarViewController');
         t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn')).toBeTruthy();
         t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);

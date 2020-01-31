@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -39,6 +39,11 @@ describe('coon.navport.view.ContentWrapTest', function(t) {
         cwrapConfig = {renderTo : document.body};
     });
 
+
+// +-------------------------------
+// | Tests
+// +-------------------------------
+
     t.it("Should create and show the ContentWrap", function(t) {
         cwrap = Ext.create(
             'coon.navport.view.ContentWrap', cwrapConfig);
@@ -46,7 +51,7 @@ describe('coon.navport.view.ContentWrapTest', function(t) {
         t.expect(cwrap instanceof Ext.Container).toBe(true);
 
         t.expect(cwrap.alias).toContain('widget.cn_navport-conwrap');
-        t.expect(cwrap.cls).toBe('cn_navport-conwrap');
+        t.expect(Ext.isModern ? cwrap.getCls() : cwrap.cls)[Ext.isModern ? "toContain" : "toBe"]('cn_navport-conwrap');
         t.expect(cwrap.referenceHolder).toBe(true);
 
         t.expect(cwrap.lookup('cn_navport_ref_navtree')).toBeTruthy();
@@ -62,9 +67,27 @@ describe('coon.navport.view.ContentWrapTest', function(t) {
         cwrap = Ext.create(
             'coon.navport.view.ContentWrap', cwrapConfig);
 
-        t.expect(cwrap.getLayout() instanceof Ext.layout.container.HBox).toBe(true);
-        t.expect(cwrap.getLayout().align).toBe('stretch');
+        t.isInstanceOf(cwrap.getLayout(), Ext.isModern ? "Ext.layout.HBox" : "Ext.layout.container.HBox");
+        t.expect(cwrap.getLayout().getAlign()).toBe('stretch');
 
     });
+
+
+    t.it("Check animation configuration for the layout", function(t) {
+        cwrap = Ext.create(
+            'coon.navport.view.ContentWrap', cwrapConfig);
+
+        if (Ext.isModern) {
+            t.expect(cwrap.getLayout().animate).toBeUndefined;
+            t.expect(cwrap.getLayout().animatePolicy).toBeUndefined();
+        } else {
+            t.expect(cwrap.getLayout().animate).toBe(true);
+            t.expect(cwrap.getLayout().animatePolicy).toEqual({x : true, width : true});
+        }
+
+
+    });
+
+
 
 });

@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -80,12 +80,13 @@ Ext.define('coon.navport.view.pages.Page404', {
      * @inheritdoc
      * Overriden to make sure we are using #homeToken for routing.
      */
-    initComponent : function() {
+    constructor : function() {
        var me = this;
 
-        me.items[0].items[1].data.route = me.homeToken;
-
         me.callParent(arguments);
+
+        me.down('label[cls=descr]').setData({route : me.homeToken});
+
     }
 
 });

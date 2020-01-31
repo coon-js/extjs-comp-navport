@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -29,6 +29,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         postLaunchInfo;
 
     t.beforeEach(function() {
+
         postLaunchInfo = {
             navigation : [{
                 route : 'myRoute',
@@ -49,23 +50,29 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
     });
 
 
+// +--------------------------------
+// | Tests
+// +--------------------------------
+
+
     t.it("Should create and show Viewport", function(t) {
         viewport = Ext.create('coon.navport.view.NavigationViewport');
         t.expect(viewport instanceof coon.comp.container.Viewport).toBeTruthy();
 
         t.expect(viewport.alias).toContain('widget.cn_navport');
-        t.expect(viewport.cls).toBe('cn_navport');
+        t.expect(Ext.isModern ? viewport.getCls() : viewport.cls)[Ext.isModern ? "toContain" : "toBe"]('cn_navport');
         t.expect(viewport.referenceHolder).toBe(true);
-        t.expect(viewport.getLayout() instanceof Ext.layout.container.VBox).toBe(true);
-        t.expect(viewport.getLayout().align).toBe('stretch');
+        t.isInstanceOf(viewport.getLayout(), Ext.isModern ? "Ext.layout.VBox" : "Ext.layout.container.VBox");
+        t.expect(Ext.isModern ? viewport.getLayout().getAlign() : viewport.getLayout().align).toBe('stretch');
 
     });
 
 
     t.it("Should have the ContentWrap", function(t) {
         viewport = Ext.create('coon.navport.view.NavigationViewport');
-        t.expect(viewport.lookup('cn_navport_ref_conwrap') instanceof coon.navport.view.ContentWrap).toBe(true);
-        t.expect(viewport.lookup('cn_navport_ref_conwrap').flex).toBe(1);
+        let cwrap = viewport.lookup('cn_navport_ref_conwrap');
+        t.expect(cwrap instanceof coon.navport.view.ContentWrap).toBe(true);
+        t.expect(Ext.isModern ? cwrap.getFlex() : cwrap.flex).toBe(1);
     });
 
 
@@ -76,7 +83,9 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
 
     t.it("Should be possible to hide the navigation", function(t) {
-        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport', Ext.isModern ? {
+            renderTo : document.body
+        } : {});
 
         t.expect(viewport.down('cn_navport-navtree').isVisible()).toBe(true);
         viewport.hideNavigation(true);
@@ -87,7 +96,9 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
 
     t.it("Should be possible to click the hideNavigation Button and hide the navigation", function(t) {
-        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport', Ext.isModern ? {
+            renderTo : document.body
+        } : undefined);
         var btn = viewport.down('button[reference=cn_navport_ref_hidenavbtn]');
 
         t.expect(btn).toBeTruthy();
@@ -125,9 +136,12 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         w = null;
     });
 
+
     t.it("activateViewForHash()", function(t) {
 
-        viewport = Ext.create('coon.navport.view.NavigationViewport');
+        viewport = Ext.create('coon.navport.view.NavigationViewport', Ext.isModern ? {
+            renderTo : document.body
+        } : {});
 
         viewport.addPostLaunchInfo({
             navigation : [{
@@ -154,6 +168,8 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         w = null;
 
     });
+
+
 
     /**
      * coon/lib-cn_navport/#2
