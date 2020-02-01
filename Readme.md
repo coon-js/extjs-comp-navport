@@ -10,6 +10,8 @@ An [lib-cn_comp](https://github.com/coon-js/lib-cn_comp) application (`coon.comp
 
 A reference implementation can be found in the [conjoon](https://github.com/conjoon) project.
 
+The following tutorial works with either the modern or the classic toolkit.
+
 ## Naming
 The following naming conventions apply:
 
@@ -108,14 +110,20 @@ Ext.define('my.Application', {
 
     name : 'my',
 
-    applicationViewClassName : 'my.view.main.Viewport'
+    applicationViewClassName : 'my.view.main.Viewport',
+    
+    launch : function() {
+    
+    }
 
 });
 ```
-Note how we have specified a default controller in ``controllers`` and the ``MainView`` in `applicationViewClassName`.
-We're not using the ExtJS' native ``mainView`` here to prevent collisions with hardcoded ExtJS functionality.
+Note how we have specified a default controller in ``controllers`` and the ``MainView`` in `mainView`.
 Once this is all done, we can continue with adding packages to your application. 
-
+Also take note, that we have left the implementation of `launch` empty. We will hook into the launch-method
+later on and only execute if, if all our packages return `true` in their `preLaunchHook`-methods. 
+You can also omit the `launch`-method since a lot of functionality regarding application-start can be 
+implemented in our PackageControllers. 
 
 ### Adding packages
 For adding a package as a module to an ExtJS-application built with [coon.js](https://github.com/coon-js), follow these steps:
@@ -146,6 +154,18 @@ looks like this:
 Additionally, you have to tell this package that it needs to require the [lib-cn_comp](https://github.com/coon-js/lib-cn_comp)-
 package from the [coon.js](https://github.com/coon-js)-project. 
 
+Hint: If you're developing packages for both the modern and classic toolkit, make sure you add 
+the following configuration to your `package.json`:
+```
+"builds": {
+    "classic": {
+        "toolkit": "classic"
+    },
+    "modern": {
+        "toolkit": "modern"
+    }
+}
+```
 #### Implementing the PackageController
 Once the package was tagged as a dynamic resource for an ExtJS-application
 built with [coon.js](https://github.com/coon-js), we can now actually write some
@@ -186,6 +206,12 @@ is registered (taking advance of the browser's *history*-functionality) and `vie
 that should be rendered/activated as soon as this menu-entry gets selected (by either clicking it in the 
 resulting `Ext.list.Tree` or by calling the application's url along with the defined `route`).
 
+##### pre-/postLaunchHook pipeline:
+```
+   PackageController*::preLaunchHook() : false -> void
+   PackageController*::preLaunchHook() : true -> Application::launch() -> PackageController*::postLaunchHook()
+```
+
 #### Registering the package in the application 
 Last but not least, we have to tell our application to actually use the package we have just created.
 For this purpose, we need to open up our application's `app.json` and specify the package's name `acme` in
@@ -207,3 +233,4 @@ application that a package exists that *might* get loaded later on during the ap
 are not hardwiring the package's code into the application itself, instead, the *PackageLoader* of ExtJS is
 being used (see [Mitchell Simoen's Blog entry for an explanation](https://mitchellsimoens.com/2017/04/12/package-loading/), amongst others).  
 
+You can now build your application by running `sencha app build --dev --uses` respective `sencha app build --prod --uses`.
