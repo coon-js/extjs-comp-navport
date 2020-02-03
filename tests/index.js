@@ -52,10 +52,9 @@ harness.configure({
         /**
          * Requirements
          */
-        'coon.core.app'       : '../../lib-cn_core/src/app',
-        'coon.core.data'      : '../../lib-cn_core/src/data',
-        'coon.comp.app'       : '../../lib-cn_comp/src/app',
-        'coon.comp.window'    : '../../lib-cn_comp/classic/src/window'
+        'coon.core'        : '../../lib-cn_core/src',
+        'coon.comp.app'    : '../../lib-cn_comp/src/app',
+        'coon.comp.window' : '../../lib-cn_comp/classic/src/window'
     },
     preload        : [
         coon.tests.config.paths.extjs[isModern ? "modern" : "classic" ].css.url,
