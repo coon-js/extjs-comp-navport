@@ -32,13 +32,18 @@
  * +--------------------------------------------------------------------------------+
  * | logo | hidenavbtn |  [node navigation items]   | [permanent navigation items]
  * +--------------------------------------------------------------------------------+
+ *
+ * @bug
+ * This class is an abstract base class since the version for the modern toolkit needs
+ * to require the HBox-layout. This is not required by the Toolbar base class in
+ * the Modern Toolkit by default.
  */
-Ext.define('coon.navport.view.NavigationToolbar', {
+Ext.define('coon.navport.view.AbstractNavigationToolbar', {
 
     extend : 'Ext.Toolbar',
 
     requires : [
-        'coon.navport.view.controller.NavigationToolbarViewController'
+        "coon.navport.view.controller.NavigationToolbarViewController"
     ],
 
     alias : 'widget.cn_navport-tbar',

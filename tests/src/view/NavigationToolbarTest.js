@@ -43,8 +43,13 @@ describe('coon.navport.view.NavigationToolbarTest', function(t) {
 
 
     t.it("Should create and show the toolbar", function(t) {
+
         toolbar = Ext.create(
             'coon.navport.view.NavigationToolbar', toolbarConfig);
+
+        if (Ext.isModern) {
+            t.expect(coon.navport.view.NavigationToolbar.prototype.requires[0].$className).toBe("Ext.layout.HBox");
+        }
 
         t.expect(toolbar instanceof Ext.Toolbar).toBeTruthy();
         t.expect(toolbar.alias).toContain('widget.cn_navport-tbar');

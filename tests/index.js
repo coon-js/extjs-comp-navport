@@ -39,6 +39,7 @@ harness.configure({
          * Universal
          */
         'coon.navport' : '../src',
+        'coon.navport.view.NavigationToolbar' : '../' + (isModern ? 'modern' : 'classic') + '/src/view/NavigationToolbar.js',
         'coon.navport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
         'coon.navport.view.controller.NavigationViewportController' : '../src/view/controller/NavigationViewportController.js',
         'coon.comp.window.LockingWindow'    : '../../lib-cn_comp/src/window/LockingWindow.js',
