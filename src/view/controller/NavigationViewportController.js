@@ -334,15 +334,27 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 }
             }
 
-            if (!config.hasOwnProperty('leaf')) {
-                config.leaf = true;
+            if (config.leaf === undefined) {
+                if (config.children === undefined) {
+                    config.leaf = true;
+                } else if (Ext.isArray(config.children)) {
+                    config.leaf = false;
+                }
             }
 
             navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls');
 
-            return Ext.create(
+            let node = Ext.create(
                 'coon.navport.model.NavigationModel', navCon
             );
+
+            if (config.children) {
+                config.children.forEach(function(child) {
+                    node.appendChild(me.createNavigationModelFrom(child));
+                });
+            }
+
+            return node;
         }
     }
 

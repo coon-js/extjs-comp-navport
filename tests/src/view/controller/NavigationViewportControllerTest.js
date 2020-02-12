@@ -106,4 +106,39 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
     });
 
 
+    t.it('createNavigationModelFrom() - with child nodes', function(t) {
+
+        var exc, e, rec;
+
+        viewportCtrl = Ext.create(
+            'coon.navport.view.controller.NavigationViewportController'
+        );
+
+        rec = viewportCtrl.createNavigationModelFrom(
+            {id : 'a', text : 'text', route : 'route', nodeNav : {},
+                view : 'myView', iconCls : 'myIconCls', children : [{text : 'childtext', route: 'childroute'}]}
+        );
+
+        t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
+
+        t.expect(rec.childNodes.length).toBe(1);
+
+        let childRec = rec.childNodes[0];
+
+        t.isStrict(childRec.get('text'),    'childtext');
+        t.isStrict(childRec.get('route'),   'childroute');
+
+        t.isInstanceOf(childRec, 'coon.navport.model.NavigationModel');
+
+        t.isStrict(rec.getId(),        'a');
+        t.isStrict(rec.get('leaf'),    false);
+        t.isStrict(rec.get('text'),    'text');
+        t.isStrict(rec.get('route'),   'route');
+        t.isStrict(rec.get('view'),    'myView');
+        t.isStrict(rec.get('iconCls'), 'myIconCls');
+        t.expect(rec.get('nodeNav')).toBeUndefined();
+
+
+    });
+
 });
