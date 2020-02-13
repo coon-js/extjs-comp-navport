@@ -235,8 +235,9 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
                 getController : function(key) {
                     if (key === "MyController") {
                         return {
-                            configureView : function() {
+                            configureView : function(view) {
                                 CONFIGURE_VIEW = true;
+                                return new Ext.Window();
                             }
                         }
                     }
@@ -269,6 +270,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
         t.expect(CONFIGURE_VIEW).toBe(false);
         w = viewport.activateViewForHash('testroute');
+        t.isInstanceOf(w, "Ext.Window");
         t.expect(CONFIGURE_VIEW).toBe(true);
 
         let SECOND = false;
@@ -276,7 +278,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
             return {
                 getController : function(packageController) {
                     if (packageController !== "MyController") {
-                        return null;;
+                        return null;
                     }
                     SECOND = true;
                     return {

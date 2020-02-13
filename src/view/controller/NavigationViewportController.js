@@ -210,7 +210,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 if (node.get("packageController")) {
                     let pctrl = Ext.getApplication().getController(node.get("packageController"));
                     if (pctrl && Ext.isFunction(pctrl.configureView)) {
-                        pctrl.configureView(newView);
+                        newView = pctrl.configureView(newView);
                     }
                 }
 
