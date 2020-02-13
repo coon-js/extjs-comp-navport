@@ -141,6 +141,11 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      * store and its collection of {@link coon.navport.model.NavigationModel}s.
      * Additionally, the NavigationToolbar is requested to show the id associated
      * navigation for the view#s associated node, if any.
+     * If the view is instantiated and the corresponding navigation has a packageController
+     * configured with a valid PackageController loaded into the app, the controller's
+     * "configureView()"-method is called with the created view as the argument,
+     * providing a chance to configure the view from inside the corresponding
+     * PackageController.
      *
      * @param {String} hash
      * @param {String} defaultToken
@@ -197,9 +202,17 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             if (newView) {
                 contentPanel.setActiveItem(newView);
             } else {
+
                 newView = Ext.create(node.get('view'), {
                     cn_routeId : hash
                 });
+
+                if (node.get("packageController")) {
+                    let pctrl = Ext.getApplication().getController(node.get("packageController"));
+                    if (pctrl && Ext.isFunction(pctrl.configureView)) {
+                        pctrl.configureView(newView);
+                    }
+                }
 
                 if (!(newView instanceof Ext.Window)) {
                     Ext.suspendLayouts();
@@ -342,7 +355,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 }
             }
 
-            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls');
+            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls,packageController');
 
             let node = Ext.create(
                 'coon.navport.model.NavigationModel', navCon

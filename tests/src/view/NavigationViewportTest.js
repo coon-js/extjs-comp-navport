@@ -221,4 +221,90 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         t.expect(viewport.down('cn_navport-tbar').down('#buttonB')).toBeTruthy();
 
     });
+
+
+
+    t.it("lib-cn_navport#7", function(t) {
+
+        let gA = Ext.getApplication();
+
+        let CONFIGURE_VIEW = false;
+
+        Ext.getApplication = function() {
+            return {
+                getController : function(key) {
+                    if (key === "MyController") {
+                        return {
+                            configureView : function() {
+                                CONFIGURE_VIEW = true;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        viewport = Ext.create('coon.navport.view.NavigationViewport', Ext.isModern ? {
+            renderTo : document.body
+        } : {});
+
+        viewport.addPostLaunchInfo({
+            navigation : [{
+                text  : 'Text',
+                route : 'testroute',
+                view  : 'Ext.Panel',
+                packageController : 'MyController'
+            }, {
+                text  : 'Text',
+                route : 'testroute2',
+                view  : 'Ext.Panel',
+                packageController : 'MyController'
+            }, {
+                text  : 'Text',
+                route : 'testroute3',
+                view  : 'Ext.Panel',
+                packageController : 'MyControllerFOOBAR'
+            }]
+        });
+
+        t.expect(CONFIGURE_VIEW).toBe(false);
+        w = viewport.activateViewForHash('testroute');
+        t.expect(CONFIGURE_VIEW).toBe(true);
+
+        let SECOND = false;
+        Ext.getApplication = function() {
+            return {
+                getController : function(packageController) {
+                    if (packageController !== "MyController") {
+                        return null;;
+                    }
+                    SECOND = true;
+                    return {
+                        configureView : true
+                    }
+                }
+            }
+        };
+
+        CONFIGURE_VIEW = false;
+        var v = viewport.activateViewForHash('testroute');
+        t.expect(CONFIGURE_VIEW).toBe(false);
+
+        viewport.activateViewForHash('testroute2');
+        t.expect(SECOND).toBe(true);
+
+        SECOND = false;
+        viewport.activateViewForHash('testroute3');
+        t.expect(SECOND).toBe(false);
+
+
+
+        w.destroy();
+        v = null;
+        w = null;
+
+        Ext.getApplication = gA;
+
+    });
+
 });

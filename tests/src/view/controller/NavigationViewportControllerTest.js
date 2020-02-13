@@ -90,7 +90,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
 
         rec = viewportCtrl.createNavigationModelFrom(
             {id : 'a', text : 'text', route : 'route', nodeNav : {},
-                view : 'myView', iconCls : 'myIconCls'}
+                view : 'myView', iconCls : 'myIconCls', packageController : "MyController"}
         );
 
         t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
@@ -101,6 +101,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         t.isStrict(rec.get('route'),   'route');
         t.isStrict(rec.get('view'),    'myView');
         t.isStrict(rec.get('iconCls'), 'myIconCls');
+        t.isStrict(rec.get('packageController'), 'MyController');
         t.expect(rec.get('nodeNav')).toBeUndefined();
 
     });

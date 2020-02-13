@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,7 +42,8 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
         data = {
             route    : 'myroute',
             text     : 'NavigationText',
-            view     : 'ViewClass'
+            view     : 'ViewClass',
+            packageController : 'MyController'
         },
         presenceFields = [
             'route',
@@ -140,5 +141,16 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
     t.it('Should return proper value for toUrl', function(t) {
         t.expect(model.toUrl()).toBe(model.get('route'));
     });
+
+    /**
+     * Test Field packageController
+     */
+    t.it('Should have packageController-field configured', function(t) {
+
+        t.expect(model.getField("packageController")).toBeDefined();
+        t.expect(model.getField("packageController").type).toBe("string");
+
+    });
+
 
 });

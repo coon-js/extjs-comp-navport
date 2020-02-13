@@ -46,8 +46,6 @@ Ext.define('coon.navport.view.AbstractNavigationToolbar', {
         "coon.navport.view.controller.NavigationToolbarViewController"
     ],
 
-    alias : 'widget.cn_navport-tbar',
-
     cls : 'cn_navport-tbar',
 
     controller : 'cn_navport-navigationtoolbarviewcontroller',

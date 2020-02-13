@@ -30,6 +30,8 @@
  */
 Ext.define('coon.navport.view.NavigationToolbar', {
 
-    extend : 'coon.navport.view.AbstractNavigationToolbar'
+    extend : 'coon.navport.view.AbstractNavigationToolbar',
+
+    alias : 'widget.cn_navport-tbar'
 
 });

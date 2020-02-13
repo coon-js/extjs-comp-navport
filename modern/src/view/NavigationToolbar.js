@@ -33,5 +33,7 @@ Ext.define('coon.navport.view.NavigationToolbar', {
 
     requires : [
         "Ext.layout.HBox"
-    ]
+    ],
+
+    alias : 'widget.cn_navport-tbar'
 });
