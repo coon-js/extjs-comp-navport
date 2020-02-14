@@ -156,14 +156,15 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      */
     addViewForHash : function(hash, defaultToken) {
 
-        var me           = this,
+        const
+            me           = this,
             conwrap      = me.lookup('cn_navport_ref_conwrap'),
             navTree      = conwrap.lookup('cn_navport_ref_navtree'),
             store        = navTree.getStore(),
-            view         = me.getView(),
             contentPanel = conwrap.lookup('cn_navport_ref_conctr'),
-            tbar         = me.lookup('cn_navport_ref_tbar'),
-            newView,
+            tbar         = me.lookup('cn_navport_ref_tbar');
+
+        let newView,
             node;
 
         hash = (hash || '').toLowerCase();
@@ -172,19 +173,18 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             return null;
         }
 
-        node = store.findBy(function(record) {
+        node = store.getRoot().findChildBy(function(record) {
             var route = (record.get('route') || '').toLowerCase();
             if (route === hash) {
                 return true;
             }
-        });
+        }, null, true);
 
-        if (node === -1) {
+        if (!node) {
             me.nodeNotFound(hash, defaultToken);
             return;
         }
 
-        node = store.getAt(node);
 
         /**
          * Suspend events of the nav tree here so selection of the node

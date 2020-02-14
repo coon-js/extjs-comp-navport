@@ -36,7 +36,15 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
         postLaunchInfo = {
             navigation : [{
                 route : 'myRoute',
-                text  : 'my route'
+                text  : 'my route',
+                children : [{
+                    route : "route_1_2",
+                    text : "sub_route",
+                    children : [{
+                        route : "route_1_2_",
+                        text : "sub_route_2"
+                    }]
+                }]
             }, {
                 route : 'myRoute1',
                 text  : 'my route 1'
@@ -77,10 +85,15 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
 
                 viewport.addPostLaunchInfo(postLaunchInfo);
 
+                let historyRoute = "route_1_2_"
                 t.click(navTree.getItem(store.getAt(0)), function() {
-                    Ext.util.History.add('myRoute1');
+                    Ext.util.History.add(historyRoute);
                     t.waitForMs(500, function() {
-                        t.expect(navTree.getSelection()).toBe(store.getAt(1));
+                        t.expect(navTree.getSelection()).toBe(store.getRoot().findChildBy(function(node) {
+                            if (node.get("route") === historyRoute) {
+                                return true;
+                            }
+                        }, null, true));
 
                     });
                 });
