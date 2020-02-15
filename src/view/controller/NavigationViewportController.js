@@ -143,9 +143,24 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      * navigation for the view#s associated node, if any.
      * If the view is instantiated and the corresponding navigation has a packageController
      * configured with a valid PackageController loaded into the app, the controller's
-     * "configureView()"-method is called with the created view as the argument,
-     * providing a chance to configure the view from inside the corresponding
-     * PackageController.
+     * "configureView()"-method is called with the created view, the node triggering the routing
+     * and the available hash as the arguments, providing a chance to configure the
+     * view from inside the corresponding PackageController when it gets created.
+     *
+     * Flow:
+     * =====
+     *
+     *                                      yes
+     *   route -> view for route existing? -----> configureView([view], [node], [hash], false)
+     *                             |                  /|\                 |
+     *                             | no                |                  |
+     *                            \|/                  |                  |
+     *                      create the view            |                 \|/
+     *                             |                   |          setActiveItem(view)
+     *                             |                   |
+     *                            \|/                  |
+     *            configureView([view], [node], [hash], true)
+     *
      *
      * @param {String} hash
      * @param {String} defaultToken
@@ -197,25 +212,55 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
         tbar.showNavigationForNode(node.getId());
 
         if (node.get('view')) {
-            newView = contentPanel.down('component[cn_routeId=' + hash + ']');
+
+            let viewCfg = node.get('view'),
+                pctrl, configurable = false;
+
+            if (node.get("packageController")) {
+                pctrl = Ext.getApplication().getController(node.get("packageController"));
+                configurable = pctrl && Ext.isFunction(pctrl.configureView);
+            }
+
+            if (Ext.isString(viewCfg)) {
+                viewCfg = {xclass : viewCfg};
+            }
+
+            // try to find an existing view first, given the injected
+            // cn_routeId-property or a unique id
+            if (viewCfg.id) {
+                // identify with id
+                newView = Ext.ComponentManager.get(viewCfg.id);
+            } else {
+                // identify by cn_routeId
+                // apply the routeId if the view is not identifiable
+                // via a given id
+                viewCfg.cn_routeId = hash;
+                newView = contentPanel.down('component[cn_routeId=' + hash + ']');
+            }
 
             if (newView) {
+                // call template method "configureView"
+                // if view is existing and gets set as activeItem for
+                // the mainView again, with "created"-arg set to false
+                if (configurable) {
+                    newView = pctrl.configureView(newView, node, hash, false);
+                }
                 contentPanel.setActiveItem(newView);
             } else {
+                newView = Ext.create(viewCfg);
 
-                newView = Ext.create(node.get('view'), {
-                    cn_routeId : hash
-                });
-
-                if (node.get("packageController")) {
-                    let pctrl = Ext.getApplication().getController(node.get("packageController"));
-                    if (pctrl && Ext.isFunction(pctrl.configureView)) {
-                        newView = pctrl.configureView(newView);
-                    }
+                // call template method "configureView"
+                // if view was newly created,  "created"-arg set to true
+                if (configurable) {
+                    newView = pctrl.configureView(newView, node, hash, true);
                 }
 
                 if (!(newView instanceof Ext.Window)) {
                     Ext.suspendLayouts();
+                    // configureView,  "created"-arg set to false
+                    if (configurable) {
+                        newView = pctrl.configureView(newView, node, hash, false);
+                    }
                     contentPanel.setActiveItem(contentPanel.add(newView));
                     Ext.resumeLayouts(true);
                 }

@@ -36,12 +36,11 @@
  *      ));
  *
  * Each navigation node is represented by a view which can be specified by the
- * "view" property.
- *
+ * "view" property, which allows for complex route/view-mapping. See the documentation
+ * of the field for detailed information.
  *
  * This model's {@link #toUrl} method is overridden so instances of this class
  * can directly be passed to {@link coon.navport.view.controller.NavigationViewPortController#redirectTo}.
- *
  *
  */
 Ext.define('coon.navport.model.NavigationModel', {
@@ -67,6 +66,16 @@ Ext.define('coon.navport.model.NavigationModel', {
             type : 'presence'
         }]
     }, {
+        /**
+         * Valid values for view, are, for example:
+         * - {String}: The FQN of the view to create, e.g. "conjoon.view.mail.MailEditor"
+         * - {Object}: An object containing JSON configuration for the view to create.
+         *             This allows, amongst others, to provide a unique id for the View
+         *             to create, making it possible to re-use one and the same view for
+         *             various routes. Example: {xclass:"cn_mail-maileditor", id : "unique_id"}.
+         *             Views will then later on not be identified by their "cn_routeId"-property,
+         *             but exacly this id.
+         */
         name : 'view',
         type : 'auto'
     }, {

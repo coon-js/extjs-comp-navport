@@ -155,6 +155,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
         t.expect(w).toBeFalsy();
 
+
         w = viewport.activateViewForHash('testroute');
 
         t.expect(w instanceof Ext.Panel).toBe(true);
@@ -226,7 +227,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
     t.it("lib-cn_navport#7", function(t) {
 
-        let gA = Ext.getApplication();
+        let gA = Ext.getApplication, w;
 
         let CONFIGURE_VIEW = false;
 
@@ -235,9 +236,17 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
                 getController : function(key) {
                     if (key === "MyController") {
                         return {
-                            configureView : function(view) {
-                                CONFIGURE_VIEW = true;
-                                return new Ext.Window();
+                            configureView : function(view, node, hash, created) {
+                                if (!Ext.isObject(CONFIGURE_VIEW)) {
+                                    CONFIGURE_VIEW = {view : [], hash : [], node : [], created : []};
+                                }
+
+                                CONFIGURE_VIEW.view.push(view);
+                                CONFIGURE_VIEW.hash.push(hash);
+                                CONFIGURE_VIEW.node.push(node);
+                                CONFIGURE_VIEW.created.push(created);
+
+                                return view;
                             }
                         }
                     }
@@ -249,7 +258,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
             renderTo : document.body
         } : {});
 
-        viewport.addPostLaunchInfo({
+        let postLaunchInfo = {
             navigation : [{
                 text  : 'Text',
                 route : 'testroute',
@@ -265,13 +274,41 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
                 route : 'testroute3',
                 view  : 'Ext.Panel',
                 packageController : 'MyControllerFOOBAR'
+            }, {
+                text  : 'Window',
+                route : 'window',
+                view  : 'Ext.Window',
+                packageController : 'MyController'
             }]
-        });
+        };
+
+        viewport.addPostLaunchInfo(postLaunchInfo);
 
         t.expect(CONFIGURE_VIEW).toBe(false);
         w = viewport.activateViewForHash('testroute');
+        t.expect(w.cn_routeId).toBe("testroute");
+        t.isInstanceOf(w, "Ext.Panel");
+        t.expect(CONFIGURE_VIEW.view).toEqual([w, w]);
+        t.expect(CONFIGURE_VIEW.hash).toEqual(["testroute", "testroute"]);
+        t.isInstanceOf(CONFIGURE_VIEW.node[0], "coon.navport.model.NavigationModel");
+        t.isInstanceOf(CONFIGURE_VIEW.node[1], "coon.navport.model.NavigationModel");
+        t.expect(CONFIGURE_VIEW.node[0]).toBe(CONFIGURE_VIEW.node[0]);
+        t.expect(CONFIGURE_VIEW.node[0]).toBe(viewport.down("treelist").getStore().getAt(0));
+        t.expect(CONFIGURE_VIEW.created).toEqual([true, false]);
+
+        // configureView only called once since comp does not get created
+        CONFIGURE_VIEW = false;
+        let newW = viewport.activateViewForHash('testroute');
+        t.expect(newW).toBe(w);
+        t.expect(CONFIGURE_VIEW.created).toEqual([false]);
+
+        // configureView only called once since window
+        // does not get activated after creating it
+        CONFIGURE_VIEW = false;
+        w = viewport.activateViewForHash('window');
         t.isInstanceOf(w, "Ext.Window");
-        t.expect(CONFIGURE_VIEW).toBe(true);
+        t.expect(CONFIGURE_VIEW.created).toEqual([true]);
+
 
         let SECOND = false;
         Ext.getApplication = function() {
@@ -292,7 +329,8 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         var v = viewport.activateViewForHash('testroute');
         t.expect(CONFIGURE_VIEW).toBe(false);
 
-        viewport.activateViewForHash('testroute2');
+        let k = viewport.activateViewForHash('testroute2');
+        t.expect(k.cn_routeId).toBe("testroute2");
         t.expect(SECOND).toBe(true);
 
         SECOND = false;
@@ -304,6 +342,79 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
         w.destroy();
         v = null;
         w = null;
+
+        Ext.getApplication = gA;
+
+    });
+
+
+    t.it("lib-cn_navport#8", function(t) {
+
+        let gA = Ext.getApplication, w1, w2, w3;
+
+        let CONFIGURE_VIEW = false;
+
+        Ext.getApplication = function() {
+            return {
+                getController : function(key) {
+                    if (key === "MyController") {
+                        return {
+                            configureView : function(view, node, hash, created) {
+                                if (!Ext.isArray(CONFIGURE_VIEW)) {
+                                    CONFIGURE_VIEW = [];
+                                }
+                                CONFIGURE_VIEW.push(view);
+                                return view;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        viewport = Ext.create('coon.navport.view.NavigationViewport', Ext.isModern ? {
+            renderTo : document.body
+        } : {});
+
+        let viewCfg = {xclass : 'Ext.Panel', id : Ext.id()},
+            postLaunchInfo = {
+            navigation : [{
+                text  : 'Text',
+                route : 'testroute',
+                view  : viewCfg,
+                packageController : 'MyController'
+            }, {
+                text  : 'Text',
+                route : 'testroute2',
+                view  : viewCfg,
+                packageController : 'MyController'
+            }, {
+                text  : 'Text',
+                route : 'testroute3',
+                view  : {xclass : 'Ext.Panel', id : Ext.id()},
+                packageController : 'MyController'
+            }]
+        };
+
+        viewport.addPostLaunchInfo(postLaunchInfo);
+
+        w1 = viewport.activateViewForHash('testroute');
+        w2 = viewport.activateViewForHash('testroute2');
+        w3 = viewport.activateViewForHash('testroute3');
+
+        t.expect(w1.cn_routeId).toBeUndefined();
+        t.expect(w2.cn_routeId).toBeUndefined();
+        t.expect(w3.cn_routeId).toBeUndefined();
+
+        t.isInstanceOf(w1, "Ext.Panel");
+        t.isInstanceOf(w2, "Ext.Panel");
+        t.isInstanceOf(w3, "Ext.Panel");
+        t.expect(w1).toBe(w2);
+        t.expect(w2).not.toBe(w3);
+
+
+        w1.destroy();
+        w3.destroy();
 
         Ext.getApplication = gA;
 
