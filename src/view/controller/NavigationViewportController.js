@@ -143,23 +143,27 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      * navigation for the view#s associated node, if any.
      * If the view is instantiated and the corresponding navigation has a packageController
      * configured with a valid PackageController loaded into the app, the controller's
-     * "configureView()"-method is called with the created view, the node triggering the routing
-     * and the available hash as the arguments, providing a chance to configure the
-     * view from inside the corresponding PackageController when it gets created.
+     * "configureView()"-method is called with the the following arguments in the following
+     * order:
+     * - view: The view either created or re-used for the view
+     * - created: true if the view was just created for the first time, otherwise false,
+     * e.g. when it becomes activated in its container
+     * - hash: The hash this method was called with
+     * - node: The {coon.navport.model.NavigationModel} associated with the hash.
      *
      * Flow:
      * =====
      *
      *                                      yes
-     *   route -> view for route existing? -----> configureView([view], [node], [hash], false)
+     *   route -> view for route existing? -----> configureView([view], false, [hash], [node])
      *                             |                  /|\                 |
      *                             | no                |                  |
      *                            \|/                  |                  |
-     *                      create the view            |                 \|/
-     *                             |                   |          setActiveItem(view)
+     *                   [view] = Ext.create(...)      |                 \|/
+     *                             |                   |          setActiveItem([view])
      *                             |                   |
      *                            \|/                  |
-     *            configureView([view], [node], [hash], true)
+     *            configureView([view], true, [hash], [node])
      *
      *
      * @param {String} hash
@@ -243,7 +247,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 // if view is existing and gets set as activeItem for
                 // the mainView again, with "created"-arg set to false
                 if (configurable) {
-                    newView = pctrl.configureView(newView, node, hash, false);
+                    newView = pctrl.configureView(newView,  false, hash, node);
                 }
                 contentPanel.setActiveItem(newView);
             } else {
@@ -252,14 +256,14 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 // call template method "configureView"
                 // if view was newly created,  "created"-arg set to true
                 if (configurable) {
-                    newView = pctrl.configureView(newView, node, hash, true);
+                    newView = pctrl.configureView(newView, true, hash, node);
                 }
 
                 if (!(newView instanceof Ext.Window)) {
                     Ext.suspendLayouts();
                     // configureView,  "created"-arg set to false
                     if (configurable) {
-                        newView = pctrl.configureView(newView, node, hash, false);
+                        newView = pctrl.configureView(newView, false, hash, node);
                     }
                     contentPanel.setActiveItem(contentPanel.add(newView));
                     Ext.resumeLayouts(true);

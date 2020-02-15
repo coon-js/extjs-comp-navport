@@ -236,7 +236,7 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
                 getController : function(key) {
                     if (key === "MyController") {
                         return {
-                            configureView : function(view, node, hash, created) {
+                            configureView : function(view, created, hash, node) {
                                 if (!Ext.isObject(CONFIGURE_VIEW)) {
                                     CONFIGURE_VIEW = {view : [], hash : [], node : [], created : []};
                                 }
