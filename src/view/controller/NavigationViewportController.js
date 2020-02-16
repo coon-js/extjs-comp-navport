@@ -323,8 +323,10 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
         // Modern Toolkit will remove all items in the tree when
         // involved in a destroy()-process, sending "null"-nodes
         // to this observer. check here if that is the case
-        // and exit silently
-        if (node === null && me.getView().isDestroying) {
+        // and exit silently.
+        // Additionally, selection might sometimes be null - if
+        // no node is available, we will exit here.
+        if (node === null) {
             return;
         }
         me.redirectTo(node);

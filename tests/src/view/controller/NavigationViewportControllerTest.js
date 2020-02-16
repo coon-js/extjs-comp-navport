@@ -145,8 +145,20 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         t.isStrict(rec.get('view'),    'myView');
         t.isStrict(rec.get('iconCls'), 'myIconCls');
         t.expect(rec.get('nodeNav')).toBeUndefined();
+    });
 
+
+    t.it("onNavigationTreeSelectionChange() - null values (lib-cn_navport#10)", function(t) {
+
+        viewportCtrl = Ext.create(
+            'coon.navport.view.controller.NavigationViewportController'
+        );
+
+        t.isntCalled("redirectTo", viewportCtrl);
+
+        viewportCtrl.onNavigationTreeSelectionChange({}, null);
 
     });
+
 
 });
