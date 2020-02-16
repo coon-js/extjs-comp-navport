@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -168,7 +168,18 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
                 t.expect(foofoo.isHidden()).toBe(true);
                 t.expect(barbar.isHidden()).toBe(true);
 
+                t.expect(controller.activateNavigationForNode('myId')).toBe('myId');
+                t.expect(foobar.isHidden()).toBe(true);
+                t.expect(barfoo.isHidden()).toBe(false);
+                t.expect(foofoo.isHidden()).toBe(true);
+                t.expect(barbar.isHidden()).toBe(true);
+
                 t.expect(controller.activateNavigationForNode('unknown')).toBe(null);
+
+                t.expect(foobar.isHidden()).toBe(true);
+                t.expect(barfoo.isHidden()).toBe(true);
+                t.expect(foofoo.isHidden()).toBe(true);
+                t.expect(barbar.isHidden()).toBe(true);
 
                 t.expect(controller.activateNavigationForNode('myId')).toBe('myId');
                 t.expect(foobar.isHidden()).toBe(true);

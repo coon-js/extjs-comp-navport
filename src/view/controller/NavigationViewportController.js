@@ -95,7 +95,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             view    = me.getView(),
             navTree = view.lookup('cn_navport_ref_conwrap').lookup('cn_navport_ref_navtree'),
             store   = navTree.getStore(),
-            navigationModel;
+            navigationModel, nodeNavItems;
 
         if (!Ext.isArray(items)) {
             Ext.raise({
@@ -107,10 +107,15 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
         for (var i = 0, len = items.length; i < len; i++) {
             navItem = items[i];
-            navigationModel = me.createNavigationModelFrom(navItem);
-            if (navItem.nodeNav) {
-                tbar.addNodeNavigation(navItem.nodeNav, navigationModel.getId());
+            [navigationModel, nodeNavItems] = me.createNavigationModelFrom(navItem);
+
+            for (let [nodeId, nodeNav] of Object.entries(nodeNavItems)) {
+                tbar.addNodeNavigation(nodeNav, nodeId);
             }
+
+            //if (navItem.nodeNav) {
+            //    tbar.addNodeNavigation(navItem.nodeNav, navigationModel.getId());
+            //}
 
             store.getRootNode().appendChild(navigationModel);
         }
@@ -373,7 +378,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
          *
          * @param {Object} config
          *
-         * @returns {coon.navport.model.NavigationModel}
+         * @returns {Array} The first index representing the {coon.navport.model.NavigationModel},
+         * the second index holding an object mapping all NavigationModel-ids with their node-navigation,
+         * if available.
          *
          * @throws if the configuration was not valid
          */
@@ -381,7 +388,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
             var me = this,
                 mandatoryFields = ['text', 'route'],
-                manField, navCon;
+                manField, navCon, nodeNavItems = {};
 
             for (var a = 0, lena = mandatoryFields.length; a < lena; a++) {
                 manField = mandatoryFields[a];
@@ -410,13 +417,19 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 'coon.navport.model.NavigationModel', navCon
             );
 
+            if (Ext.isArray(config.nodeNav) && config.nodeNav.length) {
+                nodeNavItems[node.getId()] = config.nodeNav;
+            }
+
             if (config.children) {
                 config.children.forEach(function(child) {
-                    node.appendChild(me.createNavigationModelFrom(child));
+                    let [subNode, subNodeNav] = me.createNavigationModelFrom(child);
+                    Ext.apply(nodeNavItems, subNodeNav);
+                    node.appendChild(subNode);
                 });
             }
 
-            return node;
+            return [node, nodeNavItems];
         }
     }
 

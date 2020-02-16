@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -136,7 +136,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      * to be visible.
      *
      * @return {String} nodeId or null if there are no registered nodeNavItemIds
-     * in this class/if nodeNavItemIds has no property "nodeId"
+     * in this class
      *
      * @see switchItemVisibility
      */
@@ -145,13 +145,18 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
             activeId = me.activeNodeId,
             itemIds;
 
-        if (!me.nodeNavItemIds || !me.nodeNavItemIds.hasOwnProperty(nodeId)) {
+        // no node navigation - exit
+        if (!me.nodeNavItemIds) {
             return null;
         }
 
+        // do nothing if nothing changes in nav
         if (nodeId === activeId) {
             return nodeId;
         }
+
+        // set to new nodeId - its okay if not existing
+        me.activeNodeId = nodeId;
 
         // set old hidden
         if (me.nodeNavItemIds[activeId]) {
@@ -159,6 +164,11 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
             for (var i = 0, len = itemIds.length; i < len; i++) {
                 me.switchItemVisibility(itemIds[i], false);
             }
+        }
+
+        // no node-navigation to show? Exit.
+        if (!me.nodeNavItemIds[nodeId]) {
+            return null;
         }
 
         // set new visible
@@ -169,7 +179,6 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
             }
         }
 
-        me.activeNodeId = nodeId;
 
         return nodeId;
     },

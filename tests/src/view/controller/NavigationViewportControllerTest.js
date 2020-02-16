@@ -64,7 +64,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
 
     t.it('createNavigationModelFrom()', function(t) {
 
-        var exc, e, rec;
+        var exc, e, rec, nodeNav;
 
         viewportCtrl = Ext.create(
             'coon.navport.view.controller.NavigationViewportController'
@@ -88,12 +88,14 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         );}catch(e){exc = e};
         t.expect(exc.msg).toContain('invalid configuration');
 
-        rec = viewportCtrl.createNavigationModelFrom(
-            {id : 'a', text : 'text', route : 'route', nodeNav : {},
+        [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
+            {id : 'a', text : 'text', route : 'route', nodeNav : [],
                 view : 'myView', iconCls : 'myIconCls', packageController : "MyController"}
         );
 
         t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
+
+        t.expect(nodeNav).toEqual({});
 
         t.isStrict(rec.getId(),        'a');
         t.isStrict(rec.get('leaf'),    true);
@@ -109,20 +111,25 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
 
     t.it('createNavigationModelFrom() - with child nodes', function(t) {
 
-        var exc, e, rec;
+        var exc, e, rec, nodeNav;
 
         viewportCtrl = Ext.create(
             'coon.navport.view.controller.NavigationViewportController'
         );
 
-        rec = viewportCtrl.createNavigationModelFrom(
-            {id : 'a', text : 'text', route : 'route', nodeNav : {},
-                view : 'myView', iconCls : 'myIconCls', children : [{text : 'childtext', route: 'childroute'}]}
+        [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
+            {id : 'a', text : 'text', route : 'route', nodeNav : [{text : "foo"}],
+                view : 'myView', iconCls : 'myIconCls', children : [{id : "b", text : 'childtext', route: 'childroute', nodeNav : [{text : "childfoo"}]}]}
         );
 
         t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
 
         t.expect(rec.childNodes.length).toBe(1);
+
+        t.expect(nodeNav).toEqual({
+            "a" : [{text : "foo"}],
+            "b" : [{text : "childfoo"}]
+        });
 
         let childRec = rec.childNodes[0];
 
