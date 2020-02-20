@@ -185,6 +185,19 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
 
 
     /**
+     * Returns true if a node navigation for the specific id exists,
+     * otherwise false.
+     *
+     * @param {String} id
+     *
+     * @returns {Boolean}
+     */
+    hasNodeNavigation : function(id) {
+        return !!this.nodeNavItemIds[id];
+    },
+
+
+    /**
      * Adds new items this controller's toolbar. This method will check the entries
      * in items for validity, and also apply itemId's if not already specified
      * in the items' entries. Additionally, a flag "cn_hidden" will be set

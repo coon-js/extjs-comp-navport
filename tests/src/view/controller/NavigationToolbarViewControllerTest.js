@@ -217,7 +217,20 @@ describe('coon.navport.view.controller.NavigationToolbarViewControllerTest', fun
                 t.expect(foofoo.isHidden()).toBe(true);
                 t.expect(barbar.isHidden()).toBe(true);
 
+                next(controller, toolbar);
             });
+        }
+    }, {
+        action : function(next, controller, toolbar) {
+
+            t.it("hasNodeNavigation()", function(t) {
+
+                t.expect(controller.hasNodeNavigation("myId")).toBe(true);
+                t.expect(controller.hasNodeNavigation("myId2")).toBe(true);
+                t.expect(controller.hasNodeNavigation("foofoobarbar")).toBe(false);
+
+            });
+
         }
     })
 

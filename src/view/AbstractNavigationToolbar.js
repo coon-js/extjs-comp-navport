@@ -104,6 +104,21 @@ Ext.define('coon.navport.view.AbstractNavigationToolbar', {
 
 
     /**
+     * Checks whether a node-navigation for the specified id exists.
+     *
+     * @param {String} id the id associated with this items.
+     *
+     * @return {Boolean}
+     *
+     * @see coon.navport.view.controller.NavigationToolbarViewController#hasNodeNavigation
+     * @see #showNavigationForNode
+     */
+    hasNodeNavigation : function(id) {
+        return this.getController().hasNodeNavigation(id);
+    },
+
+
+    /**
      * Shows the items associated with the specified id. Any previously shown
      * items will be hidden.
      *
