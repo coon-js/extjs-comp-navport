@@ -89,7 +89,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         t.expect(exc.msg).toContain('invalid configuration');
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
-            {id : 'a', text : 'text', route : 'route', nodeNav : [],
+            {id : 'a', text : 'text', route : 'route', nodeNav : [], inheritNodeNav : true,
                 view : 'myView', iconCls : 'myIconCls', packageController : "MyController"}
         );
 
@@ -103,6 +103,7 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         t.isStrict(rec.get('route'),   'route');
         t.isStrict(rec.get('view'),    'myView');
         t.isStrict(rec.get('iconCls'), 'myIconCls');
+        t.isStrict(rec.get('inheritNodeNav'), true);
         t.isStrict(rec.get('packageController'), 'MyController');
         t.expect(rec.get('nodeNav')).toBeUndefined();
 
@@ -157,6 +158,92 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
         t.isntCalled("redirectTo", viewportCtrl);
 
         viewportCtrl.onNavigationTreeSelectionChange({}, null);
+
+    });
+
+
+    t.it('activateNodeNavigation()', function(t) {
+
+
+        let rec,
+            nodeNav,
+            getNode = function(id) {
+            return rec.findChildBy(function (node) {
+                if (node.getId() === id) {
+                    return true;
+                }
+            }, null, true);
+        };
+
+        viewportCtrl = Ext.create(
+            'coon.navport.view.controller.NavigationViewportController'
+        );
+
+        viewportCtrl.lookup = function () {
+            return {
+                hasNodeNavigation : function (id) {
+
+                    if (nodeNav) {
+                        return !!nodeNav[id];
+                    }
+                    return false;
+                },
+                showNavigationForNode : function (nodeId) {
+
+                }
+            }
+        };
+
+        [rec, nodeNav] = viewportCtrl.createNavigationModelFrom({
+            text : 'text',
+            route : 'route',
+            children : [{
+                id : "a",
+                text : 'text_1',
+                route : 'route_1',
+                nodeNav : [{}],
+                children : [{
+                    id : "id_1_2",
+                    text : 'text_1_2',
+                    route : 'route_1_2',
+                    inheritNodeNav : true,
+                    children : [{
+                        id : "text_1_2_1",
+                        text : 'text_1_2_1',
+                        route : 'route_1_2_1',
+                    }, {
+                        id : "id_1_2_2",
+                        text : 'text_1_2_2',
+                        route : 'route_1_2_2',
+                        inheritNodeNav : true,
+                        children : [{
+                            id : "id_1_2_2_1",
+                            text : 'text_1_2_2_1',
+                            route : 'route_1_2_2_1',
+                            children : [{
+                                id : "id_1_2_2_1_1",
+                                text : 'text_1_2_2_1_1',
+                                route : 'route_1_2_2_1_1',
+                                inheritNodeNav : true
+                            }]
+                        }]
+                    }]
+                }, {
+                    text : 'text_1_3',
+                    route : 'route_1_3'
+                }]
+            }, {
+                nodeNav : [{}],
+                id : "id_2",
+                text : 'text_2',
+                route : 'route_2',
+            }]
+        });
+
+        t.expect(viewportCtrl.activateNodeNavigation(getNode("id_1_2_2"))).toBe("a");
+        t.expect(viewportCtrl.activateNodeNavigation(getNode("id_1_2_1"))).toBe(null);
+        t.expect(viewportCtrl.activateNodeNavigation(getNode("id_2"))).toBe("id_2");
+        t.expect(viewportCtrl.activateNodeNavigation(getNode("id_1_2_2_1_1"))).toBe(null);
 
     });
 

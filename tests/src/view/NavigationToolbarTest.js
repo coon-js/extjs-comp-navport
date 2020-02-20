@@ -97,4 +97,17 @@ describe('coon.navport.view.NavigationToolbarTest', function(t) {
         toolbar.showNavigationForNode('id');
         t.notOk(toolbar.down('#foo').isHidden());
     });
+
+
+    t.it("Test hasNodeNavigation()", function(t) {
+        toolbar = Ext.create(
+            'coon.navport.view.NavigationToolbar', toolbarConfig);
+
+        t.isCalled("hasNodeNavigation", toolbar.getController());
+
+        toolbar.addNodeNavigation(
+            [{xtype : 'button', itemId : 'foo'}], 'id');
+
+        t.expect(toolbar.hasNodeNavigation("id")).toBe(true);
+    });
 });

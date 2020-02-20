@@ -193,7 +193,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      * @returns {Boolean}
      */
     hasNodeNavigation : function(id) {
-        return !!this.nodeNavItemIds[id];
+        return this.nodeNavItemIds && !!this.nodeNavItemIds[id];
     },
 
 

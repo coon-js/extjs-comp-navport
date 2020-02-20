@@ -185,8 +185,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             conwrap      = me.lookup('cn_navport_ref_conwrap'),
             navTree      = conwrap.lookup('cn_navport_ref_navtree'),
             store        = navTree.getStore(),
-            contentPanel = conwrap.lookup('cn_navport_ref_conctr'),
-            tbar         = me.lookup('cn_navport_ref_tbar');
+            contentPanel = conwrap.lookup('cn_navport_ref_conctr');
 
         let newView,
             node;
@@ -218,7 +217,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
         navTree.suspendEvents();
         navTree.setSelection(node);
         navTree.resumeEvents();
-        tbar.showNavigationForNode(node.getId());
+
+        // look up the nodeNavigation to use
+        me.activateNodeNavigation(node);
 
         if (node.get('view')) {
 
@@ -353,6 +354,49 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
     privates : {
 
+
+        /**
+         * Looks up information in the passed node to decide which node-navigation
+         * should be displayed. Displays the passed node's node-navigation if
+         * available, otherwise it searches its parents if the inheritNodeNav-field
+         * is set to true and returns the first node-navigation found.
+         * @param {coon.navport.model.NavigationModel} node
+         *
+         * @returns {null|String} Returns null if there is no node-navigation available for
+         * the specified node.
+         */
+        activateNodeNavigation : function(node) {
+
+            const
+                me = this,
+                tbar = me.lookup('cn_navport_ref_tbar');
+
+            let idForNodeNav, pNode = node;
+
+            while (pNode) {
+
+                idForNodeNav = pNode.getId();
+                if (!pNode.get("inheritNodeNav")) {
+                    break;
+                }
+
+                pNode = pNode.parentNode;
+            }
+            if (!tbar.hasNodeNavigation(idForNodeNav)) {
+                return null;
+            }
+
+            tbar.showNavigationForNode(idForNodeNav);
+            return idForNodeNav;
+        },
+
+
+        /**
+         * Returns true if the NavigationViewport can safely manage to close the
+         * currentView.
+         *
+         * @returns {boolean}
+         */
         isCurrentViewClosable : function() {
 
             var me = this;
@@ -365,6 +409,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
         },
 
 
+        /**
+         * Helper for closin the current view.
+         */
         closeCurrentView : function() {
 
             var me = this;
@@ -413,7 +460,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 }
             }
 
-            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls,packageController');
+            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls,packageController,inheritNodeNav');
 
             let node = Ext.create(
                 'coon.navport.model.NavigationModel', navCon

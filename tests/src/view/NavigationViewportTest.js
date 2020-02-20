@@ -155,7 +155,6 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
         t.expect(w).toBeFalsy();
 
-
         w = viewport.activateViewForHash('testroute');
 
         t.expect(w instanceof Ext.Panel).toBe(true);
@@ -398,9 +397,14 @@ describe('coon.navport.view.NavigationViewportTest', function(t) {
 
         viewport.addPostLaunchInfo(postLaunchInfo);
 
+        // lib-cn_navport#11
+        t.isCalled("activateNodeNavigation", viewport.getController());
+
         w1 = viewport.activateViewForHash('testroute');
         w2 = viewport.activateViewForHash('testroute2');
         w3 = viewport.activateViewForHash('testroute3');
+
+
 
         t.expect(w1.cn_routeId).toBeUndefined();
         t.expect(w2.cn_routeId).toBeUndefined();
