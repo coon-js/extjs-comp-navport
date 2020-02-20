@@ -81,6 +81,14 @@ Ext.define('coon.navport.model.NavigationModel', {
     }, {
         name : 'packageController',
         type : 'string'
+    }, {
+        /**
+         * Whether this node should inherit the node navigation from its
+         * parent node.
+         */
+        name : 'inheritNodeNav',
+        type : 'bool',
+        defaultValue : false
     }],
 
     toUrl : function() {

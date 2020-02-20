@@ -82,6 +82,7 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
         t.expect(model instanceof getModelBaseClass()).toBeTruthy();
     });
 
+
     /**
      * Test Schema
      */
@@ -89,12 +90,14 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
         t.expect(model.schema instanceof getSchemaClass()).toBeTruthy();
     });
 
+
     /**
      * Test EntityName
      */
     t.it('Should return the entity name', function(t) {
         t.expect(model.schema.getEntityName(model)).toBe(entityName);
     });
+
 
     /**
      * Test getter fields
@@ -135,12 +138,14 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
         }
     });
 
+
     /**
      * Test EntityName
      */
     t.it('Should return proper value for toUrl', function(t) {
         t.expect(model.toUrl()).toBe(model.get('route'));
     });
+
 
     /**
      * Test Field packageController
@@ -149,6 +154,18 @@ describe('coon.navport.model.NavigationModelTest', function(t) {
 
         t.expect(model.getField("packageController")).toBeDefined();
         t.expect(model.getField("packageController").type).toBe("string");
+
+    });
+
+
+    /**
+     * Test Field inheritNodeNav
+     */
+    t.it('Should have inheritNodeNav-field configured', function(t) {
+
+        t.expect(model.getField("inheritNodeNav")).toBeDefined();
+        t.expect(model.getField("inheritNodeNav").type).toBe("bool");
+        t.expect(model.getField("inheritNodeNav").defaultValue).toBe(false);
 
     });
 
