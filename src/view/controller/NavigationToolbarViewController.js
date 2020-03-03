@@ -131,6 +131,8 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      * manage the visibility state of this item, and leave it be.
      * Items associated with an existing activeNodeId will be set to be hidden.
      * activeNodeId will be set to the new id.
+     * The nodeId does not necessarily have to hold a navigation. If that is not the case,
+     * previous navigation will simply be set to hidden.
      *
      * @param {String} nodeId the id for which the associated items should be set
      * to be visible.

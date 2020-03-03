@@ -382,11 +382,13 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
 
                 pNode = pNode.parentNode;
             }
-            if (!tbar.hasNodeNavigation(idForNodeNav)) {
-                return null;
-            }
 
             tbar.showNavigationForNode(idForNodeNav);
+
+            if (!tbar.hasNodeNavigation(idForNodeNav)) {
+                idForNodeNav = null;
+            }
+
             return idForNodeNav;
         },
 
