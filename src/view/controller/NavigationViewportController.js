@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -27,16 +27,16 @@
  * The View Controller for the NavigationViewport.
  *
  */
-Ext.define('coon.navport.view.controller.NavigationViewportController', {
+Ext.define("coon.navport.view.controller.NavigationViewportController", {
 
-    extend : 'Ext.app.ViewController',
+    extend : "Ext.app.ViewController",
 
     requires : [
-        'coon.navport.view.pages.Page404',
-        'coon.navport.model.NavigationModel'
+        "coon.navport.view.pages.Page404",
+        "coon.navport.model.NavigationModel"
     ],
 
-    alias : 'controller.cn_navport-ctrl',
+    alias : "controller.cn_navport-ctrl",
 
     /**
      * Stores the current view of the viewport.
@@ -45,13 +45,13 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
     currentView : null,
 
     control : {
-        'cn_navport-navtree' : {
-            selectionchange : 'onNavigationTreeSelectionChange'
+        "cn_navport-navtree" : {
+            selectionchange : "onNavigationTreeSelectionChange"
         },
 
-        'cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]' : Ext.isModern ? {
-            tap : 'onHideNavigationClick'
-        } : {click : 'onHideNavigationClick'}
+        "cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]" : Ext.isModern ? {
+            tap : "onHideNavigationClick"
+        } : {click : "onHideNavigationClick"}
 
     },
 
@@ -68,9 +68,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * @see coon.navport.view.NavigationToolbar#addPermanentNavigation
      */
-    addPermaNavItems : function(items) {
+    addPermaNavItems : function (items) {
         var me   = this,
-            tbar = me.lookup('cn_navport_ref_tbar');
+            tbar = me.lookup("cn_navport_ref_tbar");
 
         return tbar.addPermanentNavigation(items);
     },
@@ -87,20 +87,20 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * @see #createNavigationModelFrom
      */
-    addMainNavigationItems : function(items) {
+    addMainNavigationItems : function (items) {
 
         var me      = this,
             navItem = null,
-            tbar    = me.lookup('cn_navport_ref_tbar'),
+            tbar    = me.lookup("cn_navport_ref_tbar"),
             view    = me.getView(),
-            navTree = view.lookup('cn_navport_ref_conwrap').lookup('cn_navport_ref_navtree'),
+            navTree = view.lookup("cn_navport_ref_conwrap").lookup("cn_navport_ref_navtree"),
             store   = navTree.getStore(),
             navigationModel, nodeNavItems;
 
         if (!Ext.isArray(items)) {
             Ext.raise({
                 sourceClass : Ext.getClassName(this),
-                items       : nav,
+                items       : items,
                 msg         : Ext.getClassName(this) + "#addNavigationItems needs items to be an array"
             });
         }
@@ -127,12 +127,12 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * @param {Boolean} hide True to hide the NavigationTree, otherwise false.
      */
-    hideNavigation : function(hide) {
+    hideNavigation : function (hide) {
 
         var me          = this,
             view        = me.getView(),
-            contentWrap = view.lookup('cn_navport_ref_conwrap'),
-            navTree     = contentWrap.lookup('cn_navport_ref_navtree');
+            contentWrap = view.lookup("cn_navport_ref_conwrap"),
+            navTree     = contentWrap.lookup("cn_navport_ref_navtree");
 
         navTree.setHidden(hide === true);
 
@@ -178,26 +178,26 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * @see coon.navport.view.NavigationToolbar#showNavigationForNode
      */
-    addViewForHash : function(hash, defaultToken) {
+    addViewForHash : function (hash, defaultToken) {
 
         const
             me           = this,
-            conwrap      = me.lookup('cn_navport_ref_conwrap'),
-            navTree      = conwrap.lookup('cn_navport_ref_navtree'),
+            conwrap      = me.lookup("cn_navport_ref_conwrap"),
+            navTree      = conwrap.lookup("cn_navport_ref_navtree"),
             store        = navTree.getStore(),
-            contentPanel = conwrap.lookup('cn_navport_ref_conctr');
+            contentPanel = conwrap.lookup("cn_navport_ref_conctr");
 
         let newView,
             node;
 
-        hash = (hash || '').toLowerCase();
+        hash = (hash || "").toLowerCase();
 
-        if (hash == '') {
+        if (hash === "") {
             return null;
         }
 
-        node = store.getRoot().findChildBy(function(record) {
-            var route = (record.get('route') || '').toLowerCase();
+        node = store.getRoot().findChildBy(function (record) {
+            var route = (record.get("route") || "").toLowerCase();
             if (route === hash) {
                 return true;
             }
@@ -221,9 +221,9 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
         // look up the nodeNavigation to use
         me.activateNodeNavigation(node);
 
-        if (node.get('view')) {
+        if (node.get("view")) {
 
-            let viewCfg = node.get('view'),
+            let viewCfg = node.get("view"),
                 pctrl, configurable = false;
 
             if (node.get("packageController")) {
@@ -245,7 +245,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 // apply the routeId if the view is not identifiable
                 // via a given id
                 viewCfg.cn_routeId = hash;
-                newView = contentPanel.down('component[cn_routeId=' + hash + ']');
+                newView = contentPanel.down("component[cn_routeId=" + hash + "]");
             }
 
             if (newView) {
@@ -299,7 +299,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * see {@link coon.navport.view.NavigationViewport#showUnmatchedRouteNotification}
      */
-    nodeNotFound : function(hash, defaultToken) {
+    nodeNotFound : function (hash, defaultToken) {
         var me   = this,
             view = me.getView();
 
@@ -318,7 +318,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      * see {@link #redirectTo}
      * see {@link coon.navport.model.NavigationModel#toUrl}.
      */
-    onNavigationTreeSelectionChange : function(tree, node) {
+    onNavigationTreeSelectionChange : function (tree, node) {
         const me = this;
 
         // Modern Toolkit will remove all items in the tree when
@@ -342,11 +342,11 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
      *
      * see {@link #hideNavigation}
      */
-    onHideNavigationClick : function(btn) {
+    onHideNavigationClick : function (btn) {
 
         var me      = this,
             view    = me.getView(),
-            navTree = view.lookup('cn_navport_ref_conwrap').lookup('cn_navport_ref_navtree');
+            navTree = view.lookup("cn_navport_ref_conwrap").lookup("cn_navport_ref_navtree");
 
         me.hideNavigation(navTree.isVisible() === true);
     },
@@ -365,11 +365,11 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
          * @returns {null|String} Returns null if there is no node-navigation available for
          * the specified node.
          */
-        activateNodeNavigation : function(node) {
+        activateNodeNavigation : function (node) {
 
             const
                 me = this,
-                tbar = me.lookup('cn_navport_ref_tbar');
+                tbar = me.lookup("cn_navport_ref_tbar");
 
             let idForNodeNav, pNode = node;
 
@@ -399,7 +399,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
          *
          * @returns {boolean}
          */
-        isCurrentViewClosable : function() {
+        isCurrentViewClosable : function () {
 
             var me = this;
 
@@ -407,14 +407,14 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 return me.currentView.canNavigationViewportCloseView();
             }
 
-            return false
+            return false;
         },
 
 
         /**
          * Helper for closin the current view.
          */
-        closeCurrentView : function() {
+        closeCurrentView : function () {
 
             var me = this;
 
@@ -435,16 +435,16 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
          *
          * @throws if the configuration was not valid
          */
-        createNavigationModelFrom : function(config) {
+        createNavigationModelFrom : function (config) {
 
             var me = this,
-                mandatoryFields = ['text', 'route'],
+                mandatoryFields = ["text", "route"],
                 manField, navCon, nodeNavItems = {};
 
             for (var a = 0, lena = mandatoryFields.length; a < lena; a++) {
                 manField = mandatoryFields[a];
 
-                if (!config.hasOwnProperty(manField) ||
+                if (!Object.prototype.hasOwnProperty.call(config, manField) ||
                     !config[manField]) {
                     Ext.raise({
                         sourceClass : Ext.getClassName(this),
@@ -462,10 +462,10 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
                 }
             }
 
-            navCon = Ext.copy({}, config, 'leaf,route,view,id,text,iconCls,packageController,inheritNodeNav');
+            navCon = Ext.copy({}, config, "leaf,route,view,id,text,iconCls,packageController,inheritNodeNav");
 
             let node = Ext.create(
-                'coon.navport.model.NavigationModel', navCon
+                "coon.navport.model.NavigationModel", navCon
             );
 
             if (Ext.isArray(config.nodeNav) && config.nodeNav.length) {
@@ -473,7 +473,7 @@ Ext.define('coon.navport.view.controller.NavigationViewportController', {
             }
 
             if (config.children) {
-                config.children.forEach(function(child) {
+                config.children.forEach(function (child) {
                     let [subNode, subNodeNav] = me.createNavigationModelFrom(child);
                     Ext.apply(nodeNavItems, subNodeNav);
                     node.appendChild(subNode);

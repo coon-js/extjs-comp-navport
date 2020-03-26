@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -29,33 +29,33 @@ const harness = new Siesta.Harness.Browser.ExtJS();
 let isModern = window.location.href.indexOf("toolkit=modern") !== -1;
 
 harness.configure({
-    title          : 'lib-cn_navport - ' + (isModern ? "modern" : "classic"),
+    title          : "lib-cn_navport - " + (isModern ? "modern" : "classic"),
     disableCaching : true,
     loaderPath     : {
 
-        'coon.test.view.mock' : './classic/src/view/mock',
+        "coon.test.view.mock" : "./classic/src/view/mock",
 
         /**
          * Universal
          */
-        'coon.navport' : '../src',
-        'coon.navport.view.NavigationToolbar' : '../' + (isModern ? 'modern' : 'classic') + '/src/view/NavigationToolbar.js',
-        'coon.navport.view.controller.NavigationToolbarViewController' : '../src/view/controller/NavigationToolbarViewController.js',
-        'coon.navport.view.controller.NavigationViewportController' : '../src/view/controller/NavigationViewportController.js',
-        'coon.comp.window.LockingWindow'    : '../../lib-cn_comp/src/window/LockingWindow.js',
-        'coon.comp.container.Viewport' : '../../lib-cn_comp/' + (isModern ? 'modern' : 'classic') + '/src/container/Viewport.js',
-        'coon.comp.list.Tree'      : '../../lib-cn_comp/src/list/Tree.js',
-        'coon.navport.view' : '../src/view',
+        "coon.navport" : "../src",
+        "coon.navport.view.NavigationToolbar" : "../" + (isModern ? "modern" : "classic") + "/src/view/NavigationToolbar.js",
+        "coon.navport.view.controller.NavigationToolbarViewController" : "../src/view/controller/NavigationToolbarViewController.js",
+        "coon.navport.view.controller.NavigationViewportController" : "../src/view/controller/NavigationViewportController.js",
+        "coon.comp.window.LockingWindow"    : "../../lib-cn_comp/src/window/LockingWindow.js",
+        "coon.comp.container.Viewport" : "../../lib-cn_comp/" + (isModern ? "modern" : "classic") + "/src/container/Viewport.js",
+        "coon.comp.list.Tree"      : "../../lib-cn_comp/src/list/Tree.js",
+        "coon.navport.view" : "../src/view",
 
-        'Ext.Package' : '../../../remote/package-loader/src/Package.js',
-        'Ext.package' : '../../../remote/package-loader/src/package',
+        "Ext.Package" : "../../../remote/package-loader/src/Package.js",
+        "Ext.package" : "../../../remote/package-loader/src/package",
 
         /**
          * Requirements
          */
-        'coon.core'        : '../../lib-cn_core/src',
-        'coon.comp.app'    : '../../lib-cn_comp/src/app',
-        'coon.comp.window' : '../../lib-cn_comp/classic/src/window'
+        "coon.core"        : "../../lib-cn_core/src",
+        "coon.comp.app"    : "../../lib-cn_comp/src/app",
+        "coon.comp.window" : "../../lib-cn_comp/classic/src/window"
     },
     preload        : [
         coon.tests.config.paths.extjs[isModern ? "modern" : "classic" ].css.url,
@@ -64,59 +64,59 @@ harness.configure({
 });
 
 harness.start({
-    group : 'universal',
+    group : "universal",
     items : [{
-        group : 'app',
+        group : "app",
         items : [
-            'src/app/PackageControllerTest.js'
+            "src/app/PackageControllerTest.js"
         ]
     },{
-        group : 'data',
+        group : "data",
         items : [{
-            group : 'schema',
+            group : "schema",
             items : [
-                'src/data/schema/BaseSchemaTest.js'
+                "src/data/schema/BaseSchemaTest.js"
             ]
         }]
     }, {
-        group : 'mixin',
+        group : "mixin",
         items : [
-            'src/mixin/ViewportManageableTest.js'
+            "src/mixin/ViewportManageableTest.js"
         ]
     }, {
-        group : 'model',
+        group : "model",
         items : [
-            'src/model/NavigationModelTest.js'
+            "src/model/NavigationModelTest.js"
         ]
     }, {
-        group : 'store',
+        group : "store",
         items : [
-            'src/store/NavigationTreeStoreTest.js'
+            "src/store/NavigationTreeStoreTest.js"
         ]
     }, {
-        group : 'view',
+        group : "view",
         items : [
-            'src/view/NavigationTreeTest.js',
-            'src/view/ContentContainerTest.js',
-            'src/view/ContentWrapTest.js',
-            'src/view/NavigationToolbarTest.js',
-            'src/view/NavigationViewportTest.js', {
-            group : 'controller',
-            items : [
-                'src/view/controller/NavigationToolbarViewControllerTest.js',
-                'src/view/controller/NavigationViewportControllerTest.js'
-            ]
-        }, {
-            group: 'pages',
-            items: ['src/view/pages/Page404Test.js']
-        }, {
-            group : '(isolated tests)',
-            items : [
-                'src/view/NavigationViewportIsolatedTest_1.js',
-                'src/view/NavigationViewportIsolatedTest_2.js',
-                'src/view/NavigationViewportIsolatedTest_3.js',
-                'src/view/NavigationViewportIsolatedTest_4.js'
-            ]
-        }]
+            "src/view/NavigationTreeTest.js",
+            "src/view/ContentContainerTest.js",
+            "src/view/ContentWrapTest.js",
+            "src/view/NavigationToolbarTest.js",
+            "src/view/NavigationViewportTest.js", {
+                group : "controller",
+                items : [
+                    "src/view/controller/NavigationToolbarViewControllerTest.js",
+                    "src/view/controller/NavigationViewportControllerTest.js"
+                ]
+            }, {
+                group: "pages",
+                items: ["src/view/pages/Page404Test.js"]
+            }, {
+                group : "(isolated tests)",
+                items : [
+                    "src/view/NavigationViewportIsolatedTest_1.js",
+                    "src/view/NavigationViewportIsolatedTest_2.js",
+                    "src/view/NavigationViewportIsolatedTest_3.js",
+                    "src/view/NavigationViewportIsolatedTest_4.js"
+                ]
+            }]
     }]
 });

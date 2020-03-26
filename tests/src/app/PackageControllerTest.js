@@ -23,26 +23,44 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.app.PackageControllerTest', function(t) {
+describe("coon.navport.app.PackageControllerTest", function (t) {
+
+    let ctrl;
+
+    t.beforeEach(function () {
+
+    });
+
+    t.afterEach(function () {
+
+        if (ctrl) {
+            ctrl.destroy();
+            ctrl = null;
+        }
+
+    });
 
 
-    t.it("Should create the Controller", function(t) {
-        ctrl = Ext.create('coon.navport.app.PackageController');
+    // +--------------------------------------
+    // | Tests
+    // +--------------------------------------
+    t.it("Should create the Controller", function (t) {
+        ctrl = Ext.create("coon.navport.app.PackageController");
 
         t.expect(ctrl.autoDefaultToken).toBe(null);
         t.expect(ctrl instanceof Ext.app.Controller).toBe(true);
     });
 
 
-    t.it("init()", function(t) {
-        ctrl = Ext.create('coon.navport.app.PackageController');
+    t.it("init()", function (t) {
+        ctrl = Ext.create("coon.navport.app.PackageController");
 
         var app = {
             defaultToken    : null,
-            getDefaultToken : function() {
+            getDefaultToken : function () {
                 return this.defaultToken;
             },
-            setDefaultToken : function(token) {
+            setDefaultToken : function (token) {
                 this.defaultToken = token;
             }
         };
@@ -50,84 +68,84 @@ describe('coon.navport.app.PackageControllerTest', function(t) {
         ctrl.init(app);
         t.expect(app.getDefaultToken()).toBe(ctrl.autoDefaultToken);
 
-        app.setDefaultToken('myToken');
+        app.setDefaultToken("myToken");
         var oldToken = ctrl.autoDefaultToken;
         ctrl.init(app);
-        t.expect(app.getDefaultToken()).toBe('myToken');
+        t.expect(app.getDefaultToken()).toBe("myToken");
         t.expect(ctrl.autoDefaultToken).toBe(oldToken);
 
     });
 
 
-    t.it("processRouteFor()", function(t) {
-        ctrl = Ext.create('coon.navport.app.PackageController');
+    t.it("processRouteFor()", function (t) {
+        ctrl = Ext.create("coon.navport.app.PackageController");
 
         var CLEANUP = 0,
             ACTIVATED = 0,
             app = {
-                getMainView : function() {
+                getMainView : function () {
                     return {
-                        cleanup : function() {
+                        cleanup : function () {
                             CLEANUP++;
                         }
-                    }
+                    };
                 },
-                activateViewForHash : function() {
+                activateViewForHash : function () {
                     ACTIVATED++;
                 }
             };
 
-        ctrl.getApplication = function() {
+        ctrl.getApplication = function () {
             return app;
         };
 
         t.expect(ACTIVATED).toBe(0);
-        ctrl.processRouteFor('someHASH');
+        ctrl.processRouteFor("someHASH");
         t.expect(ACTIVATED).toBe(1);
 
         t.expect(CLEANUP).toBe(0);
-        ctrl.autoDefaultToken = 'someTOKEN';
+        ctrl.autoDefaultToken = "someTOKEN";
         ctrl.processRouteFor(ctrl.autoDefaultToken);
         t.expect(CLEANUP).toBe(1);
 
     });
 
 
-    t.it("onUnmatchedRoute()", function(t) {
-        ctrl = Ext.create('coon.navport.app.PackageController');
+    t.it("onUnmatchedRoute()", function (t) {
+        ctrl = Ext.create("coon.navport.app.PackageController");
 
         var CLEANUP = 0,
             ACTIVATED = 0,
             app = {
-                getMainView : function() {
+                getMainView : function () {
                     return {
-                        cleanup : function() {
+                        cleanup : function () {
                             CLEANUP++;
                         }
-                    }
+                    };
                 },
-                activateViewForHash : function() {
+                activateViewForHash : function () {
                     ACTIVATED++;
                 }
             };
 
-        ctrl.getApplication = function() {
+        ctrl.getApplication = function () {
             return app;
         };
 
         t.expect(ctrl.onBeforePackageRoute).toBeDefined();
 
-        ctrl.onBeforePackageRoute = function(action) {
+        ctrl.onBeforePackageRoute = function (action) {
             t.expect(action.stop).toBe(Ext.emptyFn);
             action.resume();
         };
 
         t.expect(ACTIVATED).toBe(0);
-        ctrl.onUnmatchedRoute('someHASH');
+        ctrl.onUnmatchedRoute("someHASH");
         t.expect(ACTIVATED).toBe(1);
 
         t.expect(CLEANUP).toBe(0);
-        ctrl.autoDefaultToken = 'someTOKEN';
+        ctrl.autoDefaultToken = "someTOKEN";
         ctrl.onUnmatchedRoute(ctrl.autoDefaultToken);
         t.expect(CLEANUP).toBe(1);
 

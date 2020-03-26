@@ -24,29 +24,28 @@
  */
 
 
-Ext.define('coon.test.view.mock.PackageControllerMock', {
+Ext.define("coon.test.view.mock.PackageControllerMock", {
 
-    extend : 'coon.core.app.PackageController',
+    extend : "coon.core.app.PackageController",
 
 
-    postLaunchHook : function() {
+    postLaunchHook : function () {
 
 
         return {
 
             navigation : [{
-                text  : 'Nav 1',
-                route : 'nav1',
-                view  : 'coon.test.view.mock.Panel1'
+                text  : "Nav 1",
+                route : "nav1",
+                view  : "coon.test.view.mock.Panel1"
             }, {
-                text  : 'Nav 2',
-                route : 'nav2',
-                view  : 'coon.test.view.mock.Panel2'
+                text  : "Nav 2",
+                route : "nav2",
+                view  : "coon.test.view.mock.Panel2"
             }]
         };
 
     }
-
 
 
 });

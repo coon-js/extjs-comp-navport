@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -43,27 +43,27 @@
  * can directly be passed to {@link coon.navport.view.controller.NavigationViewPortController#redirectTo}.
  *
  */
-Ext.define('coon.navport.model.NavigationModel', {
+Ext.define("coon.navport.model.NavigationModel", {
 
-    extend :  'Ext.data.TreeModel',
+    extend :  "Ext.data.TreeModel",
 
     requires : [
-        'coon.navport.data.schema.BaseSchema'
+        "coon.navport.data.schema.BaseSchema"
     ],
 
-    schema : 'cn_navport-baseschema',
+    schema : "cn_navport-baseschema",
 
     fields : [{
-        name : 'route',
-        type : 'string',
+        name : "route",
+        type : "string",
         validators : [{
-            type : 'presence'
+            type : "presence"
         }]
     }, {
-        name : 'text',
-        type : 'string',
+        name : "text",
+        type : "string",
         validators : [{
-            type : 'presence'
+            type : "presence"
         }]
     }, {
         /**
@@ -76,23 +76,23 @@ Ext.define('coon.navport.model.NavigationModel', {
          *             Views will then later on not be identified by their "cn_routeId"-property,
          *             but exacly this id.
          */
-        name : 'view',
-        type : 'auto'
+        name : "view",
+        type : "auto"
     }, {
-        name : 'packageController',
-        type : 'string'
+        name : "packageController",
+        type : "string"
     }, {
         /**
          * Whether this node should inherit the node navigation from its
          * parent node.
          */
-        name : 'inheritNodeNav',
-        type : 'bool',
+        name : "inheritNodeNav",
+        type : "bool",
         defaultValue : false
     }],
 
-    toUrl : function() {
-        return this.get('route');
+    toUrl : function () {
+        return this.get("route");
     }
 
 });

@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,33 +23,33 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.ContentContainerTest', function(t) {
+describe("coon.navport.view.ContentContainerTest", function (t) {
 
     var container,
         containerConfig;
 
-    t.afterEach(function() {
+    t.afterEach(function () {
         if (container) {
             container.destroy();
             container = null;
         }
     });
 
-    t.beforeEach(function() {
+    t.beforeEach(function () {
         containerConfig = {
             renderTo : document.body
         };
-    })
+    });
 
 
-    t.it("Should create and show Container", function(t) {
+    t.it("Should create and show Container", function (t) {
         container = Ext.create(
-            'coon.navport.view.ContentContainer', containerConfig);
+            "coon.navport.view.ContentContainer", containerConfig);
 
         t.expect(container instanceof Ext.Container).toBe(true);
         t.isInstanceOf(container.getLayout(), (Ext.isModern ? Ext.layout.Card : Ext.layout.container.Card));
-        t.expect(Ext.isModern ? container.getCls() : container.cls).toContain('cn_navport-conctr');
-        t.expect(container.alias).toContain('widget.cn_navport-conctr');
+        t.expect(Ext.isModern ? container.getCls() : container.cls).toContain("cn_navport-conctr");
+        t.expect(container.alias).toContain("widget.cn_navport-conctr");
 
     });
 

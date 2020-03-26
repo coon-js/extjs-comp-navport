@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,28 +23,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.NavigationViewportIsolatedTest_4', function(t) {
+describe("coon.navport.view.NavigationViewportIsolatedTest_4", function (t) {
 
     var viewport,
         postLaunchInfo;
 
-    t.beforeEach(function() {
+    t.beforeEach(function () {
         if (Ext.isModern) {
             Ext.viewport.Viewport.setup();
         }
 
         postLaunchInfo = {
             navigation : [{
-                route : 'myRoute',
-                text  : 'my route'
+                route : "myRoute",
+                text  : "my route"
             }, {
-                route : 'myRoute1',
-                text  : 'my route 1'
+                route : "myRoute1",
+                text  : "my route 1"
             }]
         };
     });
 
-    t.afterEach(function() {
+    t.afterEach(function () {
         if (Ext.isModern && Ext.Viewport) {
             Ext.Viewport.destroy();
             Ext.Viewport = null;
@@ -52,48 +52,46 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_4', function(t) {
     });
 
     t.chain({
-        requireOk : 'coon.navport.view.NavigationViewport'
+        requireOk : "coon.navport.view.NavigationViewport"
     }, {
-        action : function(next) {
+        action : function (next) {
 
 
-            t.it("Should properly process requests to empty hash", function(t) {
+            t.it("Should properly process requests to empty hash", function (t) {
 
                 console.warn("Adding custom hash so test processes properly");
                 // browser not firing hashchange if this is not set by hand
                 // might be n issue with the iframe the test runs in
-                Ext.util.History.add('');
+                Ext.util.History.add("");
 
-                var app = Ext.create('coon.comp.app.Application', {
-                    name        : 'check',
-                    mainView    : 'coon.navport.view.NavigationViewport',
+                var app = Ext.create("coon.comp.app.Application", {
+                    name        : "check",
+                    mainView    : "coon.navport.view.NavigationViewport",
                     controllers : [
-                        'coon.navport.app.PackageController'
+                        "coon.navport.app.PackageController"
                     ]
                 });
 
                 viewport = app.getMainView();
 
-                var navTree = viewport.down('cn_navport-navtree'),
-                    store   = navTree.getStore(),
-                    pg, pg2 = null;
+                var pg, pg2 = null;
 
                 console.warn("Adding custom hash so test processes properly");
                 // browser not firing hashchange if this is not set by hand
                 // might be n issue with the iframe the test runs in
-                Ext.util.History.add('');
+                Ext.util.History.add("");
 
                 viewport.addPostLaunchInfo(postLaunchInfo);
 
-                pg = Ext.ComponentQuery.query('cn_navport-pg404');
+                pg = Ext.ComponentQuery.query("cn_navport-pg404");
                 t.expect(pg).toBeTruthy();
                 t.expect(pg.length).toBe(0);
 
                 if (pg.length === 0) {
-                    Ext.util.History.add('foobar');
+                    Ext.util.History.add("foobar");
 
-                    t.waitForMs(500, function() {
-                        pg = Ext.ComponentQuery.query('cn_navport-pg404');
+                    t.waitForMs(500, function () {
+                        pg = Ext.ComponentQuery.query("cn_navport-pg404");
 
                         t.expect(pg).toBeTruthy();
                         t.expect(pg.length).toBe(1);
@@ -102,26 +100,26 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_4', function(t) {
                             t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
                         }
 
-                        Ext.util.History.add('');
+                        Ext.util.History.add("");
 
-                        t.waitForMs(500, function() {
-                            pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
+                        t.waitForMs(500, function () {
+                            pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
 
                             t.expect(pg2).toBeTruthy();
                             t.expect(pg2.length).toBe(0);
 
-                            Ext.util.History.add('snafu');
+                            Ext.util.History.add("snafu");
 
-                            t.waitForMs(500, function() {
-                                pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
+                            t.waitForMs(500, function () {
+                                pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
 
                                 t.expect(pg2).toBeTruthy();
                                 t.expect(pg2.length).toBe(1);
 
-                                Ext.util.History.add('#');
+                                Ext.util.History.add("#");
 
-                                t.waitForMs(500, function() {
-                                    pg2 = Ext.ComponentQuery.query('cn_navport-pg404');
+                                t.waitForMs(500, function () {
+                                    pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
 
                                     t.expect(pg2).toBeTruthy();
                                     t.expect(pg2.length).toBe(0);

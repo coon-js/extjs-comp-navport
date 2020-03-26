@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,90 +23,90 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.NavigationToolbarTest', function(t) {
+describe("coon.navport.view.NavigationToolbarTest", function (t) {
 
     var toolbar,
         toolbarConfig;
 
-    t.afterEach(function() {
+    t.afterEach(function () {
         if (toolbar) {
             toolbar.destroy();
             toolbar = null;
         }
     });
 
-    t.beforeEach(function() {
+    t.beforeEach(function () {
         toolbarConfig = {
             renderTo : document.body
-        }
+        };
     });
 
 
-    t.it("Should create and show the toolbar", function(t) {
+    t.it("Should create and show the toolbar", function (t) {
 
         toolbar = Ext.create(
-            'coon.navport.view.NavigationToolbar', toolbarConfig);
+            "coon.navport.view.NavigationToolbar", toolbarConfig);
 
         if (Ext.isModern) {
             t.expect(coon.navport.view.NavigationToolbar.prototype.requires[0].$className).toBe("Ext.layout.HBox");
         }
 
         t.expect(toolbar instanceof Ext.Toolbar).toBeTruthy();
-        t.expect(toolbar.alias).toContain('widget.cn_navport-tbar');
-        t.expect(Ext.isModern ? toolbar.getCls() : toolbar.cls)[Ext.isModern ? "toContain" : "toBe"]('cn_navport-tbar');
-        t.isInstanceOf(toolbar.getController(), 'coon.navport.view.controller.NavigationToolbarViewController');
-        t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn')).toBeTruthy();
-        t.expect(toolbar.lookup('cn_navport_ref_hidenavbtn') instanceof Ext.Button).toBe(true);
-        t.expect(toolbar.lookup('cn_navport_ref_applogo') instanceof Ext.Component).toBe(true);
+        t.expect(toolbar.alias).toContain("widget.cn_navport-tbar");
+        t.expect(Ext.isModern ? toolbar.getCls() : toolbar.cls)[Ext.isModern ? "toContain" : "toBe"]("cn_navport-tbar");
+        t.isInstanceOf(toolbar.getController(), "coon.navport.view.controller.NavigationToolbarViewController");
+        t.expect(toolbar.lookup("cn_navport_ref_hidenavbtn")).toBeTruthy();
+        t.expect(toolbar.lookup("cn_navport_ref_hidenavbtn") instanceof Ext.Button).toBe(true);
+        t.expect(toolbar.lookup("cn_navport_ref_applogo") instanceof Ext.Component).toBe(true);
 
     });
 
 
-    t.it("Test addNodeNavigation()", function(t) {
+    t.it("Test addNodeNavigation()", function (t) {
         toolbar = Ext.create(
-            'coon.navport.view.NavigationToolbar', toolbarConfig);
+            "coon.navport.view.NavigationToolbar", toolbarConfig);
 
         var res = toolbar.addNodeNavigation(
-            [{xtype : 'button', itemId : 'foo'}], 'id');
+            [{xtype : "button", itemId : "foo"}], "id");
 
         t.isArray(res);
-        t.isStrict(res[0], 'foo');
+        t.isStrict(res[0], "foo");
     });
 
 
-    t.it("Test addPermanentNavigation()", function(t) {
+    t.it("Test addPermanentNavigation()", function (t) {
         toolbar = Ext.create(
-            'coon.navport.view.NavigationToolbar', toolbarConfig);
+            "coon.navport.view.NavigationToolbar", toolbarConfig);
 
         var res = toolbar.addPermanentNavigation(
-            [{xtype : 'button', itemId : 'foo'}]);
+            [{xtype : "button", itemId : "foo"}]);
 
         t.isArray(res);
-        t.isStrict(res[0], 'foo');
+        t.isStrict(res[0], "foo");
     });
 
 
-    t.it("Test showNavigationForNode()", function(t) {
+    t.it("Test showNavigationForNode()", function (t) {
         toolbar = Ext.create(
-            'coon.navport.view.NavigationToolbar', toolbarConfig);
+            "coon.navport.view.NavigationToolbar", toolbarConfig);
 
-        var res = toolbar.addNodeNavigation(
-            [{xtype : 'button', itemId : 'foo'}], 'id');
+        toolbar.addNodeNavigation(
+            [{xtype : "button", itemId : "foo"}], "id");
 
-        t.ok(toolbar.down('#foo').isHidden());
-        toolbar.showNavigationForNode('id');
-        t.notOk(toolbar.down('#foo').isHidden());
+        t.ok(toolbar.down("#foo").isHidden());
+        toolbar.showNavigationForNode("id");
+        t.notOk(toolbar.down("#foo").isHidden());
     });
 
 
-    t.it("Test hasNodeNavigation()", function(t) {
+    t.it("Test hasNodeNavigation()", function (t) {
         toolbar = Ext.create(
-            'coon.navport.view.NavigationToolbar', toolbarConfig);
+            "coon.navport.view.NavigationToolbar", toolbarConfig);
 
         t.isCalled("hasNodeNavigation", toolbar.getController());
 
         toolbar.addNodeNavigation(
-            [{xtype : 'button', itemId : 'foo'}], 'id');
+            [{xtype : "button", itemId : "foo"}], "id");
 
         t.expect(toolbar.hasNodeNavigation("id")).toBe(true);
     });

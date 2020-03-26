@@ -27,7 +27,7 @@
  * Functionality to inject into views which are used with the NavigationViewport
  * and which can safely be removed by it without breaking functionality.
  */
-Ext.define('coon.navport.mixin.ViewportManageable', {
+Ext.define("coon.navport.mixin.ViewportManageable", {
 
     /**
      * returns true if the navigationViewport can safely remove and destroy the
@@ -35,7 +35,7 @@ Ext.define('coon.navport.mixin.ViewportManageable', {
      *
      * @returns {boolean}
      */
-    canNavigationViewportCloseView : function() {
+    canNavigationViewportCloseView : function () {
         return true;
     }
 

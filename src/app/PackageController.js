@@ -55,14 +55,14 @@
  * the user can continue working with the application.
  *
  */
-Ext.define('coon.navport.app.PackageController', {
+Ext.define("coon.navport.app.PackageController", {
 
-    extend : 'coon.core.app.PackageController',
+    extend : "coon.core.app.PackageController",
 
     listen : {
         controller : {
-            '#' : {
-                unmatchedroute :  'onUnmatchedRoute'
+            "#" : {
+                unmatchedroute :  "onUnmatchedRoute"
             }
         }
     },
@@ -82,7 +82,7 @@ Ext.define('coon.navport.app.PackageController', {
      * Overriden to make sure we can apply a auto generated default token if
      * none exists
      */
-    init : function(app) {
+    init : function (app) {
         var me = this;
 
         if (!app.getDefaultToken()) {
@@ -101,7 +101,7 @@ Ext.define('coon.navport.app.PackageController', {
      * @see #onBeforePackageRoute
      * @see #processRouteFor
      */
-    onUnmatchedRoute : function(hash) {
+    onUnmatchedRoute : function (hash) {
 
         var me  = this;
 
@@ -124,7 +124,7 @@ Ext.define('coon.navport.app.PackageController', {
      *
      * @protected
      */
-    processRouteFor : function(hash) {
+    processRouteFor : function (hash) {
         var me = this;
 
         if (me.autoDefaultToken && hash === me.autoDefaultToken) {
@@ -133,6 +133,6 @@ Ext.define('coon.navport.app.PackageController', {
         }
 
         me.getApplication().activateViewForHash(hash);
-     }
+    }
 
 });

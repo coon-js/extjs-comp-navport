@@ -27,17 +27,17 @@
  * An {@link Ext.data.TreeStore} to be used with {@link coon.navport.view.NavigationTree}.
  * This store manages data of the type {@link coon.navport.model.NavigationModel}.
  */
-Ext.define('coon.navport.store.NavigationTreeStore', {
+Ext.define("coon.navport.store.NavigationTreeStore", {
 
-    extend: 'Ext.data.TreeStore',
+    extend: "Ext.data.TreeStore",
 
     requires : [
-        'coon.navport.model.NavigationModel'
+        "coon.navport.model.NavigationModel"
     ],
 
-    alias : 'store.cn_navport-navtreestore',
+    alias : "store.cn_navport-navtreestore",
 
-    model : 'coon.navport.model.NavigationModel',
+    model : "coon.navport.model.NavigationModel",
 
     root: {
         expanded: true,

@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -30,11 +30,11 @@
  *
  * @see coon.navport.view.NavigationToolbar
  */
-Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
+Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
 
-    extend : 'Ext.app.ViewController',
+    extend : "Ext.app.ViewController",
 
-    alias : 'controller.cn_navport-navigationtoolbarviewcontroller',
+    alias : "controller.cn_navport-navigationtoolbarviewcontroller",
 
     /**
      * An object keyed with node ids. The values are the itemId's of the
@@ -73,7 +73,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      *
      * @see #buildToolbarItems
      */
-    buildPermaNavItems : function(items) {
+    buildPermaNavItems : function (items) {
         var me = this,
             createdItems = me.buildToolbarItems(items, false),
             view         = me.getView(),
@@ -101,7 +101,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      * @see #buildToolbarItems
      * @see #activateNavigationForNode
      */
-    buildNodeNavItems : function(items, id) {
+    buildNodeNavItems : function (items, id) {
 
         var me           = this,
             createdItems = me.buildToolbarItems(items, true),
@@ -142,10 +142,10 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      *
      * @see switchItemVisibility
      */
-    activateNavigationForNode : function(nodeId) {
+    activateNavigationForNode : function (nodeId) {
         var me       = this,
             activeId = me.activeNodeId,
-            itemIds;
+            itemIds, i, len;
 
         // no node navigation - exit
         if (!me.nodeNavItemIds) {
@@ -163,7 +163,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
         // set old hidden
         if (me.nodeNavItemIds[activeId]) {
             itemIds = me.nodeNavItemIds[activeId];
-            for (var i = 0, len = itemIds.length; i < len; i++) {
+            for (i = 0, len = itemIds.length; i < len; i++) {
                 me.switchItemVisibility(itemIds[i], false);
             }
         }
@@ -176,8 +176,8 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
         // set new visible
         if (me.nodeNavItemIds[nodeId]) {
             itemIds = me.nodeNavItemIds[nodeId];
-            for (var i = 0, len = itemIds.length; i < len; i++) {
-                me.switchItemVisibility(itemIds[i], true)
+            for (i = 0, len = itemIds.length; i < len; i++) {
+                me.switchItemVisibility(itemIds[i], true);
             }
         }
 
@@ -194,7 +194,7 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      *
      * @returns {Boolean}
      */
-    hasNodeNavigation : function(id) {
+    hasNodeNavigation : function (id) {
         return this.nodeNavItemIds && !!this.nodeNavItemIds[id];
     },
 
@@ -218,10 +218,9 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      *
      * @throws if items is not an array or entries of the array where misconfigured.
      */
-    buildToolbarItems : function(items, initialHide) {
+    buildToolbarItems : function (items, initialHide) {
 
-        var me         = this,
-            itemsToAdd = [],
+        var itemsToAdd = [],
             item, start, end;
 
         if (!Ext.isArray(items)) {
@@ -276,11 +275,11 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
      * @return {Boolean} true if the item was set to visible, otherwise false
      * @private
      */
-    switchItemVisibility : function(itemId, show) {
+    switchItemVisibility : function (itemId, show) {
 
         var me   = this,
             view = me.getView(),
-            item = view.down('#' + itemId);
+            item = view.down("#" + itemId);
 
         if (show) {
             if (!item.cn_hidden) {
@@ -298,7 +297,6 @@ Ext.define('coon.navport.view.controller.NavigationToolbarViewController', {
 
         return false;
     }
-
 
 
 });

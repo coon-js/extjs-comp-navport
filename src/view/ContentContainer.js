@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -28,17 +28,17 @@
  * to which all the module/package related content should go.
  *
  */
-Ext.define('coon.navport.view.ContentContainer', {
+Ext.define("coon.navport.view.ContentContainer", {
 
-    extend : 'Ext.Container',
+    extend : "Ext.Container",
 
-    alias : 'widget.cn_navport-conctr',
+    alias : "widget.cn_navport-conctr",
 
-    cls : 'cn_navport-conctr',
+    cls : "cn_navport-conctr",
 
     layout: {
-        type: 'card',
-        anchor: '100%'
+        type: "card",
+        anchor: "100%"
     }
 });
 

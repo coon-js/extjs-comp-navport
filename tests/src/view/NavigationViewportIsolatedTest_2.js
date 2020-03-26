@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,20 +23,19 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
+describe("coon.navport.view.NavigationViewportIsolatedTest_2", function (t) {
 
-    var viewport,
-        postLaunchInfo;
+    var postLaunchInfo;
 
-    t.beforeEach(function() {
+    t.beforeEach(function () {
         if (Ext.isModern) {
             Ext.viewport.Viewport.setup();
         }
 
         postLaunchInfo = {
             navigation : [{
-                route : 'myRoute',
-                text  : 'my route',
+                route : "myRoute",
+                text  : "my route",
                 children : [{
                     route : "route_1_2",
                     text : "sub_route",
@@ -46,13 +45,13 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
                     }]
                 }]
             }, {
-                route : 'myRoute1',
-                text  : 'my route 1'
+                route : "myRoute1",
+                text  : "my route 1"
             }]
         };
     });
 
-    t.afterEach(function() {return;
+    t.afterEach(function () {
         if (Ext.isModern && Ext.Viewport) {
             Ext.Viewport.destroy();
             Ext.Viewport = null;
@@ -61,35 +60,35 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
 
 
     t.chain({
-        requireOk : 'coon.navport.view.NavigationViewport'
+        requireOk : "coon.navport.view.NavigationViewport"
     }, {
-        action : function(next) {
+        action : function (next) {
 
-            t.it("Should be possible to click a Tree's Menu Item and trigger routing", function(t) {
+            t.it("Should be possible to click a Tree's Menu Item and trigger routing", function (t) {
                 console.warn("Adding custom hash so test processes properly");
                 // browser not firing hashchange if this is not set by hand
                 // might be n issue with the iframe the test runs in
-                Ext.util.History.add('');
+                Ext.util.History.add("");
 
-                var app = Ext.create('coon.comp.app.Application', {
-                    name        : 'check',
-                    mainView    : 'coon.navport.view.NavigationViewport',
+                var app = Ext.create("coon.comp.app.Application", {
+                    name        : "check",
+                    mainView    : "coon.navport.view.NavigationViewport",
                     controllers : [
-                        'coon.navport.app.PackageController'
+                        "coon.navport.app.PackageController"
                     ]
                 });
 
                 var viewport = app.getMainView(),
-                    navTree  = viewport.down('cn_navport-navtree'),
+                    navTree  = viewport.down("cn_navport-navtree"),
                     store    = navTree.getStore();
 
                 viewport.addPostLaunchInfo(postLaunchInfo);
 
-                let historyRoute = "route_1_2_"
-                t.click(navTree.getItem(store.getAt(0)), function() {
+                let historyRoute = "route_1_2_";
+                t.click(navTree.getItem(store.getAt(0)), function () {
                     Ext.util.History.add(historyRoute);
-                    t.waitForMs(500, function() {
-                        t.expect(navTree.getSelection()).toBe(store.getRoot().findChildBy(function(node) {
+                    t.waitForMs(500, function () {
+                        t.expect(navTree.getSelection()).toBe(store.getRoot().findChildBy(function (node) {
                             if (node.get("route") === historyRoute) {
                                 return true;
                             }
@@ -99,11 +98,9 @@ describe('coon.navport.view.NavigationViewportIsolatedTest_2', function(t) {
                 });
 
 
-
             });
 
         }});
-
 
 
 });

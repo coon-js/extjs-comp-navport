@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -112,37 +112,37 @@
  *
  *
  */
-Ext.define('coon.navport.view.NavigationViewport', {
+Ext.define("coon.navport.view.NavigationViewport", {
 
-    extend : 'coon.comp.container.Viewport',
+    extend : "coon.comp.container.Viewport",
 
-    alias : 'widget.cn_navport',
+    alias : "widget.cn_navport",
 
     requires: [
-        'coon.navport.view.NavigationToolbar',
-        'coon.navport.view.controller.NavigationViewportController',
-        'coon.navport.view.ContentWrap',
-        'coon.navport.model.NavigationModel',
-        'coon.navport.view.pages.Page404'
+        "coon.navport.view.NavigationToolbar",
+        "coon.navport.view.controller.NavigationViewportController",
+        "coon.navport.view.ContentWrap",
+        "coon.navport.model.NavigationModel",
+        "coon.navport.view.pages.Page404"
     ],
 
     referenceHolder : true,
 
-    controller : 'cn_navport-ctrl',
+    controller : "cn_navport-ctrl",
 
-    cls : 'cn_navport',
+    cls : "cn_navport",
 
     layout: {
-        type  : 'vbox',
-        align : 'stretch'
+        type  : "vbox",
+        align : "stretch"
     },
 
     items: [{
-        reference : 'cn_navport_ref_tbar',
-        xtype     : 'cn_navport-tbar'
+        reference : "cn_navport_ref_tbar",
+        xtype     : "cn_navport-tbar"
     }, {
-        reference : 'cn_navport_ref_conwrap',
-        xtype     : 'cn_navport-conwrap',
+        reference : "cn_navport_ref_conwrap",
+        xtype     : "cn_navport-conwrap",
         flex      : 1
     }],
 
@@ -158,15 +158,15 @@ Ext.define('coon.navport.view.NavigationViewport', {
      * @throws bubbles the ecxeptions od #buildNavigationItems and
      * #buildPermaNavItems
      */
-    addPostLaunchInfo : function(info) {
+    addPostLaunchInfo : function (info) {
 
         var me = this;
 
-        if (info.hasOwnProperty('navigation')) {
+        if (Object.prototype.hasOwnProperty.call(info,"navigation")) {
             me.getController().addMainNavigationItems(info.navigation);
         }
 
-        if (info.hasOwnProperty('permaNav')) {
+        if (Object.prototype.hasOwnProperty.call(info,"permaNav")) {
             me.getController().addPermaNavItems(info.permaNav);
         }
 
@@ -180,7 +180,7 @@ Ext.define('coon.navport.view.NavigationViewport', {
      *
      * see {@link coon.navport.view.controller.NavigationViewportController#hideNavigation}
      */
-    hideNavigation : function(hide) {
+    hideNavigation : function (hide) {
         this.getController().hideNavigation(hide);
     },
 
@@ -198,10 +198,9 @@ Ext.define('coon.navport.view.NavigationViewport', {
      *
      * @return {coon.navport.view.pages.Page404}
      */
-    showUnmatchedRouteNotification : function(missingHash, defaultToken) {
-        var me = this;
+    showUnmatchedRouteNotification : function (missingHash, defaultToken) {
 
-        return Ext.create('coon.navport.view.pages.Page404', {
+        return Ext.create("coon.navport.view.pages.Page404", {
             title     : Ext.String.format("\"{0}\" not found", missingHash),
             homeToken : defaultToken
         });
@@ -213,7 +212,7 @@ Ext.define('coon.navport.view.NavigationViewport', {
      *
      * @see coon.navport.view.controller.NavigationViewportController#addViewForHash
      */
-    activateViewForHash : function(hash, defaultToken) {
+    activateViewForHash : function (hash, defaultToken) {
         var me = this;
         me.cleanup();
         return me.getController().addViewForHash(hash, defaultToken);
@@ -226,7 +225,7 @@ Ext.define('coon.navport.view.NavigationViewport', {
      * @see coon.navport.view.controller.NavigationViewportController#isCurrentViewClosable
      * @see coon.navport.view.controller.NavigationViewportController#ctrl.closeCurrentView();
      */
-    cleanup : function() {
+    cleanup : function () {
         var me   = this,
             ctrl = me.getController();
 

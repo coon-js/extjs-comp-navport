@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -29,18 +29,18 @@
  * to mainly arrange and order the main navigation and the content panel and provide
  * a layout for the main elements of the viewport.
  */
-Ext.define('coon.navport.view.ContentWrap', {
+Ext.define("coon.navport.view.ContentWrap", {
 
-    extend : 'Ext.container.Container',
+    extend : "Ext.container.Container",
 
-    alias : 'widget.cn_navport-conwrap',
+    alias : "widget.cn_navport-conwrap",
 
     requires: [
-        'coon.navport.view.NavigationTree',
-        'coon.navport.view.ContentContainer'
+        "coon.navport.view.NavigationTree",
+        "coon.navport.view.ContentContainer"
     ],
 
-    cls : 'cn_navport-conwrap',
+    cls : "cn_navport-conwrap",
 
     referenceHolder : true,
 
@@ -57,8 +57,8 @@ Ext.define('coon.navport.view.ContentWrap', {
      *  this.updateLayout({isRoot: true});
      */
     layout : Ext.apply({
-        type  : 'hbox',
-        align : 'stretch'
+        type  : "hbox",
+        align : "stretch"
     }, Ext.isModern ? {} : {
         animate       : true,
         animatePolicy : {
@@ -68,13 +68,13 @@ Ext.define('coon.navport.view.ContentWrap', {
     }),
 
     items: [{
-        reference : 'cn_navport_ref_navtree',
-        xtype     : 'cn_navport-navtree',
+        reference : "cn_navport_ref_navtree",
+        xtype     : "cn_navport-navtree",
         width     : 250
     }, {
-        reference : 'cn_navport_ref_conctr',
+        reference : "cn_navport_ref_conctr",
         flex      : 1,
-        xtype     : 'cn_navport-conctr'
+        xtype     : "cn_navport-conctr"
     }]
 
 

@@ -23,20 +23,20 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.store.NavigationTreeStoreTest', function(t) {
+describe("coon.navport.store.NavigationTreeStoreTest", function (t) {
 
-    t.it("Should properly create the store and check for default config", function(t) {
+    t.it("Should properly create the store and check for default config", function (t) {
 
-        var store = Ext.create('coon.navport.store.NavigationTreeStore');
+        var store = Ext.create("coon.navport.store.NavigationTreeStore");
 
         t.expect(store instanceof Ext.data.TreeStore).toBe(true);
 
-        t.expect(store.config.model).toBe('coon.navport.model.NavigationModel');
+        t.expect(store.config.model).toBe("coon.navport.model.NavigationModel");
 
-        t.expect(store.alias).toContain('store.cn_navport-navtreestore');
+        t.expect(store.alias).toContain("store.cn_navport-navtreestore");
 
         t.expect(store.getRootNode() instanceof coon.navport.model.NavigationModel).toBe(true);
-        t.expect(store.getRootNode().get('expanded')).toBe(true);
+        t.expect(store.getRootNode().get("expanded")).toBe(true);
 
     });
 

@@ -23,21 +23,21 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-Ext.define('coon.test.view.mock.ApplicationMock', {
+Ext.define("coon.test.view.mock.ApplicationMock", {
 
-    extend : 'coon.comp.app.Application',
+    extend : "coon.comp.app.Application",
 
-    name : 'test',
+    name : "test",
 
     requires : [
-        'coon.navport.view.NavigationViewport'
+        "coon.navport.view.NavigationViewport"
     ],
 
     controllers : [
-        'coon.test.view.mock.PackageControllerMock'
+        "coon.test.view.mock.PackageControllerMock"
     ],
 
-    applicationViewClassName : 'coon.navport.view.NavigationViewport'
+    applicationViewClassName : "coon.navport.view.NavigationViewport"
 
 
 });

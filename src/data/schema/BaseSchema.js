@@ -26,14 +26,14 @@
 /**
  * BaseSchema for lib-cn_navport.
  */
-Ext.define('coon.navport.data.schema.BaseSchema', {
+Ext.define("coon.navport.data.schema.BaseSchema", {
 
-    extend : 'coon.core.data.schema.BaseSchema',
+    extend : "coon.core.data.schema.BaseSchema",
 
-    alias : 'schema.cn_navport-baseschema',
+    alias : "schema.cn_navport-baseschema",
 
-    namespace : 'coon.navport.model',
+    namespace : "coon.navport.model",
 
-    id : 'cn_navport-baseschema'
+    id : "cn_navport-baseschema"
 
 });

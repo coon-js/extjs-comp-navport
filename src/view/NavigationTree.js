@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -27,20 +27,20 @@
  * An {@link coon.comp.list.Tree} to provide a view for the main navigation of the
  * {@link coon.navport.view.NavigationViewport}.
  */
-Ext.define('coon.navport.view.NavigationTree', {
+Ext.define("coon.navport.view.NavigationTree", {
 
-    extend :  'coon.comp.list.Tree',
+    extend :  "coon.comp.list.Tree",
 
     requires : [
-        'coon.navport.store.NavigationTreeStore'
+        "coon.navport.store.NavigationTreeStore"
     ],
 
-    alias : 'widget.cn_navport-navtree',
+    alias : "widget.cn_navport-navtree",
 
-    cls : 'cn_navport-navtree',
+    cls : "cn_navport-navtree",
 
     store  : {
-        type :'cn_navport-navtreestore'
+        type :"cn_navport-navtreestore"
     },
 
     expanderOnly : false,

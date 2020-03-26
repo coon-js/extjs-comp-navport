@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -28,22 +28,22 @@
  *
  * see {@link coon.navport.view.NavigationViewport#showUnmatchedRouteNotification}
  */
-Ext.define('coon.navport.view.pages.Page404', {
+Ext.define("coon.navport.view.pages.Page404", {
 
-    extend : 'coon.comp.window.LockingWindow',
+    extend : "coon.comp.window.LockingWindow",
 
     mixins : [
-        'coon.navport.mixin.ViewportManageable'
+        "coon.navport.mixin.ViewportManageable"
     ],
 
-    alias : 'widget.cn_navport-pg404',
+    alias : "widget.cn_navport-pg404",
 
-    cls : 'cn_navport-pg404',
+    cls : "cn_navport-pg404",
 
     layout : {
-        type  : 'vbox',
-        align : 'center',
-        pack  : 'center'
+        type  : "vbox",
+        align : "center",
+        pack  : "center"
     },
 
     /**
@@ -53,26 +53,26 @@ Ext.define('coon.navport.view.pages.Page404', {
     homeToken : null,
 
     items: [{
-        cls    : 'inner-container',
-        xtype  : 'container',
+        cls    : "inner-container",
+        xtype  : "container",
         width  : 600,
         layout : {
-            type  : 'vbox',
-            align : 'stretch',
-            pack  : 'center'
+            type  : "vbox",
+            align : "stretch",
+            pack  : "center"
         },
         items: [{
-            cls   : 'top-text',
-            xtype : 'label',
-            text  : '404'
+            cls   : "top-text",
+            xtype : "label",
+            text  : "404"
         }, {
-            cls   : 'descr',
+            cls   : "descr",
             flex  : 1,
-            xtype : 'label',
+            xtype : "label",
             data  : {
                 route : undefined
             },
-            tpl  : '<div>Seems like the page you\'ve requested could not be found!</div><div>Return to the <a href="#{route}"> Home page </a></div>'
+            tpl  : "<div>Seems like the page you've requested could not be found!</div><div>Return to the <a href=\"#{route}\"> Home page </a></div>"
         }]
     }],
 
@@ -80,12 +80,12 @@ Ext.define('coon.navport.view.pages.Page404', {
      * @inheritdoc
      * Overriden to make sure we are using #homeToken for routing.
      */
-    constructor : function() {
-       var me = this;
+    constructor : function () {
+        var me = this;
 
         me.callParent(arguments);
 
-        me.down('label[cls=descr]').setData({route : me.homeToken});
+        me.down("label[cls=descr]").setData({route : me.homeToken});
 
     }
 

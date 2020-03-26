@@ -23,24 +23,24 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.data.schema.BaseSchemaTest', function(t) {
+describe("coon.navport.data.schema.BaseSchemaTest", function (t) {
 
 
-// +----------------------------------------------------------------------------
-// |                    =~. Unit Tests .~=
-// +----------------------------------------------------------------------------
+    // +----------------------------------------------------------------------------
+    // |                    =~. Unit Tests .~=
+    // +----------------------------------------------------------------------------
     /**
      * Test create
      */
-    t.it('Should create an instance of BaseSchema ans validate configs', function(t) {
+    t.it("Should create an instance of BaseSchema ans validate configs", function (t) {
 
-        var schema = Ext.create('coon.navport.data.schema.BaseSchema');
+        var schema = Ext.create("coon.navport.data.schema.BaseSchema");
 
         t.expect(schema instanceof coon.core.data.schema.BaseSchema).toBeTruthy();
 
-        t.expect(schema.id).toBe('cn_navport-baseschema');
-        t.expect(schema.getNamespace()).toBe('coon.navport.model.');
-        t.expect(schema.alias).toContain('schema.cn_navport-baseschema');
+        t.expect(schema.id).toBe("cn_navport-baseschema");
+        t.expect(schema.getNamespace()).toBe("coon.navport.model.");
+        t.expect(schema.alias).toContain("schema.cn_navport-baseschema");
 
     });
 

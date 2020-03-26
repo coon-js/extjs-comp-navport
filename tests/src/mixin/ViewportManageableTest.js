@@ -23,15 +23,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.mixin.ViewportManageableTest', function(t) {
+describe("coon.navport.mixin.ViewportManageableTest", function (t) {
 
 
-// +----------------------------------------------------------------------------
-// |                    =~. Unit Tests .~=
-// +----------------------------------------------------------------------------
+    // +----------------------------------------------------------------------------
+    // |                    =~. Unit Tests .~=
+    // +----------------------------------------------------------------------------
 
-    t.it('canNavigationViewportCloseView()', function(t) {
-        var mixin = Ext.create('coon.navport.mixin.ViewportManageable');
+    t.it("canNavigationViewportCloseView()", function (t) {
+        var mixin = Ext.create("coon.navport.mixin.ViewportManageable");
 
         t.expect(mixin.canNavigationViewportCloseView()).toBe(true);
     });

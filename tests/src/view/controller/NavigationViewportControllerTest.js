@@ -1,7 +1,7 @@
 /**
  * coon.js
  * lib-cn_navport
- * Copyright (C) 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,107 +23,107 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe('coon.navport.view.controller.NavigationViewportControllerTest', function(t) {
+describe("coon.navport.view.controller.NavigationViewportControllerTest", function (t) {
 
     var viewportCtrl;
 
-    t.afterEach(function() {
+    t.afterEach(function () {
         if (viewportCtrl) {
             viewportCtrl.destroy();
             viewportCtrl = null;
         }
     });
 
-    t.it("Should create the ViewportController", function(t) {
-        viewportCtrl = Ext.create('coon.navport.view.controller.NavigationViewportController');
+    t.it("Should create the ViewportController", function (t) {
+        viewportCtrl = Ext.create("coon.navport.view.controller.NavigationViewportController");
         t.expect(viewportCtrl instanceof Ext.app.ViewController).toBe(true);
 
-        t.expect(viewportCtrl.alias).toContain('controller.cn_navport-ctrl');
+        t.expect(viewportCtrl.alias).toContain("controller.cn_navport-ctrl");
     });
 
     /**
      * coon/lib-cn_navport/#2
      */
-    t.it("Should test addPermaNavItem() properly", function(t) {
+    t.it("Should test addPermaNavItem() properly", function (t) {
 
-        viewportCtrl = Ext.create('coon.navport.view.controller.NavigationViewportController');
+        viewportCtrl = Ext.create("coon.navport.view.controller.NavigationViewportController");
 
         // MOCK LOOKUP() - EMPTY OBJECT
         // TOOLBAR
-        var toolbar = Ext.create('coon.navport.view.NavigationToolbar');
-        viewportCtrl.lookup = function() {
+        var toolbar = Ext.create("coon.navport.view.NavigationToolbar");
+        viewportCtrl.lookup = function () {
             return toolbar;
         };
 
-        var res = viewportCtrl.addPermaNavItems([{xtype : 'button', itemId : 'foo'}]);
-        t.expect(res[0]).toBe('foo');
+        var res = viewportCtrl.addPermaNavItems([{xtype : "button", itemId : "foo"}]);
+        t.expect(res[0]).toBe("foo");
         toolbar.destroy();
         toolbar = null;
     });
 
 
-    t.it('createNavigationModelFrom()', function(t) {
+    t.it("createNavigationModelFrom()", function (t) {
 
-        var exc, e, rec, nodeNav;
+        var exc, rec, nodeNav;
 
         viewportCtrl = Ext.create(
-            'coon.navport.view.controller.NavigationViewportController'
+            "coon.navport.view.controller.NavigationViewportController"
         );
 
-        exc, e = undefined;
+        exc = undefined;
         try{viewportCtrl.createNavigationModelFrom(
             {}
-        );}catch(e){exc = e};
-        t.expect(exc.msg).toContain('invalid configuration');
+        );}catch(e){exc = e;}
+        t.expect(exc.msg).toContain("invalid configuration");
 
-        exc, e = undefined;
+        exc = undefined;
         try{viewportCtrl.createNavigationModelFrom(
-            {text : 'text'}
-        );}catch(e){exc = e};
-        t.expect(exc.msg).toContain('invalid configuration');
+            {text : "text"}
+        );}catch(e){exc = e;}
+        t.expect(exc.msg).toContain("invalid configuration");
 
-        exc, e = undefined;
+        exc = undefined;
         try{viewportCtrl.createNavigationModelFrom(
-            {route : 'route'}
-        );}catch(e){exc = e};
-        t.expect(exc.msg).toContain('invalid configuration');
+            {route : "route"}
+        );}catch(e){exc = e;}
+        t.expect(exc.msg).toContain("invalid configuration");
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
-            {id : 'a', text : 'text', route : 'route', nodeNav : [], inheritNodeNav : true,
-                view : 'myView', iconCls : 'myIconCls', packageController : "MyController"}
+            {id : "a", text : "text", route : "route", nodeNav : [], inheritNodeNav : true,
+                view : "myView", iconCls : "myIconCls", packageController : "MyController"}
         );
 
-        t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
+        t.isInstanceOf(rec, "coon.navport.model.NavigationModel");
 
         t.expect(nodeNav).toEqual({});
 
-        t.isStrict(rec.getId(),        'a');
-        t.isStrict(rec.get('leaf'),    true);
-        t.isStrict(rec.get('text'),    'text');
-        t.isStrict(rec.get('route'),   'route');
-        t.isStrict(rec.get('view'),    'myView');
-        t.isStrict(rec.get('iconCls'), 'myIconCls');
-        t.isStrict(rec.get('inheritNodeNav'), true);
-        t.isStrict(rec.get('packageController'), 'MyController');
-        t.expect(rec.get('nodeNav')).toBeUndefined();
+        t.isStrict(rec.getId(),        "a");
+        t.isStrict(rec.get("leaf"),    true);
+        t.isStrict(rec.get("text"),    "text");
+        t.isStrict(rec.get("route"),   "route");
+        t.isStrict(rec.get("view"),    "myView");
+        t.isStrict(rec.get("iconCls"), "myIconCls");
+        t.isStrict(rec.get("inheritNodeNav"), true);
+        t.isStrict(rec.get("packageController"), "MyController");
+        t.expect(rec.get("nodeNav")).toBeUndefined();
 
     });
 
 
-    t.it('createNavigationModelFrom() - with child nodes', function(t) {
+    t.it("createNavigationModelFrom() - with child nodes", function (t) {
 
-        var exc, e, rec, nodeNav;
+        var rec, nodeNav;
 
         viewportCtrl = Ext.create(
-            'coon.navport.view.controller.NavigationViewportController'
+            "coon.navport.view.controller.NavigationViewportController"
         );
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
-            {id : 'a', text : 'text', route : 'route', nodeNav : [{text : "foo"}],
-                view : 'myView', iconCls : 'myIconCls', children : [{id : "b", text : 'childtext', route: 'childroute', nodeNav : [{text : "childfoo"}]}]}
+            {id : "a", text : "text", route : "route", nodeNav : [{text : "foo"}],
+                view : "myView", iconCls : "myIconCls", children : [{id : "b", text : "childtext", route: "childroute", nodeNav : [{text : "childfoo"}]}]}
         );
 
-        t.isInstanceOf(rec, 'coon.navport.model.NavigationModel');
+        t.isInstanceOf(rec, "coon.navport.model.NavigationModel");
 
         t.expect(rec.childNodes.length).toBe(1);
 
@@ -134,25 +134,25 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
 
         let childRec = rec.childNodes[0];
 
-        t.isStrict(childRec.get('text'),    'childtext');
-        t.isStrict(childRec.get('route'),   'childroute');
+        t.isStrict(childRec.get("text"),    "childtext");
+        t.isStrict(childRec.get("route"),   "childroute");
 
-        t.isInstanceOf(childRec, 'coon.navport.model.NavigationModel');
+        t.isInstanceOf(childRec, "coon.navport.model.NavigationModel");
 
-        t.isStrict(rec.getId(),        'a');
-        t.isStrict(rec.get('leaf'),    false);
-        t.isStrict(rec.get('text'),    'text');
-        t.isStrict(rec.get('route'),   'route');
-        t.isStrict(rec.get('view'),    'myView');
-        t.isStrict(rec.get('iconCls'), 'myIconCls');
-        t.expect(rec.get('nodeNav')).toBeUndefined();
+        t.isStrict(rec.getId(),        "a");
+        t.isStrict(rec.get("leaf"),    false);
+        t.isStrict(rec.get("text"),    "text");
+        t.isStrict(rec.get("route"),   "route");
+        t.isStrict(rec.get("view"),    "myView");
+        t.isStrict(rec.get("iconCls"), "myIconCls");
+        t.expect(rec.get("nodeNav")).toBeUndefined();
     });
 
 
-    t.it("onNavigationTreeSelectionChange() - null values (lib-cn_navport#10)", function(t) {
+    t.it("onNavigationTreeSelectionChange() - null values (lib-cn_navport#10)", function (t) {
 
         viewportCtrl = Ext.create(
-            'coon.navport.view.controller.NavigationViewportController'
+            "coon.navport.view.controller.NavigationViewportController"
         );
 
         t.isntCalled("redirectTo", viewportCtrl);
@@ -162,21 +162,21 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
     });
 
 
-    t.it('activateNodeNavigation()', function(t) {
+    t.it("activateNodeNavigation()", function (t) {
 
 
         let rec,
             nodeNav,
-            getNode = function(id) {
-            return rec.findChildBy(function (node) {
-                if (node.getId() === id) {
-                    return true;
-                }
-            }, null, true);
-        };
+            getNode = function (id) {
+                return rec.findChildBy(function (node) {
+                    if (node.getId() === id) {
+                        return true;
+                    }
+                }, null, true);
+            };
 
         viewportCtrl = Ext.create(
-            'coon.navport.view.controller.NavigationViewportController'
+            "coon.navport.view.controller.NavigationViewportController"
         );
 
         viewportCtrl.lookup = function () {
@@ -191,52 +191,52 @@ describe('coon.navport.view.controller.NavigationViewportControllerTest', functi
                 showNavigationForNode : function (nodeId) {
 
                 }
-            }
+            };
         };
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom({
-            text : 'text',
-            route : 'route',
+            text : "text",
+            route : "route",
             children : [{
                 id : "a",
-                text : 'text_1',
-                route : 'route_1',
+                text : "text_1",
+                route : "route_1",
                 nodeNav : [{}],
                 children : [{
                     id : "id_1_2",
-                    text : 'text_1_2',
-                    route : 'route_1_2',
+                    text : "text_1_2",
+                    route : "route_1_2",
                     inheritNodeNav : true,
                     children : [{
                         id : "text_1_2_1",
-                        text : 'text_1_2_1',
-                        route : 'route_1_2_1',
+                        text : "text_1_2_1",
+                        route : "route_1_2_1"
                     }, {
                         id : "id_1_2_2",
-                        text : 'text_1_2_2',
-                        route : 'route_1_2_2',
+                        text : "text_1_2_2",
+                        route : "route_1_2_2",
                         inheritNodeNav : true,
                         children : [{
                             id : "id_1_2_2_1",
-                            text : 'text_1_2_2_1',
-                            route : 'route_1_2_2_1',
+                            text : "text_1_2_2_1",
+                            route : "route_1_2_2_1",
                             children : [{
                                 id : "id_1_2_2_1_1",
-                                text : 'text_1_2_2_1_1',
-                                route : 'route_1_2_2_1_1',
+                                text : "text_1_2_2_1_1",
+                                route : "route_1_2_2_1_1",
                                 inheritNodeNav : true
                             }]
                         }]
                     }]
                 }, {
-                    text : 'text_1_3',
-                    route : 'route_1_3'
+                    text : "text_1_3",
+                    route : "route_1_3"
                 }]
             }, {
                 nodeNav : [{}],
                 id : "id_2",
-                text : 'text_2',
-                route : 'route_2',
+                text : "text_2",
+                route : "route_2"
             }]
         });
 

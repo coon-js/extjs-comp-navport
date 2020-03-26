@@ -24,11 +24,11 @@
  */
 
 
-Ext.define('coon.test.view.mock.Panel1', {
+Ext.define("coon.test.view.mock.Panel1", {
 
-    extend : 'Ext.Panel',
+    extend : "Ext.Panel",
 
-    title : 'Panel 1'
+    title : "Panel 1"
 
 
 });
