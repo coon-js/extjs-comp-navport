@@ -166,6 +166,7 @@ the following configuration to your `package.json`:
     }
 }
 ```
+
 #### Implementing the PackageController
 Once the package was tagged as a dynamic resource for an ExtJS-application
 built with [coon.js](https://github.com/coon-js), we can now actually write some
@@ -212,6 +213,12 @@ resulting `Ext.list.Tree` or by calling the application's url along with the def
    PackageController*::preLaunchHook() : true -> Application::launch() -> PackageController*::postLaunchHook()
 ```
 
+##### Using plugins for PackageControllers
+[coon.core.app.PackageController](https://github.com/coon-js/lib-cn_core/blob/master/src/app/PackageController.js) 
+can have an arbitrary number of plugins of the type [coon.core.app.ControllerPlugin](https://github.com/coon-js/lib-cn_core/blob/master/src/app/ControllerPlugin.js)
+that are called by the application during the ```preLaunchHook```-process. 
+Please refer to [lib-cn_core](https://github.com/coon-js/lib-cn_core) for more information on how to use them.
+
 #### Registering the package in the application 
 Last but not least, we have to tell our application to actually use the package we have just created.
 For this purpose, we need to open up our application's `app.json` and specify the package's name `acme` in
@@ -234,3 +241,5 @@ are not hardwiring the package's code into the application itself, instead, the 
 being used (see [Mitchell Simoen's Blog entry for an explanation](https://mitchellsimoens.com/2017/04/12/package-loading/), amongst others).  
 
 You can now build your application by running `sencha app build --dev --uses` respective `sencha app build --prod --uses`.
+
+
