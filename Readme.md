@@ -215,7 +215,7 @@ resulting `Ext.list.Tree` or by calling the application's url along with the def
 
 ##### Using plugins for PackageControllers
 [coon.core.app.PackageController](https://github.com/coon-js/lib-cn_core/blob/master/src/app/PackageController.js) 
-can have an arbitrary number of plugins of the type [coon.core.app.ControllerPlugin](https://github.com/coon-js/lib-cn_core/blob/master/src/app/ControllerPlugin.js)
+can have an arbitrary number of plugins of the type [coon.core.app.plugin.ControllerPlugin](https://github.com/coon-js/lib-cn_core/blob/master/src/app/plugin/ControllerPlugin.js)
 that are called by the application during the ```preLaunchHook```-process. 
 Please refer to [lib-cn_core](https://github.com/coon-js/lib-cn_core) for more information on how to use them.
 
