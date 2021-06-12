@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,90 +23,78 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.NavigationViewportIsolatedTest_1", function (t) {
+import initAppTest, {appConfig} from "../../lib/AppTestHelper.js";
 
-    var viewport,
-        postLaunchInfo;
+StartTest((t) => {
 
-    t.beforeEach(function () {
-        if (Ext.isModern) {
-            Ext.viewport.Viewport.setup();
-        }
+    let viewport;
 
-        postLaunchInfo = {
-            navigation : [{
-                route : "myRoute",
-                text  : "my route"
-            }, {
-                route : "myRoute1",
-                text  : "my route 1"
-            }]
-        };
-    });
+    initAppTest(t, {
+        navigation: [{
+            route: "myRoute",
+            text: "my route"
+        }, {
+            route: "myRoute1",
+            text: "my route 1"
+        }]
+    }).then((t) => {
 
-    t.afterEach(function () {
-        if (Ext.isModern && Ext.Viewport) {
-            Ext.Viewport.destroy();
-            Ext.Viewport = null;
-        }
-    });
+        t.chain({
+            action: function (next) {
 
-    t.chain({
-        requireOk : "coon.navport.view.NavigationViewport"
-    }, {
-        action : function (next) {
+                t.it("Should show a 404 info if the router could not process a route", (t) => {
 
-            t.it("Should show a 404 info if the router could not process a route", function (t) {
+                    console.warn("Adding custom hash so test processes properly");
+                    // browser not firing hashchange if this is not set by hand
+                    // might be n issue with the iframe the test runs in
+                    Ext.util.History.add("");
 
-                console.warn("Adding custom hash so test processes properly");
-                // browser not firing hashchange if this is not set by hand
-                // might be n issue with the iframe the test runs in
-                Ext.util.History.add("");
+                    var app = Ext.create("coon.comp.app.Application", {
+                        name: "check",
+                        mainView: "coon.navport.view.NavigationViewport",
+                        controllers: [
+                            "coon.navport.app.PackageController"
+                        ]
+                    });
 
-                var app = Ext.create("coon.comp.app.Application", {
-                    name : "check",
-                    mainView : "coon.navport.view.NavigationViewport",
-                    controllers : [
-                        "coon.navport.app.PackageController"
-                    ]
-                });
+                    viewport = app.getMainView();
+                    viewport.addPostLaunchInfo(appConfig.postLaunchInfo);
 
-                viewport = app.getMainView();
-                viewport.addPostLaunchInfo(postLaunchInfo);
+                    var pg = null;
 
-                var pg = null;
+                    pg = Ext.ComponentQuery.query("cn_navport-pg404");
 
-                pg = Ext.ComponentQuery.query("cn_navport-pg404");
+                    t.expect(pg).toBeTruthy();
+                    t.expect(pg.length).toBe(0);
 
-                t.expect(pg).toBeTruthy();
-                t.expect(pg.length).toBe(0);
+                    if (pg.length === 0) {
+                        Ext.util.History.add("foo");
 
-                if (pg.length === 0) {
-                    Ext.util.History.add("foo");
+                        t.waitForMs(t.parent.TIMEOUT, () =>  {
+                            pg = Ext.ComponentQuery.query("cn_navport-pg404");
 
-                    t.waitForMs(500, function () {
-                        pg = Ext.ComponentQuery.query("cn_navport-pg404");
+                            t.expect(pg).toBeTruthy();
+                            t.expect(pg.length).toBe(1);
 
-                        t.expect(pg).toBeTruthy();
-                        t.expect(pg.length).toBe(1);
+                            if (pg.length) {
+                                t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
+                                pg[0].destroy();
+                            }
 
-                        if (pg.length) {
-                            t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
-                            pg[0].destroy();
-                        }
-
+                            app.destroy();
+                            app = null;
+                        });
+                    } else {
                         app.destroy();
                         app = null;
-                    });
-                } else {
-                    app.destroy();
-                    app = null;
-                }
+                    }
 
-            });
+                });
 
+            }
 
-        }
+        });
+
 
     });
 

@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,84 +23,72 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.NavigationViewportIsolatedTest_2", function (t) {
+import initAppTest, {appConfig} from "../../lib/AppTestHelper.js";
 
-    var postLaunchInfo;
+StartTest((t) => {
 
-    t.beforeEach(function () {
-        if (Ext.isModern) {
-            Ext.viewport.Viewport.setup();
-        }
 
-        postLaunchInfo = {
-            navigation : [{
-                route : "myRoute",
-                text  : "my route",
-                children : [{
-                    route : "route_1_2",
-                    text : "sub_route",
-                    children : [{
-                        route : "route_1_2_",
-                        text : "sub_route_2"
-                    }]
+    initAppTest(t, {
+        navigation: [{
+            route: "myRoute",
+            text: "my route",
+            children: [{
+                route: "route_1_2",
+                text: "sub_route",
+                children: [{
+                    route: "route_1_2_",
+                    text: "sub_route_2"
                 }]
-            }, {
-                route : "myRoute1",
-                text  : "my route 1"
             }]
-        };
-    });
+        }, {
+            route: "myRoute1",
+            text: "my route 1"
+        }]
+    }).then(t => {
 
-    t.afterEach(function () {
-        if (Ext.isModern && Ext.Viewport) {
-            Ext.Viewport.destroy();
-            Ext.Viewport = null;
-        }
-    });
+        t.chain({
+            action: function (next) {
 
+                t.it("Should be possible to click a Tree's Menu Item and trigger routing", (t) => {
+                    console.warn("Adding custom hash so test processes properly");
+                    // browser not firing hashchange if this is not set by hand
+                    // might be n issue with the iframe the test runs in
+                    Ext.util.History.add("");
 
-    t.chain({
-        requireOk : "coon.navport.view.NavigationViewport"
-    }, {
-        action : function (next) {
-
-            t.it("Should be possible to click a Tree's Menu Item and trigger routing", function (t) {
-                console.warn("Adding custom hash so test processes properly");
-                // browser not firing hashchange if this is not set by hand
-                // might be n issue with the iframe the test runs in
-                Ext.util.History.add("");
-
-                var app = Ext.create("coon.comp.app.Application", {
-                    name        : "check",
-                    mainView    : "coon.navport.view.NavigationViewport",
-                    controllers : [
-                        "coon.navport.app.PackageController"
-                    ]
-                });
-
-                var viewport = app.getMainView(),
-                    navTree  = viewport.down("cn_navport-navtree"),
-                    store    = navTree.getStore();
-
-                viewport.addPostLaunchInfo(postLaunchInfo);
-
-                let historyRoute = "route_1_2_";
-                t.click(navTree.getItem(store.getAt(0)), function () {
-                    Ext.util.History.add(historyRoute);
-                    t.waitForMs(500, function () {
-                        t.expect(navTree.getSelection()).toBe(store.getRoot().findChildBy(function (node) {
-                            if (node.get("route") === historyRoute) {
-                                return true;
-                            }
-                        }, null, true));
-
+                    var app = Ext.create("coon.comp.app.Application", {
+                        name: "check",
+                        mainView: "coon.navport.view.NavigationViewport",
+                        controllers: [
+                            "coon.navport.app.PackageController"
+                        ]
                     });
+
+                    var viewport = app.getMainView(),
+                        navTree  = viewport.down("cn_navport-navtree"),
+                        store    = navTree.getStore();
+
+                    viewport.addPostLaunchInfo(appConfig.postLaunchInfo);
+
+                    let historyRoute = "route_1_2_";
+                    t.click(navTree.getItem(store.getAt(0)), () => {
+                        Ext.util.History.add(historyRoute);
+                        t.waitForMs(t.parent.TIMEOUT, () =>  {
+                            t.expect(navTree.getSelection()).toBe(store.getRoot().findChildBy(function (node) {
+                                if (node.get("route") === historyRoute) {
+                                    return true;
+                                }
+                            }, null, true));
+
+                        });
+                    });
+
+
                 });
 
+            }});
 
-            });
 
-        }});
+    });
 
 
 });

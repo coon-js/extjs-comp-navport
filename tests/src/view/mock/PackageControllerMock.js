@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -26,22 +26,22 @@
 
 Ext.define("coon.test.view.mock.PackageControllerMock", {
 
-    extend : "coon.core.app.PackageController",
+    extend: "coon.core.app.PackageController",
 
 
-    postLaunchHook : function () {
+    postLaunchHook: () => {
 
 
         return {
 
-            navigation : [{
-                text  : "Nav 1",
-                route : "nav1",
-                view  : "coon.test.view.mock.Panel1"
+            navigation: [{
+                text: "Nav 1",
+                route: "nav1",
+                view: "coon.test.view.mock.Panel1"
             }, {
-                text  : "Nav 2",
-                route : "nav2",
-                view  : "coon.test.view.mock.Panel2"
+                text: "Nav 2",
+                route: "nav2",
+                view: "coon.test.view.mock.Panel2"
             }]
         };
 

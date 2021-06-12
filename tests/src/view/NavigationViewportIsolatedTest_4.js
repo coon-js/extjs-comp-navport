@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,122 +23,112 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.NavigationViewportIsolatedTest_4", function (t) {
+import initAppTest, {appConfig} from "../../lib/AppTestHelper.js";
 
-    var viewport,
-        postLaunchInfo;
+StartTest((t) => {
 
-    t.beforeEach(function () {
-        if (Ext.isModern) {
-            Ext.viewport.Viewport.setup();
-        }
+    var viewport;
 
-        postLaunchInfo = {
-            navigation : [{
-                route : "myRoute",
-                text  : "my route"
-            }, {
-                route : "myRoute1",
-                text  : "my route 1"
-            }]
-        };
-    });
-
-    t.afterEach(function () {
-        if (Ext.isModern && Ext.Viewport) {
-            Ext.Viewport.destroy();
-            Ext.Viewport = null;
-        }
-    });
-
-    t.chain({
-        requireOk : "coon.navport.view.NavigationViewport"
-    }, {
-        action : function (next) {
+    initAppTest(t, {
+        navigation: [{
+            route: "myRoute",
+            text: "my route"
+        }, {
+            route: "myRoute1",
+            text: "my route 1"
+        }]
+    }).then(t => {
 
 
-            t.it("Should properly process requests to empty hash", function (t) {
+        t.chain({
+            action: function (next) {
 
-                console.warn("Adding custom hash so test processes properly");
-                // browser not firing hashchange if this is not set by hand
-                // might be n issue with the iframe the test runs in
-                Ext.util.History.add("");
 
-                var app = Ext.create("coon.comp.app.Application", {
-                    name        : "check",
-                    mainView    : "coon.navport.view.NavigationViewport",
-                    controllers : [
-                        "coon.navport.app.PackageController"
-                    ]
-                });
+                t.it("Should properly process requests to empty hash", (t) => {
 
-                viewport = app.getMainView();
+                    console.warn("Adding custom hash so test processes properly");
+                    // browser not firing hashchange if this is not set by hand
+                    // might be n issue with the iframe the test runs in
+                    Ext.util.History.add("");
 
-                var pg, pg2 = null;
+                    var app = Ext.create("coon.comp.app.Application", {
+                        name: "check",
+                        mainView: "coon.navport.view.NavigationViewport",
+                        controllers: [
+                            "coon.navport.app.PackageController"
+                        ]
+                    });
 
-                console.warn("Adding custom hash so test processes properly");
-                // browser not firing hashchange if this is not set by hand
-                // might be n issue with the iframe the test runs in
-                Ext.util.History.add("");
+                    viewport = app.getMainView();
 
-                viewport.addPostLaunchInfo(postLaunchInfo);
+                    var pg, pg2 = null;
 
-                pg = Ext.ComponentQuery.query("cn_navport-pg404");
-                t.expect(pg).toBeTruthy();
-                t.expect(pg.length).toBe(0);
+                    console.warn("Adding custom hash so test processes properly");
+                    // browser not firing hashchange if this is not set by hand
+                    // might be n issue with the iframe the test runs in
+                    Ext.util.History.add("");
 
-                if (pg.length === 0) {
-                    Ext.util.History.add("foobar");
+                    viewport.addPostLaunchInfo(appConfig.postLaunchInfo);
 
-                    t.waitForMs(500, function () {
-                        pg = Ext.ComponentQuery.query("cn_navport-pg404");
+                    pg = Ext.ComponentQuery.query("cn_navport-pg404");
+                    t.expect(pg).toBeTruthy();
+                    t.expect(pg.length).toBe(0);
 
-                        t.expect(pg).toBeTruthy();
-                        t.expect(pg.length).toBe(1);
+                    if (pg.length === 0) {
+                        Ext.util.History.add("foobar");
 
-                        if (pg.length) {
-                            t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
-                        }
+                        t.waitForMs(t.parent.TIMEOUT, () => {
+                            pg = Ext.ComponentQuery.query("cn_navport-pg404");
 
-                        Ext.util.History.add("");
+                            t.expect(pg).toBeTruthy();
+                            t.expect(pg.length).toBe(1);
 
-                        t.waitForMs(500, function () {
-                            pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
+                            if (pg.length) {
+                                t.expect(pg[0] instanceof coon.navport.view.pages.Page404).toBe(true);
+                            }
 
-                            t.expect(pg2).toBeTruthy();
-                            t.expect(pg2.length).toBe(0);
+                            Ext.util.History.add("");
 
-                            Ext.util.History.add("snafu");
-
-                            t.waitForMs(500, function () {
+                            t.waitForMs(t.parent.TIMEOUT, () => {
                                 pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
 
                                 t.expect(pg2).toBeTruthy();
-                                t.expect(pg2.length).toBe(1);
+                                t.expect(pg2.length).toBe(0);
 
-                                Ext.util.History.add("#");
+                                Ext.util.History.add("snafu");
 
-                                t.waitForMs(500, function () {
+                                t.waitForMs(t.parent.TIMEOUT, () => {
                                     pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
 
                                     t.expect(pg2).toBeTruthy();
-                                    t.expect(pg2.length).toBe(0);
+                                    t.expect(pg2.length).toBe(1);
 
-                                    app.destroy();
-                                    app = null;
+                                    Ext.util.History.add("#");
+
+                                    t.waitForMs(t.parent.TIMEOUT, () =>  {
+                                        pg2 = Ext.ComponentQuery.query("cn_navport-pg404");
+
+                                        t.expect(pg2).toBeTruthy();
+                                        t.expect(pg2.length).toBe(0);
+
+                                        app.destroy();
+                                        app = null;
+                                    });
+
                                 });
 
                             });
-
                         });
-                    });
-                } else {
-                    app.destroy();
-                    app = null;
-                }
-            });
+                    } else {
+                        app.destroy();
+                        app = null;
+                    }
+                });
 
-        }});
+            }});
+
+
+    });
 
 
 });

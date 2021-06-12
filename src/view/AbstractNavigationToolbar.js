@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -40,27 +40,27 @@
  */
 Ext.define("coon.navport.view.AbstractNavigationToolbar", {
 
-    extend : "Ext.Toolbar",
+    extend: "Ext.Toolbar",
 
-    requires : [
+    requires: [
         "coon.navport.view.controller.NavigationToolbarViewController"
     ],
 
-    cls : "cn_navport-tbar",
+    cls: "cn_navport-tbar",
 
-    controller : "cn_navport-navigationtoolbarviewcontroller",
+    controller: "cn_navport-navigationtoolbarviewcontroller",
 
-    items : [{
-        xtype     : "component",
-        reference : "cn_navport_ref_applogo"
+    items: [{
+        xtype: "component",
+        reference: "cn_navport_ref_applogo"
     }, {
-        margin    : "0 0 0 8",
-        xtype     : "button",
-        reference : "cn_navport_ref_hidenavbtn",
-        text      : "Hide Navigation",
-        tooltip  : {
-            title : "Show / hide navigation",
-            text  : "Adjusts visibility of the main navigation."
+        margin: "0 0 0 8",
+        xtype: "button",
+        reference: "cn_navport_ref_hidenavbtn",
+        text: "Hide Navigation",
+        tooltip: {
+            title: "Show / hide navigation",
+            text: "Adjusts visibility of the main navigation."
         }
     }, "->"],
 
@@ -76,7 +76,7 @@ Ext.define("coon.navport.view.AbstractNavigationToolbar", {
      *
      * @see coon.navport.view.controller.NavigationToolbarViewController#buildPermaNavItems
      */
-    addPermanentNavigation : function (items) {
+    addPermanentNavigation: function (items) {
         var me = this;
 
         return me.getController().buildPermaNavItems(items);
@@ -97,7 +97,7 @@ Ext.define("coon.navport.view.AbstractNavigationToolbar", {
      * @see coon.navport.view.controller.NavigationToolbarViewController#buildNodeNavItems
      * @see #showNavigationForNode
      */
-    addNodeNavigation : function (items, id) {
+    addNodeNavigation: function (items, id) {
         var me = this;
         return me.getController().buildNodeNavItems(items, id);
     },
@@ -113,7 +113,7 @@ Ext.define("coon.navport.view.AbstractNavigationToolbar", {
      * @see coon.navport.view.controller.NavigationToolbarViewController#hasNodeNavigation
      * @see #showNavigationForNode
      */
-    hasNodeNavigation : function (id) {
+    hasNodeNavigation: function (id) {
         return this.getController().hasNodeNavigation(id);
     },
 
@@ -131,7 +131,7 @@ Ext.define("coon.navport.view.AbstractNavigationToolbar", {
      * @see coon.navport.view.controller.NavigationToolbarViewController#activateNodeNavFor
      * @see #showNavigationForNode
      */
-    showNavigationForNode : function (id) {
+    showNavigationForNode: function (id) {
         var me = this;
         me.getController().activateNavigationForNode(id);
     }

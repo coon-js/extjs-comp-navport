@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,12 +23,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.NavigationTreeTest", function (t) {
+StartTest((t) => {
 
     var tree,
         treeConfig;
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (tree) {
             tree.destroy();
             tree = null;
@@ -37,11 +37,11 @@ describe("coon.navport.view.NavigationTreeTest", function (t) {
 
     t.beforeEach(function (){
         treeConfig = {
-            renderTo : document.body
+            renderTo: document.body
         };
     });
 
-    t.it("Should create and show the tree", function (t) {
+    t.it("Should create and show the tree", (t) => {
         tree = Ext.create("coon.navport.view.NavigationTree", treeConfig);
 
         t.expect(tree instanceof coon.comp.list.Tree).toBe(true);

@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,9 +23,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.store.NavigationTreeStoreTest", function (t) {
+StartTest((t) => {
 
-    t.it("Should properly create the store and check for default config", function (t) {
+    t.it("Should properly create the store and check for default config", (t) => {
 
         var store = Ext.create("coon.navport.store.NavigationTreeStore");
 

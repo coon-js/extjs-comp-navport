@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,26 +23,26 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.ContentContainerTest", function (t) {
+StartTest((t) => {
 
     var container,
         containerConfig;
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (container) {
             container.destroy();
             container = null;
         }
     });
 
-    t.beforeEach(function () {
+    t.beforeEach(() => {
         containerConfig = {
-            renderTo : document.body
+            renderTo: document.body
         };
     });
 
 
-    t.it("Should create and show Container", function (t) {
+    t.it("Should create and show Container", (t) => {
         container = Ext.create(
             "coon.navport.view.ContentContainer", containerConfig);
 

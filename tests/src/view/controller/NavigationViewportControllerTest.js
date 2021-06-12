@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,18 +23,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.controller.NavigationViewportControllerTest", function (t) {
+StartTest((t) => {
 
     var viewportCtrl;
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (viewportCtrl) {
             viewportCtrl.destroy();
             viewportCtrl = null;
         }
     });
 
-    t.it("Should create the ViewportController", function (t) {
+    t.it("Should create the ViewportController", (t) => {
         viewportCtrl = Ext.create("coon.navport.view.controller.NavigationViewportController");
         t.expect(viewportCtrl instanceof Ext.app.ViewController).toBe(true);
 
@@ -42,27 +42,27 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
     });
 
     /**
-     * coon/lib-cn_navport/#2
+     * coon/extjs-comp-navport/#2
      */
-    t.it("Should test addPermaNavItem() properly", function (t) {
+    t.it("Should test addPermaNavItem() properly", (t) => {
 
         viewportCtrl = Ext.create("coon.navport.view.controller.NavigationViewportController");
 
         // MOCK LOOKUP() - EMPTY OBJECT
         // TOOLBAR
         var toolbar = Ext.create("coon.navport.view.NavigationToolbar");
-        viewportCtrl.lookup = function () {
+        viewportCtrl.lookup = () => {
             return toolbar;
         };
 
-        var res = viewportCtrl.addPermaNavItems([{xtype : "button", itemId : "foo"}]);
+        var res = viewportCtrl.addPermaNavItems([{xtype: "button", itemId: "foo"}]);
         t.expect(res[0]).toBe("foo");
         toolbar.destroy();
         toolbar = null;
     });
 
 
-    t.it("createNavigationModelFrom()", function (t) {
+    t.it("createNavigationModelFrom()", (t) => {
 
         var exc, rec, nodeNav;
 
@@ -78,19 +78,19 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
 
         exc = undefined;
         try{viewportCtrl.createNavigationModelFrom(
-            {text : "text"}
+            {text: "text"}
         );}catch(e){exc = e;}
         t.expect(exc.msg).toContain("invalid configuration");
 
         exc = undefined;
         try{viewportCtrl.createNavigationModelFrom(
-            {route : "route"}
+            {route: "route"}
         );}catch(e){exc = e;}
         t.expect(exc.msg).toContain("invalid configuration");
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
-            {id : "a", text : "text", route : "route", nodeNav : [], inheritNodeNav : true,
-                view : "myView", iconCls : "myIconCls", packageController : "MyController"}
+            {id: "a", text: "text", route: "route", nodeNav: [], inheritNodeNav: true,
+                view: "myView", iconCls: "myIconCls", packageController: "MyController"}
         );
 
         t.isInstanceOf(rec, "coon.navport.model.NavigationModel");
@@ -110,7 +110,7 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
     });
 
 
-    t.it("createNavigationModelFrom() - with child nodes", function (t) {
+    t.it("createNavigationModelFrom() - with child nodes", (t) => {
 
         var rec, nodeNav;
 
@@ -119,8 +119,8 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
         );
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom(
-            {id : "a", text : "text", route : "route", nodeNav : [{text : "foo"}],
-                view : "myView", iconCls : "myIconCls", children : [{id : "b", text : "childtext", route: "childroute", nodeNav : [{text : "childfoo"}]}]}
+            {id: "a", text: "text", route: "route", nodeNav: [{text: "foo"}],
+                view: "myView", iconCls: "myIconCls", children: [{id: "b", text: "childtext", route: "childroute", nodeNav: [{text: "childfoo"}]}]}
         );
 
         t.isInstanceOf(rec, "coon.navport.model.NavigationModel");
@@ -128,8 +128,8 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
         t.expect(rec.childNodes.length).toBe(1);
 
         t.expect(nodeNav).toEqual({
-            "a" : [{text : "foo"}],
-            "b" : [{text : "childfoo"}]
+            "a": [{text: "foo"}],
+            "b": [{text: "childfoo"}]
         });
 
         let childRec = rec.childNodes[0];
@@ -149,7 +149,7 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
     });
 
 
-    t.it("onNavigationTreeSelectionChange() - null values (lib-cn_navport#10)", function (t) {
+    t.it("onNavigationTreeSelectionChange() - null values (extjs-comp-navport#10)", (t) => {
 
         viewportCtrl = Ext.create(
             "coon.navport.view.controller.NavigationViewportController"
@@ -162,7 +162,7 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
     });
 
 
-    t.it("activateNodeNavigation()", function (t) {
+    t.it("activateNodeNavigation()", (t) => {
 
 
         let rec,
@@ -179,64 +179,64 @@ describe("coon.navport.view.controller.NavigationViewportControllerTest", functi
             "coon.navport.view.controller.NavigationViewportController"
         );
 
-        viewportCtrl.lookup = function () {
+        viewportCtrl.lookup = () => {
             return {
-                hasNodeNavigation : function (id) {
+                hasNodeNavigation: function (id) {
 
                     if (nodeNav) {
                         return !!nodeNav[id];
                     }
                     return false;
                 },
-                showNavigationForNode : function (nodeId) {
+                showNavigationForNode: function (nodeId) {
 
                 }
             };
         };
 
         [rec, nodeNav] = viewportCtrl.createNavigationModelFrom({
-            text : "text",
-            route : "route",
-            children : [{
-                id : "a",
-                text : "text_1",
-                route : "route_1",
-                nodeNav : [{}],
-                children : [{
-                    id : "id_1_2",
-                    text : "text_1_2",
-                    route : "route_1_2",
-                    inheritNodeNav : true,
-                    children : [{
-                        id : "text_1_2_1",
-                        text : "text_1_2_1",
-                        route : "route_1_2_1"
+            text: "text",
+            route: "route",
+            children: [{
+                id: "a",
+                text: "text_1",
+                route: "route_1",
+                nodeNav: [{}],
+                children: [{
+                    id: "id_1_2",
+                    text: "text_1_2",
+                    route: "route_1_2",
+                    inheritNodeNav: true,
+                    children: [{
+                        id: "text_1_2_1",
+                        text: "text_1_2_1",
+                        route: "route_1_2_1"
                     }, {
-                        id : "id_1_2_2",
-                        text : "text_1_2_2",
-                        route : "route_1_2_2",
-                        inheritNodeNav : true,
-                        children : [{
-                            id : "id_1_2_2_1",
-                            text : "text_1_2_2_1",
-                            route : "route_1_2_2_1",
-                            children : [{
-                                id : "id_1_2_2_1_1",
-                                text : "text_1_2_2_1_1",
-                                route : "route_1_2_2_1_1",
-                                inheritNodeNav : true
+                        id: "id_1_2_2",
+                        text: "text_1_2_2",
+                        route: "route_1_2_2",
+                        inheritNodeNav: true,
+                        children: [{
+                            id: "id_1_2_2_1",
+                            text: "text_1_2_2_1",
+                            route: "route_1_2_2_1",
+                            children: [{
+                                id: "id_1_2_2_1_1",
+                                text: "text_1_2_2_1_1",
+                                route: "route_1_2_2_1_1",
+                                inheritNodeNav: true
                             }]
                         }]
                     }]
                 }, {
-                    text : "text_1_3",
-                    route : "route_1_3"
+                    text: "text_1_3",
+                    route: "route_1_3"
                 }]
             }, {
-                nodeNav : [{}],
-                id : "id_2",
-                text : "text_2",
-                route : "route_2"
+                nodeNav: [{}],
+                id: "id_2",
+                text: "text_2",
+                route: "route_2"
             }]
         });
 

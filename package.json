@@ -1,52 +1,90 @@
 {
-
-    "name": "lib-cn_navport",
-
-    "sencha": {
-        "namespace": "coon.navport",
-        "type": "code",
-        "creator": "coon.js",
-        "summary": "Enhanced viewport template for rapid, modular, package agnostic Sencha ExtJS application building.",
-        "detailedDescription": "This package contains a default Viewport implementation which serves as a template for Sencha ExtJS applications. The Viewport along with its configurations allows for support for routing, navigation and managing views. It lets you hook modules into an application by simply specifying PackageControllers. Requires lib-cn_comp.",
-        "version": "1.0.0",
-        "compatVersion": "1.0.0",
-        "format": "1",
-        "slicer": null,
-        "output": {
-            "base": "${package.dir}/build/${build.id}",
-            "js": {
-                "version": "ES8"
-            }
-        },
-        "language": {
-            "js": {
-                "input": "ES8",
-                "output": "ES8"
-            }
-        },
-        "compressor": {
-            "type" : "closure",
-            "polyfills": "none"
-        },
-        "local": true,
-        "sass" : null,
-        "classpath": [
-            "${package.dir}/src",
-            "${package.dir}/${toolkit.name}/src"
-        ],
-        "overrides": null,
-        "example": null,
-        "framework": "ext",
-        "requires": [
-            "lib-cn_comp"
-        ],
-        "builds": {
-            "classic": {
-                "toolkit": "classic"
-            },
-            "modern": {
-                "toolkit": "modern"
-            }
-        }
+  "name": "@coon-js/extjs-comp-navport",
+  "sencha": {
+    "name": "extjs-comp-navport",
+    "namespace": "coon.navport",
+    "type": "code",
+    "creator": "coon.js",
+    "summary": "NPM package providing enhanced viewport template for rapid, modular, package agnostic Sencha ExtJS application building.",
+    "detailedDescription": "This package contains a default Viewport implementation which serves as a template for Sencha ExtJS applications. The Viewport along with its configurations allows for support for routing, navigation and managing views. It lets you hook modules into an application by simply specifying PackageControllers. Requires extjs-lib-comp.",
+    "version": "0.0.1",
+    "compatVersion": "0.0.1",
+    "format": "1",
+    "slicer": null,
+    "output": {
+      "base": "${package.dir}/build/${build.id}",
+      "js": {
+        "version": "ES8"
+      }
+    },
+    "language": {
+      "js": {
+        "input": "ES8",
+        "output": "ES8"
+      }
+    },
+    "compressor": {
+      "type": "closure",
+      "polyfills": "none"
+    },
+    "local": true,
+    "sass": null,
+    "classpath": [
+      "${package.dir}/src",
+      "${package.dir}/${toolkit.name}/src"
+    ],
+    "overrides": null,
+    "example": null,
+    "framework": "ext",
+    "requires": [
+      "extjs-lib-comp"
+    ],
+    "builds": {
+      "classic": {
+        "toolkit": "classic"
+      },
+      "modern": {
+        "toolkit": "modern"
+      }
     }
+  },
+  "description": "This **Sencha ExtJS** package provides an enhanced viewport template for rapid,  modular, package agnostic Sencha ExtJS application building.",
+  "version": "0.0.1",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npx ws --port 8062 --static.index tests.html --open",
+    "postinstall" : "npx extjs-link"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coon-js/extjs-comp-navport.git"
+  },
+  "keywords": [
+    "coon.js",
+    "coonjs",
+    "coon-js",
+    "ExtJS",
+    "Ext",
+    "Sencha",
+    "conjoon"
+  ],
+  "author": "Thorsten Suckow-Homberg <thorsten@suckow-homberg.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coon-js/extjs-comp-navport/issues"
+  },
+  "homepage": "https://github.com/coon-js/extjs-comp-navport#readme",
+  "devDependencies": {
+    "@coon-js/extjs-package-loader": "^1.0.0",
+    "@coon-js/extjs-lib-core": "file:../extjs-lib-core",
+    "@coon-js/extjs-lib-comp": "file:../extjs-lib-comp",
+    "@coon-js/extjs-link": "file:../extjs-link",
+    "@coon-js/siesta-lib-helper": "file:../siesta-lib-helper",
+    "@l8js/l8": "file:../../@l8js/l8",
+    "local-web-server": "^4.2.1",
+    "siesta-lite": "^5.5.2"
+  }
 }

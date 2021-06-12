@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,7 +24,7 @@
  */
 
 /**
- * This is the package controller of the lib-cn_navport package to be
+ * This is the package controller of the extjs-comp-navport package to be
  * used with {@link coon.comp.app.Application}.
  * This package controller is mainly responsible for proper routing of unmatched
  * routes against the application's addViewForHash() method.
@@ -57,12 +57,12 @@
  */
 Ext.define("coon.navport.app.PackageController", {
 
-    extend : "coon.core.app.PackageController",
+    extend: "coon.core.app.PackageController",
 
-    listen : {
-        controller : {
-            "#" : {
-                unmatchedroute :  "onUnmatchedRoute"
+    listen: {
+        controller: {
+            "#": {
+                unmatchedroute: "onUnmatchedRoute"
             }
         }
     },
@@ -74,7 +74,7 @@ Ext.define("coon.navport.app.PackageController", {
      * @type {String} autoDefaultToken
      * @private
      */
-    autoDefaultToken : null,
+    autoDefaultToken: null,
 
 
     /**
@@ -82,7 +82,7 @@ Ext.define("coon.navport.app.PackageController", {
      * Overriden to make sure we can apply a auto generated default token if
      * none exists
      */
-    init : function (app) {
+    init: function (app) {
         var me = this;
 
         if (!app.getDefaultToken()) {
@@ -101,13 +101,13 @@ Ext.define("coon.navport.app.PackageController", {
      * @see #onBeforePackageRoute
      * @see #processRouteFor
      */
-    onUnmatchedRoute : function (hash) {
+    onUnmatchedRoute: function (hash) {
 
         var me  = this;
 
         me.onBeforePackageRoute({
-            stop   : Ext.emptyFn,
-            resume : me.processRouteFor.bind(me, hash)
+            stop: Ext.emptyFn,
+            resume: me.processRouteFor.bind(me, hash)
         });
     },
 
@@ -124,7 +124,7 @@ Ext.define("coon.navport.app.PackageController", {
      *
      * @protected
      */
-    processRouteFor : function (hash) {
+    processRouteFor: function (hash) {
         var me = this;
 
         if (me.autoDefaultToken && hash === me.autoDefaultToken) {

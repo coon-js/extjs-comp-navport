@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,7 +23,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.data.schema.BaseSchemaTest", function (t) {
+StartTest((t) => {
 
 
     // +----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ describe("coon.navport.data.schema.BaseSchemaTest", function (t) {
     /**
      * Test create
      */
-    t.it("Should create an instance of BaseSchema ans validate configs", function (t) {
+    t.it("Should create an instance of BaseSchema ans validate configs", (t) => {
 
         var schema = Ext.create("coon.navport.data.schema.BaseSchema");
 

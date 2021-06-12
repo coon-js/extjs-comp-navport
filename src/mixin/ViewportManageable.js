@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -35,7 +35,7 @@ Ext.define("coon.navport.mixin.ViewportManageable", {
      *
      * @returns {boolean}
      */
-    canNavigationViewportCloseView : function () {
+    canNavigationViewportCloseView: function () {
         return true;
     }
 

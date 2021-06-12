@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -29,29 +29,29 @@
  */
 Ext.define("coon.navport.view.controller.NavigationViewportController", {
 
-    extend : "Ext.app.ViewController",
+    extend: "Ext.app.ViewController",
 
-    requires : [
+    requires: [
         "coon.navport.view.pages.Page404",
         "coon.navport.model.NavigationModel"
     ],
 
-    alias : "controller.cn_navport-ctrl",
+    alias: "controller.cn_navport-ctrl",
 
     /**
      * Stores the current view of the viewport.
      * @protected
      */
-    currentView : null,
+    currentView: null,
 
-    control : {
-        "cn_navport-navtree" : {
-            selectionchange : "onNavigationTreeSelectionChange"
+    control: {
+        "cn_navport-navtree": {
+            selectionchange: "onNavigationTreeSelectionChange"
         },
 
-        "cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]" : Ext.isModern ? {
-            tap : "onHideNavigationClick"
-        } : {click : "onHideNavigationClick"}
+        "cn_navport-tbar > button[reference=cn_navport_ref_hidenavbtn]": Ext.isModern ? {
+            tap: "onHideNavigationClick"
+        } : {click: "onHideNavigationClick"}
 
     },
 
@@ -68,7 +68,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * @see coon.navport.view.NavigationToolbar#addPermanentNavigation
      */
-    addPermaNavItems : function (items) {
+    addPermaNavItems: function (items) {
         var me   = this,
             tbar = me.lookup("cn_navport_ref_tbar");
 
@@ -87,7 +87,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * @see #createNavigationModelFrom
      */
-    addMainNavigationItems : function (items) {
+    addMainNavigationItems: function (items) {
 
         var me      = this,
             navItem = null,
@@ -99,9 +99,9 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
 
         if (!Ext.isArray(items)) {
             Ext.raise({
-                sourceClass : Ext.getClassName(this),
-                items       : items,
-                msg         : Ext.getClassName(this) + "#addNavigationItems needs items to be an array"
+                sourceClass: Ext.getClassName(this),
+                items: items,
+                msg: Ext.getClassName(this) + "#addNavigationItems needs items to be an array"
             });
         }
 
@@ -127,7 +127,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * @param {Boolean} hide True to hide the NavigationTree, otherwise false.
      */
-    hideNavigation : function (hide) {
+    hideNavigation: function (hide) {
 
         var me          = this,
             view        = me.getView(),
@@ -178,7 +178,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * @see coon.navport.view.NavigationToolbar#showNavigationForNode
      */
-    addViewForHash : function (hash, defaultToken) {
+    addViewForHash: function (hash, defaultToken) {
 
         const
             me           = this,
@@ -232,7 +232,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
             }
 
             if (Ext.isString(viewCfg)) {
-                viewCfg = {xclass : viewCfg};
+                viewCfg = {xclass: viewCfg};
             }
 
             // try to find an existing view first, given the injected
@@ -299,7 +299,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * see {@link coon.navport.view.NavigationViewport#showUnmatchedRouteNotification}
      */
-    nodeNotFound : function (hash, defaultToken) {
+    nodeNotFound: function (hash, defaultToken) {
         var me   = this,
             view = me.getView();
 
@@ -318,7 +318,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      * see {@link #redirectTo}
      * see {@link coon.navport.model.NavigationModel#toUrl}.
      */
-    onNavigationTreeSelectionChange : function (tree, node) {
+    onNavigationTreeSelectionChange: function (tree, node) {
         const me = this;
 
         // Modern Toolkit will remove all items in the tree when
@@ -342,7 +342,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
      *
      * see {@link #hideNavigation}
      */
-    onHideNavigationClick : function (btn) {
+    onHideNavigationClick: function (btn) {
 
         var me      = this,
             view    = me.getView(),
@@ -352,7 +352,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
     },
 
 
-    privates : {
+    privates: {
 
 
         /**
@@ -365,7 +365,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
          * @returns {null|String} Returns null if there is no node-navigation available for
          * the specified node.
          */
-        activateNodeNavigation : function (node) {
+        activateNodeNavigation: function (node) {
 
             const
                 me = this,
@@ -399,7 +399,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
          *
          * @returns {boolean}
          */
-        isCurrentViewClosable : function () {
+        isCurrentViewClosable: function () {
 
             var me = this;
 
@@ -414,7 +414,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
         /**
          * Helper for closin the current view.
          */
-        closeCurrentView : function () {
+        closeCurrentView: function () {
 
             var me = this;
 
@@ -435,7 +435,7 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
          *
          * @throws if the configuration was not valid
          */
-        createNavigationModelFrom : function (config) {
+        createNavigationModelFrom: function (config) {
 
             var me = this,
                 mandatoryFields = ["text", "route"],
@@ -447,9 +447,9 @@ Ext.define("coon.navport.view.controller.NavigationViewportController", {
                 if (!Object.prototype.hasOwnProperty.call(config, manField) ||
                     !config[manField]) {
                     Ext.raise({
-                        sourceClass : Ext.getClassName(this),
-                        config      : config,
-                        msg         : Ext.getClassName(this) + "#createNavigationModelFrom found an invalid configuration for a navigation item"
+                        sourceClass: Ext.getClassName(this),
+                        config: config,
+                        msg: Ext.getClassName(this) + "#createNavigationModelFrom found an invalid configuration for a navigation item"
                     });
                 }
             }

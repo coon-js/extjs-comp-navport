@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,26 +23,26 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.NavigationViewportTest", function (t) {
+StartTest((t) => {
 
     var viewport,
         postLaunchInfo;
 
-    t.beforeEach(function () {
+    t.beforeEach(() => {
 
         postLaunchInfo = {
-            navigation : [{
-                route : "myRoute",
-                text  : "my route"
+            navigation: [{
+                route: "myRoute",
+                text: "my route"
             }, {
-                route : "myRoute1",
-                text  : "my route 1"
+                route: "myRoute1",
+                text: "my route 1"
             }]
         };
     });
 
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (viewport) {
             viewport.destroy();
             viewport = null;
@@ -55,7 +55,7 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     // +--------------------------------
 
 
-    t.it("Should create and show Viewport", function (t) {
+    t.it("Should create and show Viewport", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport");
         t.expect(viewport instanceof coon.comp.container.Viewport).toBeTruthy();
 
@@ -68,7 +68,7 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("Should have the ContentWrap", function (t) {
+    t.it("Should have the ContentWrap", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport");
         let cwrap = viewport.lookup("cn_navport_ref_conwrap");
         t.expect(cwrap instanceof coon.navport.view.ContentWrap).toBe(true);
@@ -76,15 +76,15 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("Should have the Toolbar", function (t) {
+    t.it("Should have the Toolbar", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport");
         t.expect(viewport.lookup("cn_navport_ref_tbar") instanceof coon.navport.view.NavigationToolbar).toBe(true);
     });
 
 
-    t.it("Should be possible to hide the navigation", function (t) {
+    t.it("Should be possible to hide the navigation", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {
-            renderTo : document.body
+            renderTo: document.body
         } : {});
 
         t.expect(viewport.down("cn_navport-navtree").isVisible()).toBe(true);
@@ -95,22 +95,22 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("Should be possible to click the hideNavigation Button and hide the navigation", function (t) {
+    t.it("Should be possible to click the hideNavigation Button and hide the navigation", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {
-            renderTo : document.body
+            renderTo: document.body
         } : undefined);
         var btn = viewport.down("button[reference=cn_navport_ref_hidenavbtn]");
 
         t.expect(btn).toBeTruthy();
         t.expect(viewport.down("cn_navport-navtree").isHidden()).toBe(false);
-        t.click(btn, function () {
+        t.click(btn, () => {
             t.expect(viewport.down("cn_navport-navtree").isHidden()).toBe(true);
         });
 
     });
 
 
-    t.it("Should be possible to call addPostLaunchInfo and populate the NavigationTree", function (t) {
+    t.it("Should be possible to call addPostLaunchInfo and populate the NavigationTree", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport");
 
         var store = viewport.down("cn_navport-navtree").getStore();
@@ -125,7 +125,7 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("Should process showUnmatchedRouteNotification properly", function (t) {
+    t.it("Should process showUnmatchedRouteNotification properly", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport");
 
         var w = viewport.showUnmatchedRouteNotification("somehash");
@@ -137,17 +137,17 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("activateViewForHash()", function (t) {
+    t.it("activateViewForHash()", (t) => {
 
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {
-            renderTo : document.body
+            renderTo: document.body
         } : {});
 
         viewport.addPostLaunchInfo({
-            navigation : [{
-                text  : "Text",
-                route : "testroute",
-                view  : "Ext.Panel"
+            navigation: [{
+                text: "Text",
+                route: "testroute",
+                view: "Ext.Panel"
             }]
         });
 
@@ -171,21 +171,21 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
 
 
     /**
-     * coon/lib-cn_navport/#2
+     * coon/extjs-comp-navport/#2
      */
-    t.it("Should test addPostLaunchInfo() with permaNav properly", function (t) {
+    t.it("Should test addPostLaunchInfo() with permaNav properly", (t) => {
 
         viewport = Ext.create("coon.navport.view.NavigationViewport");
 
         t.expect(viewport.down("cn_navport-tbar").down("#buttonA")).toBeFalsy();
         t.expect(viewport.down("cn_navport-tbar").down("#buttonB")).toBeFalsy();
         viewport.addPostLaunchInfo({
-            permaNav : [{
-                xtype  : "button",
-                itemId : "buttonA"
+            permaNav: [{
+                xtype: "button",
+                itemId: "buttonA"
             }, {
-                xtype  : "button",
-                itemId : "buttonB"
+                xtype: "button",
+                itemId: "buttonB"
             }]
         });
         t.expect(viewport.down("cn_navport-tbar").down("#buttonA")).toBeTruthy();
@@ -195,24 +195,24 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
 
 
     /**
-     * coon/lib-cn_navport/#2
+     * coon/extjs-comp-navport/#2
      */
-    t.it("Should test addPostLaunchInfo() with nodeNav properly", function (t) {
+    t.it("Should test addPostLaunchInfo() with nodeNav properly", (t) => {
 
         viewport = Ext.create("coon.navport.view.NavigationViewport");
 
         t.expect(viewport.down("cn_navport-tbar").down("#buttonA")).toBeFalsy();
         t.expect(viewport.down("cn_navport-tbar").down("#buttonB")).toBeFalsy();
         viewport.addPostLaunchInfo({
-            navigation : [{
-                route : "route",
-                text  : "text",
-                nodeNav : [{
-                    xtype  : "button",
-                    itemId : "buttonA"
+            navigation: [{
+                route: "route",
+                text: "text",
+                nodeNav: [{
+                    xtype: "button",
+                    itemId: "buttonA"
                 }, {
-                    xtype  : "button",
-                    itemId : "buttonB"
+                    xtype: "button",
+                    itemId: "buttonB"
                 }]
             }]
         });
@@ -222,20 +222,20 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("lib-cn_navport#7", function (t) {
+    t.it("extjs-comp-navport#7", (t) => {
 
         let gA = Ext.getApplication, w;
 
         let CONFIGURE_VIEW = false;
 
-        Ext.getApplication = function () {
+        Ext.getApplication = () => {
             return {
-                getController : function (key) {
+                getController: function (key) {
                     if (key === "MyController") {
                         return {
-                            configureView : function (view, created, hash, node) {
+                            configureView: function (view, created, hash, node) {
                                 if (!Ext.isObject(CONFIGURE_VIEW)) {
-                                    CONFIGURE_VIEW = {view : [], hash : [], node : [], created : []};
+                                    CONFIGURE_VIEW = {view: [], hash: [], node: [], created: []};
                                 }
 
                                 CONFIGURE_VIEW.view.push(view);
@@ -252,30 +252,30 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
         };
 
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {
-            renderTo : document.body
+            renderTo: document.body
         } : {});
 
         let postLaunchInfo = {
-            navigation : [{
-                text  : "Text",
-                route : "testroute",
-                view  : "Ext.Panel",
-                packageController : "MyController"
+            navigation: [{
+                text: "Text",
+                route: "testroute",
+                view: "Ext.Panel",
+                packageController: "MyController"
             }, {
-                text  : "Text",
-                route : "testroute2",
-                view  : "Ext.Panel",
-                packageController : "MyController"
+                text: "Text",
+                route: "testroute2",
+                view: "Ext.Panel",
+                packageController: "MyController"
             }, {
-                text  : "Text",
-                route : "testroute3",
-                view  : "Ext.Panel",
-                packageController : "MyControllerFOOBAR"
+                text: "Text",
+                route: "testroute3",
+                view: "Ext.Panel",
+                packageController: "MyControllerFOOBAR"
             }, {
-                text  : "Window",
-                route : "window",
-                view  : "Ext.Window",
-                packageController : "MyController"
+                text: "Window",
+                route: "window",
+                view: "Ext.Window",
+                packageController: "MyController"
             }]
         };
 
@@ -308,15 +308,15 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
 
 
         let SECOND = false;
-        Ext.getApplication = function () {
+        Ext.getApplication = () => {
             return {
-                getController : function (packageController) {
+                getController: function (packageController) {
                     if (packageController !== "MyController") {
                         return null;
                     }
                     SECOND = true;
                     return {
-                        configureView : true
+                        configureView: true
                     };
                 }
             };
@@ -343,18 +343,18 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
     });
 
 
-    t.it("lib-cn_navport#8", function (t) {
+    t.it("extjs-comp-navport#8", (t) => {
 
         let gA = Ext.getApplication, w1, w2, w3;
 
         let CONFIGURE_VIEW = false;
 
-        Ext.getApplication = function () {
+        Ext.getApplication = () => {
             return {
-                getController : function (key) {
+                getController: function (key) {
                     if (key === "MyController") {
                         return {
-                            configureView : function (view, node, hash, created) {
+                            configureView: function (view, node, hash, created) {
                                 if (!Ext.isArray(CONFIGURE_VIEW)) {
                                     CONFIGURE_VIEW = [];
                                 }
@@ -368,32 +368,32 @@ describe("coon.navport.view.NavigationViewportTest", function (t) {
         };
 
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {
-            renderTo : document.body
+            renderTo: document.body
         } : {});
 
-        let viewCfg = {xclass : "Ext.Panel", id : Ext.id()},
+        let viewCfg = {xclass: "Ext.Panel", id: Ext.id()},
             postLaunchInfo = {
-                navigation : [{
-                    text  : "Text",
-                    route : "testroute",
-                    view  : viewCfg,
-                    packageController : "MyController"
+                navigation: [{
+                    text: "Text",
+                    route: "testroute",
+                    view: viewCfg,
+                    packageController: "MyController"
                 }, {
-                    text  : "Text",
-                    route : "testroute2",
-                    view  : viewCfg,
-                    packageController : "MyController"
+                    text: "Text",
+                    route: "testroute2",
+                    view: viewCfg,
+                    packageController: "MyController"
                 }, {
-                    text  : "Text",
-                    route : "testroute3",
-                    view  : {xclass : "Ext.Panel", id : Ext.id()},
-                    packageController : "MyController"
+                    text: "Text",
+                    route: "testroute3",
+                    view: {xclass: "Ext.Panel", id: Ext.id()},
+                    packageController: "MyController"
                 }]
             };
 
         viewport.addPostLaunchInfo(postLaunchInfo);
 
-        // lib-cn_navport#11
+        // extjs-comp-navport#11
         t.isCalled("activateNodeNavigation", viewport.getController());
 
         w1 = viewport.activateViewForHash("testroute");

@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,29 +23,4 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-const coon = window.coon || {};
-coon.tests = coon.tests || {};
-coon.tests.config = coon.tests.config || {};
-
-
-coon.tests.config.paths = {
-    extjs : {
-        modern : {
-            js : {
-                url : "[PATH_TO_EXT_MODERN_ALL.JS]" /*Your path to your ExtJS distribution for the modern toolkit (e.g. ext-modern-all-debug.js) */
-            },
-            css : {
-                url : "[PATH_TO_EXT_THEME.JS]" /*Your path to an ExtJS theme, preferably Triton Theme (modern toolkit) */
-            }
-        },
-        classic : {
-            js : {
-                url : "[PATH_TO_EXT_ALL.JS]" /*Your path to your ExtJS distribution for the classic toolkit (e.g. ext-all-debug.js) */
-            },
-            css : {
-                url : "[PATH_TO_EXT_THEME.JS]" /*Your path to an ExtJS theme, preferably Triton Theme (classic toolkit) */
-            }
-        }
-    }
-}
+// intentionally left empty

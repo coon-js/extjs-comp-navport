@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,16 +24,16 @@
  */
 
 /**
- * BaseSchema for lib-cn_navport.
+ * BaseSchema for extjs-comp-navport.
  */
 Ext.define("coon.navport.data.schema.BaseSchema", {
 
-    extend : "coon.core.data.schema.BaseSchema",
+    extend: "coon.core.data.schema.BaseSchema",
 
-    alias : "schema.cn_navport-baseschema",
+    alias: "schema.cn_navport-baseschema",
 
-    namespace : "coon.navport.model",
+    namespace: "coon.navport.model",
 
-    id : "cn_navport-baseschema"
+    id: "cn_navport-baseschema"
 
 });

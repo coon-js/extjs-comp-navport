@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -29,11 +29,11 @@
  */
 Ext.define("coon.navport.view.NavigationToolbar", {
 
-    extend : "coon.navport.view.AbstractNavigationToolbar",
+    extend: "coon.navport.view.AbstractNavigationToolbar",
 
-    requires : [
+    requires: [
         "Ext.layout.HBox"
     ],
 
-    alias : "widget.cn_navport-tbar"
+    alias: "widget.cn_navport-tbar"
 });

@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,16 +22,16 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", function (t) {
+StartTest((t) => {
 
     var sharedController,
         toolbar;
 
     t.chain({
-        action : function (next) {
-            t.it("sanitize", function (t) {
+        action: function (next) {
+            t.it("sanitize", (t) => {
                 sharedController = Ext.create("coon.navport.view.controller.NavigationToolbarViewController");
-                toolbar = Ext.create("Ext.Toolbar", {renderTo : document.body, controller : sharedController});
+                toolbar = Ext.create("Ext.Toolbar", {renderTo: document.body, controller: sharedController});
 
                 t.isInstanceOf(sharedController, "Ext.app.ViewController");
                 t.expect(sharedController.alias).toContain("controller.cn_navport-navigationtoolbarviewcontroller");
@@ -43,9 +43,9 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
             // buildToolbarItems
-            t.it("buildToolbarItems()", function (t) {
+            t.it("buildToolbarItems()", (t) => {
                 var exc = undefined, itemIds;
                 try {controller.buildToolbarItems();}catch(e){exc = e;}
                 t.expect(exc.msg).toContain("to be an array");
@@ -55,11 +55,11 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
                 t.expect(exc.msg).toContain("invalid configuration");
 
                 exc = undefined;
-                try {controller.buildToolbarItems([{text : "bla"}]);}catch(e){exc = e;}
+                try {controller.buildToolbarItems([{text: "bla"}]);}catch(e){exc = e;}
                 t.expect(exc.msg).toContain("invalid configuration");
 
                 itemIds = controller.buildToolbarItems(
-                    [{xtype : "button", itemId : "foo", hidden : true}],
+                    [{xtype: "button", itemId: "foo", hidden: true}],
                     true
                 );
                 t.isArray(itemIds);
@@ -68,7 +68,7 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
                 t.isStrict(itemIds[0].cn_hidden, true);
                 t.isStrict(itemIds[0].hidden,    true);
 
-                itemIds = controller.buildToolbarItems([{xclass : "Ext.Button"}]);
+                itemIds = controller.buildToolbarItems([{xclass: "Ext.Button"}]);
                 t.isArray(itemIds);
                 t.is(itemIds.length, 1);
                 t.ok(itemIds[0].itemId);
@@ -79,12 +79,12 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
             // buildPermaNavItems
-            t.it("buildPermaNavItems()", function (t) {
+            t.it("buildPermaNavItems()", (t) => {
                 var itemIds = controller.buildPermaNavItems(
-                    [{xtype : "button", itemId : "foo", hidden : true},
-                        {xtype : "button", itemId : "bar", hidden : true}]
+                    [{xtype: "button", itemId: "foo", hidden: true},
+                        {xtype: "button", itemId: "bar", hidden: true}]
                 );
                 t.isArray(itemIds);
                 t.is(itemIds.length, 2);
@@ -96,12 +96,12 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
             // buildNodeNavItems
-            t.it("buildNodeNavItems()", function (t) {
+            t.it("buildNodeNavItems()", (t) => {
                 var itemIds = controller.buildNodeNavItems(
-                    [{xtype : "button", itemId : "foobar", hidden : true},
-                        {xtype : "button", itemId : "barfoo"}],
+                    [{xtype: "button", itemId: "foobar", hidden: true},
+                        {xtype: "button", itemId: "barfoo"}],
                     "myId"
                 );
                 t.isArray(itemIds);
@@ -116,9 +116,9 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
             // switchItemVisibility
-            t.it("switchItemVisibility()", function (t) {
+            t.it("switchItemVisibility()", (t) => {
 
                 var foobar = toolbar.down("#foobar"),
                     barfoo = toolbar.down("#barfoo");
@@ -146,15 +146,15 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
             /**
              * activateNavigationForNode
              */
-            t.it("activateNavigationForNode()", function (t) {
+            t.it("activateNavigationForNode()", (t) => {
 
                 controller.buildNodeNavItems(
-                    [{xtype : "button", itemId : "foofoo"},
-                        {xtype : "button", itemId : "barbar"}],
+                    [{xtype: "button", itemId: "foofoo"},
+                        {xtype: "button", itemId: "barbar"}],
                     "myId2"
                 );
 
@@ -221,9 +221,9 @@ describe("coon.navport.view.controller.NavigationToolbarViewControllerTest", fun
             });
         }
     }, {
-        action : function (next, controller, toolbar) {
+        action: function (next, controller, toolbar) {
 
-            t.it("hasNodeNavigation()", function (t) {
+            t.it("hasNodeNavigation()", (t) => {
 
                 t.expect(controller.hasNodeNavigation("myId")).toBe(true);
                 t.expect(controller.hasNodeNavigation("myId2")).toBe(true);

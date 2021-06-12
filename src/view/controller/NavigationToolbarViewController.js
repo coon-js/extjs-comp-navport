@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,9 +32,9 @@
  */
 Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
 
-    extend : "Ext.app.ViewController",
+    extend: "Ext.app.ViewController",
 
-    alias : "controller.cn_navport-navigationtoolbarviewcontroller",
+    alias: "controller.cn_navport-navigationtoolbarviewcontroller",
 
     /**
      * An object keyed with node ids. The values are the itemId's of the
@@ -43,14 +43,14 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      * @private
      * @see #activateNavigationForNode
      */
-    nodeNavItemIds : null,
+    nodeNavItemIds: null,
 
     /**
      * The currently active id for which toolbar items are shown.
      * @type {String} activeNodeId
      * @private
      */
-    activeNodeId : null,
+    activeNodeId: null,
 
     /**
      * The insert position of the toolbar, where node navigation items should be
@@ -58,7 +58,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      * @type {String} nodeNavInsertPosition
      * @private
      */
-    nodeNavInsertPosition : 2,
+    nodeNavInsertPosition: 2,
 
 
     /**
@@ -73,7 +73,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      *
      * @see #buildToolbarItems
      */
-    buildPermaNavItems : function (items) {
+    buildPermaNavItems: function (items) {
         var me = this,
             createdItems = me.buildToolbarItems(items, false),
             view         = me.getView(),
@@ -101,7 +101,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      * @see #buildToolbarItems
      * @see #activateNavigationForNode
      */
-    buildNodeNavItems : function (items, id) {
+    buildNodeNavItems: function (items, id) {
 
         var me           = this,
             createdItems = me.buildToolbarItems(items, true),
@@ -142,7 +142,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      *
      * @see switchItemVisibility
      */
-    activateNavigationForNode : function (nodeId) {
+    activateNavigationForNode: function (nodeId) {
         var me       = this,
             activeId = me.activeNodeId,
             itemIds, i, len;
@@ -194,7 +194,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      *
      * @returns {Boolean}
      */
-    hasNodeNavigation : function (id) {
+    hasNodeNavigation: function (id) {
         return this.nodeNavItemIds && !!this.nodeNavItemIds[id];
     },
 
@@ -218,16 +218,16 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      *
      * @throws if items is not an array or entries of the array where misconfigured.
      */
-    buildToolbarItems : function (items, initialHide) {
+    buildToolbarItems: function (items, initialHide) {
 
         var itemsToAdd = [],
             item, start, end;
 
         if (!Ext.isArray(items)) {
             Ext.raise({
-                sourceClass : Ext.getClassName(this),
-                items       : items,
-                msg         : Ext.getClassName(this) + "#buildToolbarItems needs items to be an array"
+                sourceClass: Ext.getClassName(this),
+                items: items,
+                msg: Ext.getClassName(this) + "#buildToolbarItems needs items to be an array"
             });
         }
 
@@ -241,9 +241,9 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
             if (!Ext.isObject(item) ||
                 (!Ext.isString(item.xtype) && !Ext.isString(item.xclass))) {
                 Ext.raise({
-                    sourceClass : Ext.getClassName(this),
-                    item        : item,
-                    msg         : Ext.getClassName(this) + "#buildToolbarItems found an invalid configuration for an item"
+                    sourceClass: Ext.getClassName(this),
+                    item: item,
+                    msg: Ext.getClassName(this) + "#buildToolbarItems found an invalid configuration for an item"
                 });
             }
 
@@ -275,7 +275,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      * @return {Boolean} true if the item was set to visible, otherwise false
      * @private
      */
-    switchItemVisibility : function (itemId, show) {
+    switchItemVisibility: function (itemId, show) {
 
         var me   = this,
             view = me.getView(),

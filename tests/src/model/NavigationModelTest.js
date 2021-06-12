@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,7 +23,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.model.NavigationModelTest", function (t) {
+StartTest((t) => {
 
 
     // +----------------------------------------------------------------------------
@@ -32,18 +32,18 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
 
     var model,
         modelName = "coon.navport.model.NavigationModel",
-        getModelBaseClass = function () {
+        getModelBaseClass = () => {
             return eval("Ext.data.TreeModel");
         },
-        getSchemaClass = function () {
+        getSchemaClass = () => {
             return coon.navport.data.schema.BaseSchema;
         },
         entityName = "NavigationModel",
         data = {
-            route    : "myroute",
-            text     : "NavigationText",
-            view     : "ViewClass",
-            packageController : "MyController"
+            route: "myroute",
+            text: "NavigationText",
+            view: "ViewClass",
+            packageController: "MyController"
         },
         presenceFields = [
             "route",
@@ -59,7 +59,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
         };
 
 
-    t.beforeEach(function () {
+    t.beforeEach(() => {
         model = Ext.create(modelName, Ext.apply({}, data));
     });
 
@@ -70,7 +70,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test create
      */
-    t.it("Should read out the proper idProperty", function (t) {
+    t.it("Should read out the proper idProperty", (t) => {
         t.expect(model.getIdProperty()).toBe(expectedIdProperty);
     });
 
@@ -78,7 +78,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test create
      */
-    t.it(Ext.String.format("Should create an instance of {0}", modelName), function (t) {
+    t.it(Ext.String.format("Should create an instance of {0}", modelName), (t) => {
         t.expect(model instanceof getModelBaseClass()).toBeTruthy();
     });
 
@@ -86,7 +86,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test Schema
      */
-    t.it("Should return the proper schema", function (t) {
+    t.it("Should return the proper schema", (t) => {
         t.expect(model.schema instanceof getSchemaClass()).toBeTruthy();
     });
 
@@ -94,7 +94,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test EntityName
      */
-    t.it("Should return the entity name", function (t) {
+    t.it("Should return the entity name", (t) => {
         t.expect(model.schema.getEntityName(model)).toBe(entityName);
     });
 
@@ -102,7 +102,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test getter fields
      */
-    t.it("Should check the fields' values", function (t) {
+    t.it("Should check the fields' values", (t) => {
         // valid model
         for (var i in data) {
             if (!Object.prototype.hasOwnProperty.call(data, i)) {
@@ -120,7 +120,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test field validators: presence
      */
-    t.it("Should properly check field validators", function (t) {
+    t.it("Should properly check field validators", (t) => {
         for (var i = 0, len = presenceFields.length; i < len; i++) {
             var msg = Ext.String.format(
                 "Should not be valid if {0} is null",
@@ -128,7 +128,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
             );
             (function (field) {
 
-                t.it(msg, function (t) {
+                t.it(msg, (t) => {
                     modelShouldBeValid(t, model);
                     model.set(field, null);
                     modelShouldBeInvalid(t, model);
@@ -142,7 +142,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test EntityName
      */
-    t.it("Should return proper value for toUrl", function (t) {
+    t.it("Should return proper value for toUrl", (t) => {
         t.expect(model.toUrl()).toBe(model.get("route"));
     });
 
@@ -150,7 +150,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test Field packageController
      */
-    t.it("Should have packageController-field configured", function (t) {
+    t.it("Should have packageController-field configured", (t) => {
 
         t.expect(model.getField("packageController")).toBeDefined();
         t.expect(model.getField("packageController").type).toBe("string");
@@ -161,7 +161,7 @@ describe("coon.navport.model.NavigationModelTest", function (t) {
     /**
      * Test Field inheritNodeNav
      */
-    t.it("Should have inheritNodeNav-field configured", function (t) {
+    t.it("Should have inheritNodeNav-field configured", (t) => {
 
         t.expect(model.getField("inheritNodeNav")).toBeDefined();
         t.expect(model.getField("inheritNodeNav").type).toBe("bool");

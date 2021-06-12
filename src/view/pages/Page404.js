@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -30,49 +30,49 @@
  */
 Ext.define("coon.navport.view.pages.Page404", {
 
-    extend : "coon.comp.window.LockingWindow",
+    extend: "coon.comp.window.LockingWindow",
 
-    mixins : [
+    mixins: [
         "coon.navport.mixin.ViewportManageable"
     ],
 
-    alias : "widget.cn_navport-pg404",
+    alias: "widget.cn_navport-pg404",
 
-    cls : "cn_navport-pg404",
+    cls: "cn_navport-pg404",
 
-    layout : {
-        type  : "vbox",
-        align : "center",
-        pack  : "center"
+    layout: {
+        type: "vbox",
+        align: "center",
+        pack: "center"
     },
 
     /**
      * The token to use as the route for redirecting to a "home" route.
      * @cfg {String} homeToken
      */
-    homeToken : null,
+    homeToken: null,
 
     items: [{
-        cls    : "inner-container",
-        xtype  : "container",
-        width  : 600,
-        layout : {
-            type  : "vbox",
-            align : "stretch",
-            pack  : "center"
+        cls: "inner-container",
+        xtype: "container",
+        width: 600,
+        layout: {
+            type: "vbox",
+            align: "stretch",
+            pack: "center"
         },
         items: [{
-            cls   : "top-text",
-            xtype : "label",
-            text  : "404"
+            cls: "top-text",
+            xtype: "label",
+            text: "404"
         }, {
-            cls   : "descr",
-            flex  : 1,
-            xtype : "label",
-            data  : {
-                route : undefined
+            cls: "descr",
+            flex: 1,
+            xtype: "label",
+            data: {
+                route: undefined
             },
-            tpl  : "<div>Seems like the page you've requested could not be found!</div><div>Return to the <a href=\"#{route}\"> Home page </a></div>"
+            tpl: "<div>Seems like the page you've requested could not be found!</div><div>Return to the <a href=\"#{route}\"> Home page </a></div>"
         }]
     }],
 
@@ -80,12 +80,12 @@ Ext.define("coon.navport.view.pages.Page404", {
      * @inheritdoc
      * Overriden to make sure we are using #homeToken for routing.
      */
-    constructor : function () {
+    constructor: function () {
         var me = this;
 
         me.callParent(arguments);
 
-        me.down("label[cls=descr]").setData({route : me.homeToken});
+        me.down("label[cls=descr]").setData({route: me.homeToken});
 
     }
 

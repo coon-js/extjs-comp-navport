@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2019 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,15 +23,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.app.PackageControllerTest", function (t) {
+StartTest((t) => {
 
     let ctrl;
 
-    t.beforeEach(function () {
+    t.beforeEach(() => {
 
     });
 
-    t.afterEach(function () {
+    t.afterEach(() => {
 
         if (ctrl) {
             ctrl.destroy();
@@ -44,7 +44,7 @@ describe("coon.navport.app.PackageControllerTest", function (t) {
     // +--------------------------------------
     // | Tests
     // +--------------------------------------
-    t.it("Should create the Controller", function (t) {
+    t.it("Should create the Controller", (t) => {
         ctrl = Ext.create("coon.navport.app.PackageController");
 
         t.expect(ctrl.autoDefaultToken).toBe(null);
@@ -52,15 +52,15 @@ describe("coon.navport.app.PackageControllerTest", function (t) {
     });
 
 
-    t.it("init()", function (t) {
+    t.it("init()", (t) => {
         ctrl = Ext.create("coon.navport.app.PackageController");
 
         var app = {
-            defaultToken    : null,
-            getDefaultToken : function () {
+            defaultToken: null,
+            getDefaultToken: function () {
                 return this.defaultToken;
             },
-            setDefaultToken : function (token) {
+            setDefaultToken: function (token) {
                 this.defaultToken = token;
             }
         };
@@ -77,25 +77,25 @@ describe("coon.navport.app.PackageControllerTest", function (t) {
     });
 
 
-    t.it("processRouteFor()", function (t) {
+    t.it("processRouteFor()", (t) => {
         ctrl = Ext.create("coon.navport.app.PackageController");
 
         var CLEANUP = 0,
             ACTIVATED = 0,
             app = {
-                getMainView : function () {
+                getMainView: () => {
                     return {
-                        cleanup : function () {
+                        cleanup: () => {
                             CLEANUP++;
                         }
                     };
                 },
-                activateViewForHash : function () {
+                activateViewForHash: () => {
                     ACTIVATED++;
                 }
             };
 
-        ctrl.getApplication = function () {
+        ctrl.getApplication = () => {
             return app;
         };
 
@@ -111,25 +111,25 @@ describe("coon.navport.app.PackageControllerTest", function (t) {
     });
 
 
-    t.it("onUnmatchedRoute()", function (t) {
+    t.it("onUnmatchedRoute()", (t) => {
         ctrl = Ext.create("coon.navport.app.PackageController");
 
         var CLEANUP = 0,
             ACTIVATED = 0,
             app = {
-                getMainView : function () {
+                getMainView: () => {
                     return {
-                        cleanup : function () {
+                        cleanup: () => {
                             CLEANUP++;
                         }
                     };
                 },
-                activateViewForHash : function () {
+                activateViewForHash: () => {
                     ACTIVATED++;
                 }
             };
 
-        ctrl.getApplication = function () {
+        ctrl.getApplication = () => {
             return app;
         };
 

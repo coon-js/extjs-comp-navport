@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,18 +23,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.pages.404Test", function (t) {
+StartTest((t) => {
 
     var page;
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (page) {
             page.destroy();
             page = null;
         }
     });
 
-    t.beforeEach(function () {
+    t.beforeEach(() => {
 
     });
 
@@ -43,7 +43,7 @@ describe("coon.navport.view.pages.404Test", function (t) {
     // +-------------------------------
 
 
-    t.it("Should create and show Page", function (t) {
+    t.it("Should create and show Page", (t) => {
         page = Ext.create("coon.navport.view.pages.Page404");
 
         t.expect(page instanceof coon.comp.window.LockingWindow).toBe(true);
@@ -51,14 +51,14 @@ describe("coon.navport.view.pages.404Test", function (t) {
         t.expect(page.alias).toContain("widget.cn_navport-pg404");
     });
 
-    t.it("Should test mixin", function (t) {
+    t.it("Should test mixin", (t) => {
         page = Ext.create("coon.navport.view.pages.Page404");
         t.expect(page.canNavigationViewportCloseView()).toBe(true);
     });
 
-    t.it("Should test homeToken", function (t) {
+    t.it("Should test homeToken", (t) => {
         Ext.create("coon.navport.view.pages.Page404", {
-            homeToken : "testhome"
+            homeToken: "testhome"
         });
 
 

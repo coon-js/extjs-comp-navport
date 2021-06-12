@@ -1,7 +1,7 @@
 /**
  * coon.js
- * lib-cn_navport
- * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/lib-cn_navport
+ * extjs-comp-navport
+ * Copyright (C) 2017 - 2020 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,20 +23,20 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-describe("coon.navport.view.ContentWrapTest", function (t) {
+StartTest((t) => {
 
     var cwrap,
         cwrapConfig;
 
-    t.afterEach(function () {
+    t.afterEach(() => {
         if (cwrap) {
             cwrap.destroy();
             cwrap = null;
         }
     });
 
-    t.beforeEach(function () {
-        cwrapConfig = {renderTo : document.body};
+    t.beforeEach(() => {
+        cwrapConfig = {renderTo: document.body};
     });
 
 
@@ -44,7 +44,7 @@ describe("coon.navport.view.ContentWrapTest", function (t) {
     // | Tests
     // +-------------------------------
 
-    t.it("Should create and show the ContentWrap", function (t) {
+    t.it("Should create and show the ContentWrap", (t) => {
         cwrap = Ext.create(
             "coon.navport.view.ContentWrap", cwrapConfig);
 
@@ -63,7 +63,7 @@ describe("coon.navport.view.ContentWrapTest", function (t) {
         t.expect(cwrap.lookup("cn_navport_ref_conctr") instanceof coon.navport.view.ContentContainer).toBeTruthy();
     });
 
-    t.it("Should use the proper layout", function (t) {
+    t.it("Should use the proper layout", (t) => {
         cwrap = Ext.create(
             "coon.navport.view.ContentWrap", cwrapConfig);
 
@@ -73,7 +73,7 @@ describe("coon.navport.view.ContentWrapTest", function (t) {
     });
 
 
-    t.it("Check animation configuration for the layout", function (t) {
+    t.it("Check animation configuration for the layout", (t) => {
         cwrap = Ext.create(
             "coon.navport.view.ContentWrap", cwrapConfig);
 
@@ -82,7 +82,7 @@ describe("coon.navport.view.ContentWrapTest", function (t) {
             t.expect(cwrap.getLayout().animatePolicy).toBeUndefined();
         } else {
             t.expect(cwrap.getLayout().animate).toBe(true);
-            t.expect(cwrap.getLayout().animatePolicy).toEqual({x : true, width : true});
+            t.expect(cwrap.getLayout().animatePolicy).toEqual({x: true, width: true});
         }
 
 
