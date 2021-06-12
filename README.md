@@ -1,4 +1,4 @@
-# extjs-comp-navport  [![Build Status](https://travis-ci.org/coon/extjs-comp-navport.svg?branch=master)](https://travis-ci.org/coon/extjs-comp-navport)
+# @coon-js/extjs-comp-navport 
 This **Sencha ExtJS** package provides an enhanced viewport template for rapid, 
 modular, package agnostic Sencha ExtJS application building.
 
