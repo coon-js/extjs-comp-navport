@@ -48,7 +48,7 @@
       }
     }
   },
-  "description": "This **Sencha ExtJS** package provides an enhanced viewport template for rapid,  modular, package agnostic Sencha ExtJS application building.",
+  "description": "NPM package providing enhanced viewport template for rapid, modular, package agnostic Sencha ExtJS application building.",
   "version": "0.0.1",
   "main": "index.js",
   "directories": {
