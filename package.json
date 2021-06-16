@@ -55,8 +55,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npx ws --port 8062 --static.index tests.html --open",
-    "postinstall" : "npx extjs-link"
+    "test": "npx ws --port 8062 --static.index tests.redirect.html --open",
+    "postinstall": "npm run setup:tests",
+    "setup:tests": "npx extjs-link && siesta-lib-helper"
   },
   "repository": {
     "type": "git",
