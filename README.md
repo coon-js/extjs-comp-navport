@@ -12,7 +12,7 @@ A reference implementation can be found in the [conjoon](https://github.com/conj
 
 ## Installation
 ```
-npm install --save-dev @coon-js/extjs-lib-core
+npm install --save-dev @coon-js/extjs-comp-navport
 ```
 
 ## Post-Install

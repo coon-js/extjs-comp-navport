@@ -49,14 +49,14 @@
     }
   },
   "description": "NPM package providing enhanced viewport template for rapid, modular, package agnostic Sencha ExtJS application building.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "npx ws --port 8062 --static.index tests.redirect.html --open",
-    "postinstall": "npm run setup:tests",
+    "postinstall": "npm run setup:tests && node-git-hooks",
     "setup:tests": "npx extjs-link && siesta-lib-helper"
   },
   "repository": {
@@ -79,13 +79,15 @@
   },
   "homepage": "https://github.com/coon-js/extjs-comp-navport#readme",
   "devDependencies": {
-    "@coon-js/extjs-package-loader": "^1.0.0",
-    "@coon-js/extjs-lib-core": "file:../extjs-lib-core",
     "@coon-js/extjs-lib-comp": "file:../extjs-lib-comp",
+    "@coon-js/extjs-lib-core": "file:../extjs-lib-core",
     "@coon-js/extjs-link": "file:../extjs-link",
+    "@coon-js/extjs-package-loader": "^1.0.0",
     "@coon-js/siesta-lib-helper": "file:../siesta-lib-helper",
     "@l8js/l8": "file:../../@l8js/l8",
+    "eslint": "^7.28.0",
     "local-web-server": "^4.2.1",
+    "node-git-hooks": "^1.0.6",
     "siesta-lite": "^5.5.2"
   }
 }
