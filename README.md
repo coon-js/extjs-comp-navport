@@ -11,8 +11,18 @@ An [extjs-lib-comp](https://github.com/coon-js/extjs-lib-comp) application (`coo
 A reference implementation can be found in the [conjoon](https://github.com/conjoon) project.
 
 ## Installation
-```
+```bash
 npm install --save-dev @coon-js/extjs-comp-navport
+```
+
+If you want to develop with `extjs-comp-navport`, run the `build:dev`-script afterwards:
+```bash
+npm run build:dev
+```
+Testing environment will then be available via
+
+```bash
+npm test
 ```
 
 ## Post-Install
@@ -59,7 +69,7 @@ environment.
 Create an ExtJS application by calling *Sencha CMD*'s ```sencha generate app``` and make sure you remove the
 auto-generated code. Open up the application's `app.json` and specify the package [extjs-comp-navport](https://github.com/coon-js/extjs-comp-navport)
 as a requirement for the application, e.g.
-```
+```json
     "requires": [
         "font-awesome",
         "extjs-comp-navport"
@@ -67,7 +77,7 @@ as a requirement for the application, e.g.
 ``` 
 Once this is done, go the file ``Application.js`` (usually generated as universal code in the folder `[appname]/app/Application.js`
 and make sure this class extends from `coon.comp.app.Application`, e.g.
-```
+```javascript
 Ext.define('my.Application', {
 
     extend: 'coon.comp.app.Application',
@@ -81,7 +91,7 @@ Since [coon.js](https://github.com/coon-js) works with packages that provide fun
 work directly with the application layer provided by coon.js. However, we have to make sure that the application
 uses the Viewport provided by  `coon.navport.view.NavigationViewport`. For this, create a view in your
 application that should serve as the *MainView* for your application. This view needs to extend `coon.navport.view.NavigationViewport`, e.g.
-```
+```javascript
 Ext.define('my.view.main.Viewport', {
     extend: 'coon.navport.view.NavigationViewport'
 });
@@ -90,7 +100,7 @@ Ext.define('my.view.main.Viewport', {
 Before we can use this specific Viewport, we need to go back to our ``Application.js`` and register this view there.
 Additinally, we have to specify a ``PackageController`` which is responsible for various tasks in an application
 using the [coon.js](https://github.com/coon-js) library:
-```
+```javascript
 Ext.define('my.Application', {
 
     extend: 'coon.comp.app.Application',
@@ -136,7 +146,7 @@ by the ExtJS application built with [coon.js](https://github.com/coon-js)'s.
 First off, add the entry `"coon-js" : {"packageController" :  true}`  to the
 `sencha`-section in the `package.json`, so that the resulting json in the file
 looks like this:
-```
+```json
 {
     "name": "acme",
 
@@ -151,7 +161,7 @@ package from the [coon.js](https://github.com/coon-js)-project.
 
 Hint: If you're developing packages for both the modern and classic toolkit, make sure you add
 the following configuration to your `package.json`:
-```
+```json
 "builds": {
     "classic": {
         "toolkit": "classic"
@@ -175,7 +185,7 @@ for cancelling the launch-process of the application (e.g. if user credentials a
 launched and exposes additional information the application should use from this package. We'll have a look
 at the latter.
 So, go to your newly created `acme`-package and add the following code to the file `acme/src/app/PackageController.js`:
-```
+```javascript
 Ext.define('acme.app.PackageController', {
 
     extend : 'coon.core.app.PackageController',
@@ -214,18 +224,22 @@ can have an arbitrary number of plugins of the type [coon.core.app.plugin.Contro
 that are called by the application during the ```preLaunchHook```-process.
 Please refer to [extjs-lib-core](https://github.com/coon-js/extjs-lib-core) for more information on how to use them.
 
+##### Using plugins with the Application
+Please refer to [extjs-lib-core](https://github.com/coon-js/extjs-lib-core) for more information on how to add dynamically loaded
+configuration files and specifying plugins.
+
 #### Registering the package in the application
 Last but not least, we have to tell our application to actually use the package we have just created.
 For this purpose, we need to open up our application's `app.json` and specify the package's name `acme` in
 either the `development`- or the `production`-section - or both!
 Specifying this package for development would look like this
-```
+```json
 "development" : {
     "uses" : ["acme"]
 }
 ```
 whereas the package being (also) used for production would look like this
-```
+```json
 "production" : {
     "uses" : ["acme"]
 }
@@ -236,8 +250,6 @@ are not hardwiring the package's code into the application itself, instead, the 
 being used (see [Mitchell Simoen's Blog entry for an explanation](https://mitchellsimoens.com/2017/04/12/package-loading/), amongst others).
 
 You can now build your application by running `sencha app build --dev --uses` respective `sencha app build --prod --uses`.
-
-
 
 
 ##Dev 
