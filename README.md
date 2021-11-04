@@ -215,8 +215,19 @@ Ext.define('acme.app.PackageController', {
                 text   : 'Acme Module',
                 route  : 'acme/home',
                 view   : 'Ext.Panel',
-                leaf   : true
-            }]
+                leaf   : true,
+                nodeNav: [{
+                    xtype: "button",
+                    text: "action"
+                }]
+            }],
+            permaNav :{
+                index: 1000,
+                items: [{
+                    xtype: "button",
+                    text: "permanent button"
+                }]
+            }
         };
     }
 
@@ -230,6 +241,10 @@ understand: `text` is the display-text of the menu-entry, `route` is the route u
 is registered (taking advance of the browser's *history*-functionality) and `view` is the FQN of the view
 that should be rendered/activated as soon as this menu-entry gets selected (by either clicking it in the
 resulting `Ext.list.Tree` or by calling the application's url along with the defined `route`).
+However, the node has an additional `nodeNav`-entry: This entry denotes Toolbar-items that will be accessible
+when the user activates its parent item in the navigation tree.<br>The `permaNav`-property, on the other hand,
+will expose controls which are permanently available for the application and stay in the main toolbar, no matter what
+module was activated.
 
 ##### pre-/postLaunchHook pipeline:
 ```

@@ -60,12 +60,22 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      */
     nodeNavInsertPosition: 2,
 
+    /**
+     * The initial insert position of permanent navigation (perma nav) items
+     *
+     * @type {Number}
+     * @private
+     */
+    permaNavIndex: 3,
 
     /**
      * Creates and adds toolbar items which are handled as permanent navigation
      * items.
      *
-     * @param {Array} items
+     * @param {Array|Object} items An array with items to add, or an object with
+     * the properties "index" for the desired insert-position, and "items" with
+     * the items to add. If "index" is not specified, items will get added to the end
+     * of the item-list.
      *
      * @returns {Array} an array with the itemIds of the added items
      *
@@ -74,13 +84,52 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
      * @see #buildToolbarItems
      */
     buildPermaNavItems: function (items) {
-        var me = this,
-            createdItems = me.buildToolbarItems(items, false),
-            view         = me.getView(),
+
+        const
+            me = this,
+            view = me.getView();
+
+        let passItems = items,
+            index = false;
+
+        if (items.items) {
+            passItems = items.items;
+            index = items.index ? items.index : false;
+        }
+
+        let maxIndex = index;
+        if (index === false) {
+            maxIndex = 0;
+            view.items.items.forEach(
+                item => maxIndex = item.cn_index  > maxIndex ? item.cn_index + 1 : maxIndex
+            );
+
+        }
+
+        const
+            createdItems = me.buildToolbarItems(passItems, false),
             itemIds      = [];
 
+        createdItems.map(item => item.cn_index = maxIndex++);
+
         for (var i = 0, len = createdItems.length; i < len; i++) {
-            itemIds.push(view.add(createdItems[i]).getItemId());
+            itemIds.push(
+                view.insert(
+                    view.items.findInsertionIndex(createdItems[i], (item, itemNext) => {
+
+                        if (item.cn_index < itemNext.cn_index) {
+                            return -1;
+                        }
+
+                        if (item.cn_index > itemNext.cn_index) {
+                            return 1;
+                        }
+
+                        return 0;
+                    }),
+                    createdItems[i]
+                ).getItemId()
+            );
         }
 
         return itemIds;
@@ -112,6 +161,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
             itemIds.push(
                 view.insert(me.nodeNavInsertPosition, createdItems[i]).getItemId()
             );
+            me.permaNavIndex++;
         }
 
         if (!me.nodeNavItemIds) {
@@ -258,6 +308,7 @@ Ext.define("coon.navport.view.controller.NavigationToolbarViewController", {
 
             itemsToAdd.push(item);
         }
+
 
         return itemsToAdd;
 
