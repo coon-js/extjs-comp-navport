@@ -81,6 +81,15 @@ StartTest((t) => {
         t.expect(viewport.lookup("cn_navport_ref_tbar") instanceof coon.navport.view.NavigationToolbar).toBe(true);
     });
 
+    t.it("Should have the AnnouncementBar", (t) => {
+
+        const announcementSpy = t.spyOn(coon.Announcement, "register");
+        viewport = Ext.create("coon.navport.view.NavigationViewport");
+        t.isInstanceOf(viewport.down("cn_comp-announcementbar"), "coon.comp.component.AnnouncementBar");
+        t.expect(announcementSpy.calls.count()).toBe(1);
+        t.expect(announcementSpy.calls.all()[0].args[0]).toBe(viewport.down("cn_comp-announcementbar"));
+        announcementSpy.remove();
+    });
 
     t.it("Should be possible to hide the navigation", (t) => {
         viewport = Ext.create("coon.navport.view.NavigationViewport", Ext.isModern ? {

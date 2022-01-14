@@ -56,6 +56,7 @@ export default {
         },
 
         classic: {
+            "coon.comp.component.AnnouncementBar": "../node_modules/@coon-js/extjs-lib-comp/classic/src/component/AnnouncementBar.js",
             "coon.navport.view.NavigationToolbar": "../classic/src/view/NavigationToolbar.js",
             "coon.comp.container.Viewport": "../node_modules/@coon-js/extjs-lib-comp/classic/src/container/Viewport.js"
         }
@@ -65,5 +66,3 @@ export default {
         js: "../node_modules/@l8js/l8/dist/l8.runtime.umd.js"
     }
 };
-
-

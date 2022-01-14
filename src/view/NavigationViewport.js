@@ -32,6 +32,8 @@
  * leaving a content panel with an {@link Ext.layout.container.Card}-layout.
  *
  *      +-----------------------------------------+
+ *      |           announcement bar              |
+ *      +-----------------------------------------+
  *      |                toolbar                  |
  *      +-----------------------------------------+
  *      |        |                                |
@@ -119,6 +121,7 @@ Ext.define("coon.navport.view.NavigationViewport", {
     alias: "widget.cn_navport",
 
     requires: [
+        "coon.comp.component.AnnouncementBar",
         "coon.navport.view.NavigationToolbar",
         "coon.navport.view.controller.NavigationViewportController",
         "coon.navport.view.ContentWrap",
@@ -138,6 +141,8 @@ Ext.define("coon.navport.view.NavigationViewport", {
     },
 
     items: [{
+        xtype: "cn_comp-announcementbar"
+    }, {
         reference: "cn_navport_ref_tbar",
         xtype: "cn_navport-tbar"
     }, {
@@ -145,6 +150,19 @@ Ext.define("coon.navport.view.NavigationViewport", {
         xtype: "cn_navport-conwrap",
         flex: 1
     }],
+
+
+    /**
+     * @inheritdoc
+     */
+    initComponent () {
+
+        const me = this;
+        me.callParent(arguments);
+
+        coon.Announcement.register(me.down("cn_comp-announcementbar"));
+
+    },
 
 
     /**
@@ -158,9 +176,10 @@ Ext.define("coon.navport.view.NavigationViewport", {
      * @throws bubbles the ecxeptions od #buildNavigationItems and
      * #buildPermaNavItems
      */
-    addPostLaunchInfo: function (info) {
+    addPostLaunchInfo (info) {
+        "use strict";
 
-        var me = this;
+        const me = this;
 
         if (Object.prototype.hasOwnProperty.call(info,"navigation")) {
             me.getController().addMainNavigationItems(info.navigation);
@@ -180,7 +199,8 @@ Ext.define("coon.navport.view.NavigationViewport", {
      *
      * see {@link coon.navport.view.controller.NavigationViewportController#hideNavigation}
      */
-    hideNavigation: function (hide) {
+    hideNavigation (hide) {
+        "use strict";
         this.getController().hideNavigation(hide);
     },
 
@@ -198,7 +218,8 @@ Ext.define("coon.navport.view.NavigationViewport", {
      *
      * @return {coon.navport.view.pages.Page404}
      */
-    showUnmatchedRouteNotification: function (missingHash, defaultToken) {
+    showUnmatchedRouteNotification (missingHash, defaultToken) {
+        "use strict";
 
         return Ext.create("coon.navport.view.pages.Page404", {
             title: Ext.String.format("\"{0}\" not found", missingHash),
@@ -212,8 +233,9 @@ Ext.define("coon.navport.view.NavigationViewport", {
      *
      * @see coon.navport.view.controller.NavigationViewportController#addViewForHash
      */
-    activateViewForHash: function (hash, defaultToken) {
-        var me = this;
+    activateViewForHash (hash, defaultToken) {
+        "use strict";
+        const me = this;
         me.cleanup();
         return me.getController().addViewForHash(hash, defaultToken);
     },
@@ -225,8 +247,10 @@ Ext.define("coon.navport.view.NavigationViewport", {
      * @see coon.navport.view.controller.NavigationViewportController#isCurrentViewClosable
      * @see coon.navport.view.controller.NavigationViewportController#ctrl.closeCurrentView();
      */
-    cleanup: function () {
-        var me   = this,
+    cleanup () {
+        "use strict";
+        const
+            me   = this,
             ctrl = me.getController();
 
         if (ctrl.isCurrentViewClosable()) {

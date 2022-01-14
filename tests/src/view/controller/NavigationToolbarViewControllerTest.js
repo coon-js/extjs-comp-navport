@@ -38,6 +38,7 @@ StartTest((t) => {
                 t.expect(sharedController.nodeNavItemIds).toBe(null);
                 t.expect(sharedController.activeNodeId).toBe(null);
                 t.isStrict(sharedController.nodeNavInsertPosition, 2);
+                t.isStrict(sharedController.permaNavIndex, 3);
 
                 next(sharedController, toolbar);
             });
@@ -82,7 +83,7 @@ StartTest((t) => {
         action: function (next, controller, toolbar) {
             // buildPermaNavItems
             t.it("buildPermaNavItems()", (t) => {
-                var itemIds = controller.buildPermaNavItems(
+                let itemIds = controller.buildPermaNavItems(
                     [{xtype: "button", itemId: "foo", hidden: true},
                         {xtype: "button", itemId: "bar", hidden: true}]
                 );
@@ -92,6 +93,62 @@ StartTest((t) => {
                 t.expect(toolbar.items.getAt(0).getItemId()).toBe("foo");
                 t.expect(toolbar.items.getAt(1).getItemId()).toBe("bar");
 
+                t.expect(toolbar.items.getAt(0).cn_index).toBe(0);
+                t.expect(toolbar.items.getAt(1).cn_index).toBe(1);
+
+                controller.buildPermaNavItems({
+                    index: -5,
+                    items: [
+                        {xtype: "button", itemId: "foo2", hidden: true},
+                        {xtype: "button", itemId: "bar2", hidden: true}
+                    ]
+                });
+                t.expect(toolbar.items.getAt(0).getItemId()).toBe("foo2");
+                t.expect(toolbar.items.getAt(0).cn_index).toBe(-5);
+                t.expect(toolbar.items.getAt(1).getItemId()).toBe("bar2");
+                t.expect(toolbar.items.getAt(1).cn_index).toBe(-4);
+
+                t.expect(toolbar.items.getAt(2).getItemId()).toBe("foo");
+                t.expect(toolbar.items.getAt(2).cn_index).toBe(0);
+                t.expect(toolbar.items.getAt(3).getItemId()).toBe("bar");
+                t.expect(toolbar.items.getAt(3).cn_index).toBe(1);
+
+
+                controller.buildPermaNavItems({
+                    index: -3,
+                    items: [
+                        {xtype: "button", itemId: "foo3", hidden: true},
+                        {xtype: "button", itemId: "bar3", hidden: true}
+                    ]
+                });
+
+                t.expect(toolbar.items.getAt(0).getItemId()).toBe("foo2");
+                t.expect(toolbar.items.getAt(0).cn_index).toBe(-5);
+                t.expect(toolbar.items.getAt(1).getItemId()).toBe("bar2");
+                t.expect(toolbar.items.getAt(1).cn_index).toBe(-4);
+
+                t.expect(toolbar.items.getAt(2).getItemId()).toBe("foo3");
+                t.expect(toolbar.items.getAt(2).cn_index).toBe(-3);
+                t.expect(toolbar.items.getAt(3).getItemId()).toBe("bar3");
+                t.expect(toolbar.items.getAt(3).cn_index).toBe(-2);
+
+                t.expect(toolbar.items.getAt(4).getItemId()).toBe("foo");
+                t.expect(toolbar.items.getAt(4).cn_index).toBe(0);
+                t.expect(toolbar.items.getAt(5).getItemId()).toBe("bar");
+                t.expect(toolbar.items.getAt(5).cn_index).toBe(1);
+
+                controller.buildPermaNavItems({
+                    items: [
+                        {xtype: "button", itemId: "foo4", hidden: true},
+                        {xtype: "button", itemId: "bar4", hidden: true}
+                    ]
+                });
+
+                t.expect(toolbar.items.getAt(6).getItemId()).toBe("foo4");
+                t.expect(toolbar.items.getAt(6).cn_index).toBe(2);
+                t.expect(toolbar.items.getAt(7).getItemId()).toBe("bar4");
+                t.expect(toolbar.items.getAt(7).cn_index).toBe(3);
+
                 next(controller, toolbar);
             });
         }
@@ -99,6 +156,7 @@ StartTest((t) => {
         action: function (next, controller, toolbar) {
             // buildNodeNavItems
             t.it("buildNodeNavItems()", (t) => {
+                t.expect(controller.permaNavIndex).toBe(3);
                 var itemIds = controller.buildNodeNavItems(
                     [{xtype: "button", itemId: "foobar", hidden: true},
                         {xtype: "button", itemId: "barfoo"}],
