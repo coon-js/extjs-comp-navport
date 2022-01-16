@@ -1,7 +1,7 @@
 /**
  * coon.js
  * extjs-comp-navport
- * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
+ * Copyright (C) 2017-2022 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,8 +42,11 @@ export default {
         "coon.navport": "../src",
         "coon.navport.view.controller.NavigationToolbarViewController": "../src/view/controller/NavigationToolbarViewController.js",
         "coon.navport.view.controller.NavigationViewportController": "../src/view/controller/NavigationViewportController.js",
+        "coon.navport.view.AbstractNavigationViewport": "../src/view/AbstractNavigationViewport.js",
         "coon.comp.window.LockingWindow": "../node_modules/@coon-js/extjs-lib-comp/src/window/LockingWindow.js",
         "coon.comp.list.Tree": "../node_modules/@coon-js/extjs-lib-comp/src/list/Tree.js",
+        "coon.comp.component.AbstractAnnouncementBar": "../node_modules/@coon-js/extjs-lib-comp/src/component/AbstractAnnouncementBar.js",
+
         "coon.navport.view": "../src/view",
 
         "coon.core": "../node_modules/@coon-js/extjs-lib-core/src",
@@ -51,13 +54,16 @@ export default {
         "coon.comp.window": "../node_modules/@coon-js/extjs-lib-comp/classic/src/window",
 
         modern: {
+            "coon.comp.component.AnnouncementBar": "../node_modules/@coon-js/extjs-lib-comp/modern/src/component/AnnouncementBar.js",
             "coon.navport.view.NavigationToolbar": "../modern/src/view/NavigationToolbar.js",
+            "coon.navport.view.NavigationViewport": "../modern/src/view/NavigationViewport.js",
             "coon.comp.container.Viewport": "../node_modules/@coon-js/extjs-lib-comp/modern/src/container/Viewport.js"
         },
 
         classic: {
             "coon.comp.component.AnnouncementBar": "../node_modules/@coon-js/extjs-lib-comp/classic/src/component/AnnouncementBar.js",
             "coon.navport.view.NavigationToolbar": "../classic/src/view/NavigationToolbar.js",
+            "coon.navport.view.NavigationViewport": "../classic/src/view/NavigationViewport.js",
             "coon.comp.container.Viewport": "../node_modules/@coon-js/extjs-lib-comp/classic/src/container/Viewport.js"
         }
 
