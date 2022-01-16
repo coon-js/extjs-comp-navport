@@ -1,7 +1,7 @@
 /**
  * coon.js
  * extjs-comp-navport
- * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
+ * Copyright (C) 2017-2022 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,6 +24,26 @@
  */
 
 export default [{
+    group: "classic",
+    items: [{
+        group: "view",
+        items: [
+            // we need to run the tests with the modern and with the classic toolkit loaded,
+            // although they are the same
+            "src/view/NavigationToolbarTest.js",
+            "src/view/NavigationViewportTest.js"
+        ]
+    }]
+}, {
+    group: "modern",
+    items: [{
+        group: "view",
+        items: [
+            "src/view/NavigationToolbarTest.js",
+            "src/view/NavigationViewportTest.js"
+        ]
+    }]
+},{
     group: "universal",
     items: [{
         group: "app",
@@ -59,8 +79,7 @@ export default [{
             "src/view/NavigationTreeTest.js",
             "src/view/ContentContainerTest.js",
             "src/view/ContentWrapTest.js",
-            "src/view/NavigationToolbarTest.js",
-            "src/view/NavigationViewportTest.js", {
+            {
                 group: "controller",
                 items: [
                     "src/view/controller/NavigationToolbarViewControllerTest.js",

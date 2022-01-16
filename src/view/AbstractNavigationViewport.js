@@ -1,7 +1,7 @@
 /**
  * coon.js
  * extjs-comp-navport
- * Copyright (C) 2017-2021 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
+ * Copyright (C) 2017-2022 Thorsten Suckow-Homberg https://github.com/coon-js/extjs-comp-navport
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -114,11 +114,9 @@
  *
  *
  */
-Ext.define("coon.navport.view.NavigationViewport", {
+Ext.define("coon.navport.view.AbstractNavigationViewport", {
 
     extend: "coon.comp.container.Viewport",
-
-    alias: "widget.cn_navport",
 
     requires: [
         "coon.comp.component.AnnouncementBar",
@@ -150,19 +148,6 @@ Ext.define("coon.navport.view.NavigationViewport", {
         xtype: "cn_navport-conwrap",
         flex: 1
     }],
-
-
-    /**
-     * @inheritdoc
-     */
-    initComponent () {
-
-        const me = this;
-        me.callParent(arguments);
-
-        coon.Announcement.register(me.down("cn_comp-announcementbar"));
-
-    },
 
 
     /**
